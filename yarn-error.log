@@ -1,0 +1,102 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add node-sass@4.9.0
+
+PATH: 
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Files\cpp\bin\Intel64;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;E:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\Yarn\bin\;C:\Users\Novil F\AppData\Local\Microsoft\WindowsApps;;C:\Users\Novil F\AppData\Roaming\npm;C:\Users\Novil F\AppData\Roaming\Composer\vendor\bin;C:\Users\Novil F\AppData\Local\Yarn\bin;C:\Users\Novil F\AppData\Local\Programs\Microsoft VS Code\bin
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  10.15.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141292:19)
+      at Object.onceWrapper (events.js:277:13)
+      at ClientRequest.emit (events.js:189:13)
+      at TLSSocket.emitRequestTimeout (_http_client.js:662:40)
+      at Object.onceWrapper (events.js:277:13)
+      at TLSSocket.emit (events.js:189:13)
+      at TLSSocket.Socket._onTimeout (net.js:443:8)
+      at ontimeout (timers.js:436:11)
+      at tryOnTimeout (timers.js:300:5)
+      at listOnTimeout (timers.js:263:5)
+
+npm manifest: 
+  {
+    "name": "argon-dashboard-react",
+    "version": "1.0.0",
+    "description": "React version of Argon Dashboard by Creative Tim",
+    "main": "index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/creativetimofficial/argon-dashboard-react.git"
+    },
+    "keywords": [
+      "react",
+      "reactjs",
+      "argon",
+      "argon-react",
+      "dashboard",
+      "dashboard-react",
+      "argon-dashboard",
+      "argon-dashboard-react"
+    ],
+    "author": "Creative Tim",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
+    },
+    "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject",
+      "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+      "compile-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.css",
+      "minify-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.min.css --output-style compressed",
+      "map-sass": "node-sass src/assets/scss/argon-dashboard-react.scss src/assets/css/argon-dashboard-react.css --source-map true"
+    },
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 11",
+      "not op_mini all"
+    ],
+    "dependencies": {
+      "chart.js": "2.7.3",
+      "classnames": "2.2.6",
+      "moment": "2.24.0",
+      "node-sass": "4.11.0",
+      "nouislider": "13.1.1",
+      "react": "16.8.4",
+      "react-chartjs-2": "2.7.4",
+      "react-copy-to-clipboard": "5.0.1",
+      "react-datetime": "2.16.3",
+      "react-dom": "16.8.4",
+      "react-google-maps": "9.4.5",
+      "react-router-dom": "4.3.1",
+      "react-scripts": "2.1.8",
+      "reactstrap": "7.1.0"
+    },
+    "devDependencies": {
+      "@types/googlemaps": "3.30.18",
+      "@types/markerclustererplus": "2.1.33",
+      "@types/react": "16.8.7",
+      "typescript": "3.3.3333"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
