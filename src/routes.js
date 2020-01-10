@@ -20,6 +20,7 @@ import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
 import PegawaiIndex from './views/pegawai/PegawaiIndex.jsx';
+import PegawaiDetails from './views/pegawai/PegawaiDetails.jsx'
 var routes = [
   {
     path: "/index",
@@ -36,6 +37,14 @@ var routes = [
     component: PegawaiIndex,
     layout: "/admin",
     isActive: true
+  },
+  {
+    path: "/detail-pegawai/:id",
+    name: "Detail Pegawai",
+    icon: "fas fa-user-tie",
+    component: PegawaiDetails,
+    layout: "/admin",
+    isActive: false
   },
 
   {

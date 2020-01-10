@@ -19,10 +19,10 @@ import {
 // core components
 import Header from "components/Headers/Header.jsx";
 import BootstrapTable from 'react-bootstrap-table-next';
-import axios from 'axios';
 import API from '../../store/api.js';
 import PegawaiForm from './PegawaiForm'
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom'
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
@@ -67,9 +67,11 @@ class PegawaiIndex extends React.Component {
                                     <Button color="success">
                                         <i className="fas fa-pencil-alt"></i>
                                     </Button>
-                                    <Button color="primary">
-                                        <i className="fas fa-eye"></i>
-                                    </Button>
+                                    <Link className="text-white" to={`/admin/detail-pegawai/${p.id}`}>
+                                        <Button color="primary">
+                                            <i className="fas fa-eye"></i>
+                                        </Button>
+                                    </Link>
                                 </>
                         };
                     })
