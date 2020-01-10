@@ -19,7 +19,7 @@ import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
-
+import PegawaiIndex from './views/pegawai/PegawaiIndex.jsx';
 var routes = [
   {
     path: "/index",
@@ -33,10 +33,11 @@ var routes = [
     path: "/pegawai",
     name: "Pegawai",
     icon: "fas fa-user-tie",
-    component: Index,
+    component: PegawaiIndex,
     layout: "/admin",
     isActive: true
   },
+
   {
     path: "/absensi",
     name: "Absensi",
