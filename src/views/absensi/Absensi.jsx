@@ -16,11 +16,15 @@ import {
   DropdownToggle 
 } from 'reactstrap';
 
+import { withRouter } from 'react-router-dom';
+
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class Absensi extends React.Component {
   render() {
+    console.log(this.props);
+
     const columns = [{
       dataField: 'id',
       text: '#',
@@ -82,19 +86,19 @@ class Absensi extends React.Component {
     let opsi = (
       <UncontrolledDropdown>
         <DropdownToggle size="sm">
-          <i class="fas fa-ellipsis-v"></i>
+          <i className="fas fa-ellipsis-v"></i>
         </DropdownToggle>
         <DropdownMenu right>
           <DropdownItem style={{ cursor: 'pointer' }}>
-            <i class="fas fa-trash-alt text-danger"></i>
+            <i className="fas fa-trash-alt text-danger"></i>
             Delete
           </DropdownItem>
           <DropdownItem style={{ cursor: 'pointer' }}>
-            <i class="fas fa-pencil-alt text-success"></i>
+            <i className="fas fa-pencil-alt text-success"></i>
             Edit
           </DropdownItem>
           <DropdownItem style={{ cursor: 'pointer' }}>
-            <i class="fas fa-eye text-primary"></i>
+            <i className="fas fa-eye text-primary"></i>
             View
           </DropdownItem>
         </DropdownMenu>
@@ -124,7 +128,7 @@ class Absensi extends React.Component {
                       <h2 className="m-0">Absensi</h2>
                     </Col>
                     <Col className="text-right" xs="4">
-                      <Button color="primary">Absen</Button>
+                      <Button color="primary" onClick={() => this.props.history.push('tambah-absensi')}>Absen</Button>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -145,4 +149,4 @@ class Absensi extends React.Component {
   }
 }
 
-export default Absensi;
+export default withRouter(Absensi);
