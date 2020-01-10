@@ -17,8 +17,7 @@ import {
   // DropdownToggle
   FormGroup,
   Label,
-  Input,
-  FormText
+  Input
 } from 'reactstrap';
 
 class TambahAbsensi extends React.Component {

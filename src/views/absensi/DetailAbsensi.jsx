@@ -11,14 +11,8 @@ import {
   CardBody, 
   CardHeader, 
   Button, 
-  // UncontrolledDropdown, 
-  // DropdownItem, 
-  // DropdownMenu, 
-  // DropdownToggle
-  FormGroup,
-  Label,
-  Input,
-  FormText
+  ListGroup,
+  ListGroupItem
 } from 'reactstrap';
 
 class TambahAbsensi extends React.Component {
@@ -33,7 +27,7 @@ class TambahAbsensi extends React.Component {
                 <CardHeader>
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h2 className="m-0">Tambah Absensi</h2>
+                      <h2 className="m-0">Detail Absensi</h2>
                     </Col>
                     <Col className="text-right" xs="4">
                       <Button color="primary" onClick={() => this.props.history.push('absensi')}>
@@ -43,34 +37,32 @@ class TambahAbsensi extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <FormGroup>
-                    <Label htmlFor="tanggal">Tanggal</Label>
-                    <Input type="date" name="tanggal" id="tanggal" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label htmlFor="jam_masuk">Jam Masuk</Label>
-                    <Input type="time" name="jam_masuk" id="jam_masuk" />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label htmlFor="jam_pulang">Jam Pulang</Label>
-                    <Input type="time" name="jam_pulang" id="jam_pulang" disabled />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label htmlFor="keterangan_absen">Keterangan Absen</Label>
-                    <Input type="textarea" name="keterangan_absen" id="keterangan_absen" rows={6} />
-                  </FormGroup>
-                  <FormGroup>
-                    <div className="d-flex">
-                      <Label htmlFor="alasan_lembur">
-                        Alasan Lembur
-                      </Label>
-                      <FormText color="muted" className="ml-3">
-                        Jika ingin melakukan lembur
-                      </FormText>
-                    </div>
-                    <Input type="textarea" name="alasan_lembur" id="alasan_lembur" rows={6} />
-                  </FormGroup>
-                  <Button color="primary">Absen</Button>
+                  <Row>
+                    <ListGroup>
+                      <ListGroupItem>
+                        <h3>Tanggal</h3>
+                        <p className="m-0">2019-12-2</p>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <h3>Jam Masuk</h3>
+                        <p className="m-0">7:50</p>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <h3>Jam Pulang</h3>
+                        <p className="m-0">16:20</p>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <h3>Keterangan Absen</h3>
+                        <p className="m-0">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
+                        </p>
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        <h3>Keterangan Lembur</h3>
+                        <p className="m-0">-</p>
+                      </ListGroupItem>
+                    </ListGroup>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>
@@ -83,7 +75,6 @@ class TambahAbsensi extends React.Component {
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" width="100%" height="300" />
-                  <Button color="primary" className="mt-3 w-100">Foto</Button>
                 </CardBody>
               </Card>
             </Col>
