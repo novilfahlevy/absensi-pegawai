@@ -19,6 +19,7 @@ import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Lembur from 'views/lembur/Lembur.jsx';
+import PermintaanLembur from 'views/lembur/PermintaanLembur.jsx';
 import Register from 'views/auth/Register.jsx';
 
 var routes = [
@@ -53,6 +54,14 @@ var routes = [
     component: Lembur,
     layout: "/admin",
     isActive: true
+  },
+  {
+    path: "/permintaan-lembur",
+    name: "Permintaan Lembur",
+    icon: "",
+    component: PermintaanLembur,
+    layout: "/admin",
+    isActive: false
   },
   {
     path: "/user-profile",

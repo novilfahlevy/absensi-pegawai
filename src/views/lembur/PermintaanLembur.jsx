@@ -16,12 +16,12 @@ import {
   DropdownToggle 
 } from 'reactstrap';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
-class Lembur extends React.Component {
+class PermintaanLembur extends React.Component {
   render() {
     console.log(this.props);
 
@@ -82,33 +82,24 @@ class Lembur extends React.Component {
       },
       align: 'center'
     }];
-
-    let opsi = (
-      <UncontrolledDropdown>
-        <DropdownToggle size="sm">
-          <i className="fas fa-ellipsis-v"></i>
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-trash-alt text-danger"></i>
-            Hapus
-          </DropdownItem>
-          <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-list-alt text-primary"></i>
-            Lihat Detail Absensi
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    );
     
     const products = Array(6).fill(null).map((a, i) => ({
       id: i+1,
       tanggal: '2019-10-02',
-      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
+      nama_pegawai: <Link to="/admin/detail-absensi/1">{'Muhammad Novil Fahlevy'.slice(0, 24) + "..."}</Link>,
       waktu_mulai: '08:30:00',
       waktu_selesai: '16:15:00',
       total_waktu: '08:15:00',
-      opsi
+      opsi: (
+        <>
+          <Button color="success" size="sm">
+            <i className="fas fa-check"></i>
+          </Button>
+          <Button color="danger" size="sm">
+            <i className="fas fa-times"></i>
+          </Button>
+        </>
+      )
     }));
 
     return (
@@ -121,10 +112,12 @@ class Lembur extends React.Component {
                 <CardHeader>
                   <Row className="align-items-center">
                     <Col>
-                      <h2 className="m-0">Lembur</h2>
+                      <h2 className="m-0">Permintaan Lembur</h2>
                     </Col>
                     <Col className="text-right">
-                      <Button color="primary" onClick={() => this.props.history.push('permintaan-lembur')}>Permintaan Lembur</Button>
+                      <Button color="primary">
+                        <i className="fas fa-arrow-left"></i>
+                      </Button>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -145,4 +138,4 @@ class Lembur extends React.Component {
   }
 }
 
-export default withRouter(Lembur);
+export default withRouter(PermintaanLembur);
