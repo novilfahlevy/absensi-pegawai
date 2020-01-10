@@ -19,8 +19,10 @@ import {
 // core components
 import Header from "components/Headers/Header.jsx";
 import BootstrapTable from 'react-bootstrap-table-next';
-import axios from 'axios';
+import API from '../../store/api.js';
 import PegawaiForm from './PegawaiForm'
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom'
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
@@ -29,8 +31,29 @@ class PegawaiIndex extends React.Component {
     toggleModal = () => {
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
     }
+    deletePegawai() {
+        Swal.fire({
+            title: 'Apa anda yakin?',
+            text: "Data yang sudah dihapus tidak bisa dipulihkan kembali!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Gak jadi!',
+            reverseButton: true
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire(
+                    'Dihapus!',
+                    'Data sudah dihapus.',
+                    'success'
+                )
+            }
+        })
+    }
     componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/users')
+        API.get('users')
             .then(res => {
                 this.setState({ pegawai: res.data })
                 this.setState({
@@ -38,15 +61,17 @@ class PegawaiIndex extends React.Component {
                         return {
                             ...p, actions:
                                 <>
-                                    <Button color="danger">
+                                    <Button color="danger" onClick={this.deletePegawai}>
                                         <i className="fas fa-trash-alt"></i>
                                     </Button>
                                     <Button color="success">
                                         <i className="fas fa-pencil-alt"></i>
                                     </Button>
-                                    <Button color="primary">
-                                        <i className="fas fa-eye"></i>
-                                    </Button>
+                                    <Link className="text-white" to={`/admin/detail-pegawai/${p.id}`}>
+                                        <Button color="primary">
+                                            <i className="fas fa-eye"></i>
+                                        </Button>
+                                    </Link>
                                 </>
                         };
                     })
@@ -62,8 +87,8 @@ class PegawaiIndex extends React.Component {
             dataField: 'email',
             text: 'Email'
         }, {
-            dataField: 'phone',
-            text: 'Phone Number'
+            dataField: 'address.street',
+            text: 'Alamat'
         }, {
             dataField: 'actions',
             text: 'Actions'
