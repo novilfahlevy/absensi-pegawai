@@ -19,6 +19,7 @@ import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Absensi from 'views/absensi/Absensi.jsx';
 import TambahAbsensi from 'views/absensi/TambahAbsensi.jsx';
+import DetailAbsensi from 'views/absensi/DetailAbsensi.jsx';
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
 
@@ -52,6 +53,14 @@ var routes = [
     name: "Absen Pegawai",
     icon: "",
     component: TambahAbsensi,
+    layout: "/admin",
+    isActive: false
+  },
+  {
+    path: "/detail-absensi",
+    name: "Detail Absen Pegawai",
+    icon: "",
+    component: DetailAbsensi,
     layout: "/admin",
     isActive: false
   },

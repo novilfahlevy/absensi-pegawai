@@ -94,10 +94,6 @@ class Absensi extends React.Component {
             Delete
           </DropdownItem>
           <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-pencil-alt text-success"></i>
-            Edit
-          </DropdownItem>
-          <DropdownItem style={{ cursor: 'pointer' }}>
             <i className="fas fa-eye text-primary"></i>
             View
           </DropdownItem>
