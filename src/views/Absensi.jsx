@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Header from 'components/Headers/Header.jsx';
-import { Container, Row, Col, Card, CardBody, Button } from 'reactstrap';
+
+import { 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  CardBody, 
+  Button, 
+  UncontrolledDropdown, 
+  DropdownItem, 
+  DropdownMenu, 
+  DropdownToggle 
+} from 'reactstrap';
+
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
@@ -9,38 +22,95 @@ class Absensi extends React.Component {
   render() {
     const columns = [{
       dataField: 'id',
-      text: 'Product ID'
+      text: '#',
+      headerStyle: () => ({
+        width: '20px',
+        textAlign: 'center'
+      }),
     }, {
-      dataField: 'name',
-      text: 'Product Name'
+      dataField: 'tanggal',
+      text: 'Tanggal',
+      headerStyle: () => ({
+        width: '100px',
+        textAlign: 'center'
+      }),
+      align: 'center'
     }, {
-      dataField: 'price',
-      text: 'Product Price'
+      dataField: 'nama_pegawai',
+      text: 'Nama Pegawai',
+      headerStyle: () => ({
+        width: '200px',
+        textAlign: 'center'
+      }),
+      align: 'left'
+    }, {
+      dataField: 'waktu_masuk',
+      text: 'Waktu Masuk',
+      headerStyle: () => ({
+        width: '120px',
+        textAlign: 'center'
+      }),
+      align: 'center'
+    }, {
+      dataField: 'waktu_pulang',
+      text: 'Waktu Pulang',
+      headerAlign: 'center',
+      headerStyle: () => ({
+        width: '120px',
+        textAlign: 'center'
+      }),
+      align: 'center'
+    }, {
+      dataField: 'total_waktu',
+      text: 'Total Waktu',
+      headerAlign: 'center',
+      headerStyle: () => ({
+        width: '120px',
+        textAlign: 'center'
+      }),
+      align: 'center'
     }, {
       dataField: 'opsi',
-      text: 'Opsi'
+      text: 'Opsi',
+      headerStyle: () => {
+        return { width: '80px', textAlign: 'center' };
+      },
+      align: 'center'
     }];
+
+    let opsi = (
+      <UncontrolledDropdown>
+        <DropdownToggle size="sm">
+          <i class="fas fa-ellipsis-v"></i>
+        </DropdownToggle>
+        <DropdownMenu right>
+          <DropdownItem style={{ cursor: 'pointer' }}>
+            <i class="fas fa-trash-alt text-danger"></i>
+            Delete
+          </DropdownItem>
+          <DropdownItem style={{ cursor: 'pointer' }}>
+            <i class="fas fa-pencil-alt text-success"></i>
+            Edit
+          </DropdownItem>
+          <DropdownItem style={{ cursor: 'pointer' }}>
+            <i class="fas fa-eye text-primary"></i>
+            View
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
+    );
     
-    const products = [
+    const products = Array(6).fill(null).map((a, i) => (
       {
-        id: 1,
-        name: 'Shampoo',
-        price: '$0.99',
-        opsi: (
-          <>
-            <Button color="danger">
-              <i class="fas fa-trash-alt"></i>
-            </Button>
-            <Button color="success">
-              <i class="fas fa-pencil-alt"></i>
-            </Button>
-            <Button color="primary">
-              <i class="fas fa-eye"></i>
-            </Button>
-          </>
-        )
+        id: i+1,
+        tanggal: '2019-10-02',
+        nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
+        waktu_masuk: '08:30:00',
+        waktu_pulang: '16:15:00',
+        total_waktu: '08:15:00',
+        opsi
       }
-    ]
+    ));
 
     return (
       <>
