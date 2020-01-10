@@ -24,7 +24,31 @@ var routes = [
   {
     path: "/index",
     name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "fas fa-tachometer-alt",
+    component: Index,
+    layout: "/admin",
+    isActive: true
+  },
+  {
+    path: "/pegawai",
+    name: "Pegawai",
+    icon: "fas fa-user-tie",
+    component: Index,
+    layout: "/admin",
+    isActive: true
+  },
+  {
+    path: "/absensi",
+    name: "Absensi",
+    icon: "far fa-list-alt",
+    component: Index,
+    layout: "/admin",
+    isActive: true
+  },
+  {
+    path: "/lembur",
+    name: "Lembur",
+    icon: "fas fa-moon",
     component: Index,
     layout: "/admin",
     isActive: true
@@ -32,7 +56,7 @@ var routes = [
   {
     path: "/user-profile",
     name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "fas fa-user",
     component: Profile,
     layout: "/admin",
     isActive: true
