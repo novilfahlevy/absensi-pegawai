@@ -18,6 +18,7 @@
 import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
+import Lembur from 'views/lembur/Lembur.jsx';
 import Register from 'views/auth/Register.jsx';
 
 var routes = [
@@ -49,7 +50,7 @@ var routes = [
     path: "/lembur",
     name: "Lembur",
     icon: "fas fa-moon",
-    component: Index,
+    component: Lembur,
     layout: "/admin",
     isActive: true
   },
