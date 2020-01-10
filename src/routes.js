@@ -19,6 +19,7 @@ import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
+import JamKerja from 'views/JamKerja.jsx';
 
 var routes = [
   {
@@ -50,6 +51,14 @@ var routes = [
     name: "Lembur",
     icon: "fas fa-moon",
     component: Index,
+    layout: "/admin",
+    isActive: true
+  },
+  {
+    path: "/jam-kerja",
+    name: "Jam Kerja",
+    icon: "fas fa-clock",
+    component: JamKerja,
     layout: "/admin",
     isActive: true
   },
