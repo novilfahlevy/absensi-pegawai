@@ -19,7 +19,7 @@ import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
-import JamKerja from 'views/JamKerja.jsx';
+import JamKerja from 'views/jam-kerja/JamKerja.jsx';
 
 var routes = [
   {
