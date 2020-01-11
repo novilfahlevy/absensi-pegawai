@@ -19,13 +19,13 @@ import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
-
+import Dashboard from 'views/dashboard/Dashboard.jsx'
 var routes = [
   {
     path: "/index",
     name: "Dashboard",
     icon: "fas fa-tachometer-alt",
-    component: Index,
+    component: Dashboard,
     layout: "/admin",
     isActive: true
   },
