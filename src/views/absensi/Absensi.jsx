@@ -21,6 +21,8 @@ import { withRouter } from 'react-router-dom';
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
+import Swal from 'sweetalert2';
+
 class Absensi extends React.Component {
   state = {
     absensi: Array(6).fill(null).map((a, i) => ({
@@ -51,9 +53,31 @@ class Absensi extends React.Component {
     }))
   };
 
-  deleteAbsen = id => this.setState({
-    absensi: this.state.absensi.filter(absen => absen.id !== id)
-  });
+  deleteAbsen = id => {
+    Swal.fire({
+      title: 'Apa anda yakin?',
+      text: "Data yang sudah dihapus tidak bisa dipulihkan kembali!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus!',
+      cancelButtonText: 'Gak jadi!',
+      reverseButton: true
+    }).then((result) => {
+        if (result.value) {
+          this.setState({
+            absensi: this.state.absensi.filter(absen => absen.id !== id)
+          }, () => {
+            Swal.fire(
+              'Dihapus!',
+              'Absensi sudah dihapus.',
+              'success'
+            )
+          });
+        }
+    })
+  };
 
   render() {
     const columns = [{
