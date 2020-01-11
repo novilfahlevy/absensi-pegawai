@@ -17,7 +17,6 @@
 */
 import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
-import Absensi from 'views/Absensi.jsx';
 import Login from 'views/auth/Login.jsx';
 import Register from 'views/auth/Register.jsx';
 import PegawaiIndex from './views/pegawai/PegawaiIndex.jsx';
@@ -52,7 +51,7 @@ var routes = [
     path: "/absensi",
     name: "Absensi",
     icon: "far fa-list-alt",
-    component: Absensi,
+    component: Index,
     layout: "/admin",
     isActive: true
   },
