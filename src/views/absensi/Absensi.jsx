@@ -150,14 +150,7 @@ class Absensi extends React.Component {
             <Col>
               <Card>
                 <CardHeader>
-                  <Row className="align-items-center">
-                    <Col xs="8">
-                      <h2 className="m-0">Absensi</h2>
-                    </Col>
-                    <Col className="text-right" xs="4">
-                      <Button color="primary" onClick={() => this.props.history.push('tambah-absensi')}>Absen</Button>
-                    </Col>
-                  </Row>
+                  <h2 className="m-0">Absensi</h2>
                 </CardHeader>
                 <CardBody>
                   <BootstrapTable 
