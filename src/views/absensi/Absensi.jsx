@@ -22,9 +22,40 @@ import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class Absensi extends React.Component {
-  render() {
-    console.log(this.props);
+  state = {
+    absensi: Array(6).fill(null).map((a, i) => ({
+      id: i+1,
+      tanggal: '2019-10-02',
+      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
+      waktu_masuk: '08:30:00',
+      waktu_pulang: '16:15:00',
+      total_waktu: '08:15:00',
+      opsi: (
+        <UncontrolledDropdown>
+          <DropdownToggle size="sm">
+            <i className="fas fa-ellipsis-v"></i>
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem onClick={() => this.deleteAbsen(i+1)} style={{ cursor: 'pointer' }}>
+              <i className="fas fa-trash-alt text-danger"></i>
+              Delete
+            </DropdownItem>
+            <DropdownItem style={{ cursor: 'pointer' }}>
+              <i className="fas fa-eye text-primary"></i>
+              View
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      ),
+      status: Math.round(Math.random())
+    }))
+  };
 
+  deleteAbsen = id => this.setState({
+    absensi: this.state.absensi.filter(absen => absen.id !== id)
+  });
+
+  render() {
     const columns = [{
       dataField: 'id',
       text: '#',
@@ -81,35 +112,11 @@ class Absensi extends React.Component {
         return { width: '80px', textAlign: 'center' };
       },
       align: 'center'
+    }, {
+      dataField: 'status',
+      text: 'Status',
+      hidden: true
     }];
-
-    let opsi = (
-      <UncontrolledDropdown>
-        <DropdownToggle size="sm">
-          <i className="fas fa-ellipsis-v"></i>
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-trash-alt text-danger"></i>
-            Delete
-          </DropdownItem>
-          <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-eye text-primary"></i>
-            View
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    );
-    
-    const products = Array(6).fill(null).map((a, i) => ({
-      id: i+1,
-      tanggal: '2019-10-02',
-      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
-      waktu_masuk: '08:30:00',
-      waktu_pulang: '16:15:00',
-      total_waktu: '08:15:00',
-      opsi
-    }));
 
     return (
       <>
@@ -132,7 +139,10 @@ class Absensi extends React.Component {
                   <BootstrapTable 
                     keyField="id" 
                     columns={columns} 
-                    data={products} 
+                    data={this.state.absensi} 
+                    rowStyle={row => {
+                      if( row.status ) return { backgroundColor: '#eaeaea', color: '#333' };
+                    }}
                     // pagination={paginationFactory()}
                   />
                 </CardBody>
