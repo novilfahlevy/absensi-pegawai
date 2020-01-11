@@ -42,7 +42,7 @@ class Absensi extends React.Component {
               <i className="fas fa-trash-alt text-danger"></i>
               Delete
             </DropdownItem>
-            <DropdownItem style={{ cursor: 'pointer' }}>
+            <DropdownItem onClick={() => this.props.history.push('detail-absensi')} style={{ cursor: 'pointer' }}>
               <i className="fas fa-eye text-primary"></i>
               View
             </DropdownItem>
