@@ -156,10 +156,7 @@ class Absensi extends React.Component {
                   <BootstrapTable 
                     keyField="id" 
                     columns={columns} 
-                    data={this.state.absensi} 
-                    rowStyle={row => {
-                      if( row.status ) return { backgroundColor: '#eaeaea', color: '#333' };
-                    }}
+                    data={this.state.absensi}
                     // pagination={paginationFactory()}
                   />
                 </CardBody>
