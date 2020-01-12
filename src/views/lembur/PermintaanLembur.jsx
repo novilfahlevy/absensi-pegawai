@@ -110,16 +110,7 @@ class PermintaanLembur extends React.Component {
             <Col>
               <Card>
                 <CardHeader>
-                  <Row className="align-items-center">
-                    <Col>
-                      <h2 className="m-0">Permintaan Lembur</h2>
-                    </Col>
-                    <Col className="text-right">
-                      <Button color="primary">
-                        <i className="fas fa-arrow-left"></i>
-                      </Button>
-                    </Col>
-                  </Row>
+                  <h2 className="m-0">Permintaan Lembur</h2>
                 </CardHeader>
                 <CardBody>
                   <BootstrapTable 
