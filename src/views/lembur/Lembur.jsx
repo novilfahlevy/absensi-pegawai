@@ -17,14 +17,65 @@ import {
 } from 'reactstrap';
 
 import { withRouter } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class Lembur extends React.Component {
-  render() {
-    console.log(this.props);
+  state = {
+    lembur: Array(6).fill(null).map((a, i) => ({
+      id: i+1,
+      tanggal: '2019-10-02',
+      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
+      waktu_mulai: '08:30:00',
+      waktu_selesai: '16:15:00',
+      total_waktu: '08:15:00',
+      opsi: (
+        <UncontrolledDropdown>
+          <DropdownToggle size="sm">
+            <i className="fas fa-ellipsis-v"></i>
+          </DropdownToggle>
+          <DropdownMenu right>
+            <DropdownItem onClick={() => this.deleteLembur(i+1)} style={{ cursor: 'pointer' }}>
+              <i className="fas fa-trash-alt text-danger"></i>
+              Hapus
+            </DropdownItem>
+            <DropdownItem onClick={() => this.props.history.push('detail-Absensi')} style={{ cursor: 'pointer' }}>
+              <i className="fas fa-list-alt text-primary"></i>
+              Lihat Detail Absensi
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      )
+    }))
+  };
 
+  deleteLembur = id => {
+    Swal.fire({
+      title: 'Apa anda yakin?',
+      text: "Data yang sudah dihapus tidak bisa dipulihkan kembali!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus!',
+      cancelButtonText: 'Gak jadi!',
+      reverseButton: true
+    }).then((result) => {
+      if (result.value) {
+        this.setState({ lembur: this.state.lembur.filter(l => l.id !== id) }, () => {
+          Swal.fire(
+            'Dihapus!',
+            'Data sudah dihapus.',
+            'success'
+          )
+        });
+      }
+    });
+  };
+
+  render() {
     const columns = [{
       dataField: 'id',
       text: '#',
@@ -83,34 +134,6 @@ class Lembur extends React.Component {
       align: 'center'
     }];
 
-    let opsi = (
-      <UncontrolledDropdown>
-        <DropdownToggle size="sm">
-          <i className="fas fa-ellipsis-v"></i>
-        </DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-trash-alt text-danger"></i>
-            Hapus
-          </DropdownItem>
-          <DropdownItem style={{ cursor: 'pointer' }}>
-            <i className="fas fa-list-alt text-primary"></i>
-            Lihat Detail Absensi
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    );
-    
-    const products = Array(6).fill(null).map((a, i) => ({
-      id: i+1,
-      tanggal: '2019-10-02',
-      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
-      waktu_mulai: '08:30:00',
-      waktu_selesai: '16:15:00',
-      total_waktu: '08:15:00',
-      opsi
-    }));
-
     return (
       <>
         <Header />
@@ -125,7 +148,7 @@ class Lembur extends React.Component {
                   <BootstrapTable 
                     keyField="id" 
                     columns={columns} 
-                    data={products} 
+                    data={this.state.lembur} 
                     // pagination={paginationFactory()}
                   />
                 </CardBody>

@@ -38,27 +38,47 @@ class TambahAbsensi extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <Row>
-                    <ListGroup>
-                      <ListGroupItem>
-                        <h3>Tanggal</h3>
-                        <p className="m-0">2019-12-2</p>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        <h3>Jam Masuk</h3>
-                        <p className="m-0">7:50</p>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        <h3>Jam Pulang</h3>
-                        <p className="m-0">16:20</p>
-                      </ListGroupItem>
-                      <ListGroupItem>
-                        <h3>Keterangan Absen</h3>
-                        <p className="m-0">
-                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
-                        </p>
-                      </ListGroupItem>
-                      <Button color="primary" className="mt-3">Lihat Keterangan Lembur</Button>
-                    </ListGroup>
+                    <Col className="col-12">
+                      <ListGroup>
+                        <ListGroupItem>
+                          <h3>Tanggal</h3>
+                          <p className="m-0">2019-12-2</p>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <h3>Jam Masuk</h3>
+                          <p className="m-0">7:50</p>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <h3>Jam Pulang</h3>
+                          <p className="m-0">16:20</p>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <h3>Keterangan Absen</h3>
+                          <p className="m-0">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
+                          </p>
+                        </ListGroupItem>
+                      </ListGroup>
+                    </Col>
+                    <Col className="col-12">
+                      <CardTitle><h2 className="mt-4 m-0">Keterangan Lembur</h2></CardTitle>
+                      <ListGroup>
+                        <ListGroupItem>
+                          <h3>Tanggal</h3>
+                          <p className="m-0">2019-12-2</p>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <h3>Waktu Selesai</h3>
+                          <p className="m-0">16:20</p>
+                        </ListGroupItem>
+                        <ListGroupItem>
+                          <h3>Keterangan</h3>
+                          <p className="m-0">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
+                          </p>
+                        </ListGroupItem>
+                      </ListGroup>
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>
