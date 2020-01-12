@@ -20,6 +20,7 @@ import Profile from "views/Profile.jsx";
 import Login from 'views/auth/Login.jsx';
 import Lembur from 'views/lembur/Lembur.jsx';
 import PermintaanLembur from 'views/lembur/PermintaanLembur.jsx';
+import PengajuanLembur from 'views/lembur/PengajuanLembur.jsx';
 import Register from 'views/auth/Register.jsx';
 
 var routes = [
@@ -60,6 +61,14 @@ var routes = [
     name: "Permintaan Lembur",
     icon: "",
     component: PermintaanLembur,
+    layout: "/admin",
+    isActive: false
+  },
+  {
+    path: "/pengajuan-lembur",
+    name: "Pengajuan Lembur",
+    icon: "",
+    component: PengajuanLembur,
     layout: "/admin",
     isActive: false
   },
