@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add node-sass@4.9.0
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-bootstrap-table2-paginator
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Files\cpp\bin\Intel64;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;E:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\Yarn\bin\;C:\Users\Novil F\AppData\Local\Microsoft\WindowsApps;;C:\Users\Novil F\AppData\Roaming\npm;C:\Users\Novil F\AppData\Roaming\Composer\vendor\bin;C:\Users\Novil F\AppData\Local\Yarn\bin;C:\Users\Novil F\AppData\Local\Programs\Microsoft VS Code\bin
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Novil F\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Files\cpp\bin\Intel64;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;E:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\Yarn\bin;C:\Users\Novil F\.windows-build-tools\python27;C:\Users\Novil F\AppData\Local\Microsoft\WindowsApps;C:\Users\Novil F\AppData\Roaming\npm;C:\Users\Novil F\AppData\Roaming\Composer\vendor\bin;C:\Users\Novil F\AppData\Local\Yarn\bin;C:\Users\Novil F\AppData\Local\Programs\Microsoft VS Code\bin
 
 Yarn version: 
   1.21.1
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz: ESOCKETTIMEDOUT
-      at ClientRequest.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141292:19)
-      at Object.onceWrapper (events.js:277:13)
-      at ClientRequest.emit (events.js:189:13)
-      at TLSSocket.emitRequestTimeout (_http_client.js:662:40)
-      at Object.onceWrapper (events.js:277:13)
-      at TLSSocket.emit (events.js:189:13)
-      at TLSSocket.Socket._onTimeout (net.js:443:8)
-      at ontimeout (timers.js:436:11)
-      at tryOnTimeout (timers.js:300:5)
-      at listOnTimeout (timers.js:263:5)
+  Error: EPERM: operation not permitted, unlink 'E:\absensi-pegawai\node_modules\node-sass\vendor\win32-x64-64\binding.node'
 
 npm manifest: 
   {
@@ -78,6 +68,7 @@ npm manifest:
       "node-sass": "4.11.0",
       "nouislider": "13.1.1",
       "react": "16.8.4",
+      "react-bootstrap-table-next": "^3.3.3",
       "react-chartjs-2": "2.7.4",
       "react-copy-to-clipboard": "5.0.1",
       "react-datetime": "2.16.3",
