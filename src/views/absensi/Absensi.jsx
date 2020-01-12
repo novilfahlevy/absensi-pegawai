@@ -90,52 +90,33 @@ class Absensi extends React.Component {
     }, {
       dataField: 'tanggal',
       text: 'Tanggal',
-      headerStyle: () => ({
-        width: '100px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'nama_pegawai',
       text: 'Nama Pegawai',
-      headerStyle: () => ({
-        width: '200px',
-        textAlign: 'center'
-      }),
       align: 'left'
     }, {
       dataField: 'jam_masuk',
       text: 'Waktu Masuk',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'jam_pulang',
       text: 'Waktu Pulang',
       headerAlign: 'center',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'total_waktu',
       text: 'Total Waktu',
       headerAlign: 'center',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'opsi',
       text: 'Opsi',
-      headerStyle: () => {
-        return { width: '80px', textAlign: 'center' };
-      },
-      align: 'center'
+      align: 'center',
+      headerStyle: () => ({
+        width: '70px',
+        textAlign: 'center'
+      }),
     }, {
       dataField: 'status',
       text: 'Status',

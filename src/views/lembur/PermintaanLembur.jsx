@@ -35,44 +35,24 @@ class PermintaanLembur extends React.Component {
     }, {
       dataField: 'tanggal',
       text: 'Tanggal',
-      headerStyle: () => ({
-        width: '100px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'nama_pegawai',
       text: 'Nama Pegawai',
-      headerStyle: () => ({
-        width: '200px',
-        textAlign: 'center'
-      }),
       align: 'left'
     }, {
       dataField: 'waktu_mulai',
       text: 'Waktu Mulai',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'waktu_selesai',
       text: 'Waktu Selesai',
       headerAlign: 'center',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'total_waktu',
       text: 'Total Waktu',
       headerAlign: 'center',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'opsi',

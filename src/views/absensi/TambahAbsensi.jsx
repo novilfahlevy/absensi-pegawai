@@ -27,7 +27,7 @@ class TambahAbsensi extends React.Component {
         <Header />
         <Container className="mt--7">
           <Row>
-            <Col md="7">
+            <Col lg="7">
               <Card className="mb-3">
                 <CardHeader>
                   <h2 className="m-0">Tambah Absensi</h2>
@@ -53,7 +53,7 @@ class TambahAbsensi extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col md="5">
+            <Col lg="5">
               <Card>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>

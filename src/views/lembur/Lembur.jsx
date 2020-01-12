@@ -86,50 +86,30 @@ class Lembur extends React.Component {
     }, {
       dataField: 'tanggal',
       text: 'Tanggal',
-      headerStyle: () => ({
-        width: '100px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'nama_pegawai',
       text: 'Nama Pegawai',
-      headerStyle: () => ({
-        width: '200px',
-        textAlign: 'center'
-      }),
       align: 'left'
     }, {
       dataField: 'waktu_mulai',
       text: 'Waktu Mulai',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'waktu_selesai',
       text: 'Waktu Selesai',
       headerAlign: 'center',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'total_waktu',
       text: 'Total Waktu',
       headerAlign: 'center',
-      headerStyle: () => ({
-        width: '120px',
-        textAlign: 'center'
-      }),
       align: 'center'
     }, {
       dataField: 'opsi',
       text: 'Opsi',
       headerStyle: () => {
-        return { width: '80px', textAlign: 'center' };
+        return { width: '70px', textAlign: 'center' };
       },
       align: 'center'
     }];
