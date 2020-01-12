@@ -30,16 +30,7 @@ class TambahAbsensi extends React.Component {
             <Col md="7">
               <Card className="mb-3">
                 <CardHeader>
-                  <Row className="align-items-center">
-                    <Col xs="8">
-                      <h2 className="m-0">Tambah Absensi</h2>
-                    </Col>
-                    <Col className="text-right" xs="4">
-                      <Button color="primary" onClick={() => this.props.history.push('absensi')}>
-                        <i className="fas fa-arrow-left"></i>
-                      </Button>
-                    </Col>
-                  </Row>
+                  <h2 className="m-0">Tambah Absensi</h2>
                 </CardHeader>
                 <CardBody>
                   <FormGroup>
