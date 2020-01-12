@@ -15,6 +15,11 @@ import {
     Container,
     Button,
     Row,
+    UncontrolledDropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.jsx";
@@ -22,7 +27,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import API from '../../store/api.js';
 import PegawaiForm from './PegawaiForm'
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
@@ -61,17 +66,25 @@ class PegawaiIndex extends React.Component {
                         return {
                             ...p, actions:
                                 <>
-                                    <Button color="danger" onClick={this.deletePegawai}>
-                                        <i className="fas fa-trash-alt"></i>
-                                    </Button>
-                                    <Button color="success">
-                                        <i className="fas fa-pencil-alt"></i>
-                                    </Button>
-                                    <Link className="text-white" to={`/admin/detail-pegawai/${p.id}`}>
-                                        <Button color="primary">
-                                            <i className="fas fa-eye"></i>
-                                        </Button>
-                                    </Link>
+                                    <UncontrolledDropdown>
+                                        <DropdownToggle size="sm">
+                                            <i className="fas fa-ellipsis-v"></i>
+                                        </DropdownToggle>
+                                        <DropdownMenu right>
+                                            <DropdownItem onClick={this.deletePegawai} style={{ cursor: 'pointer' }}>
+                                                <i className="fas fa-trash-alt text-danger"></i>
+                                                Delete
+                                            </DropdownItem>
+                                            <DropdownItem style={{ cursor: 'pointer' }}>
+                                                <i className="fas fa-pencil-alt text-success"></i>
+                                                Edit
+                                            </DropdownItem>
+                                            <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
+                                                <i className="fas fa-eye text-primary"></i>
+                                                Detail
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
                                 </>
                         };
                     })
@@ -91,7 +104,9 @@ class PegawaiIndex extends React.Component {
             text: 'Alamat'
         }, {
             dataField: 'actions',
-            text: 'Actions'
+            text: 'Opsi',
+            headerStyle: { width: '70px', textAlign: 'center' },
+            align: 'center'
         }];
         const { pegawai } = this.state;
         return (
@@ -177,4 +192,4 @@ class PegawaiIndex extends React.Component {
     }
 }
 
-export default PegawaiIndex;
+export default withRouter(PegawaiIndex);
