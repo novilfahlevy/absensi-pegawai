@@ -26,6 +26,8 @@ import Lembur from 'views/lembur/Lembur.jsx';
 import PermintaanLembur from 'views/lembur/PermintaanLembur.jsx';
 import PengajuanLembur from 'views/lembur/PengajuanLembur.jsx';
 import Register from 'views/auth/Register.jsx';
+import PegawaiIndex from 'views/pegawai/PegawaiIndex.jsx';
+import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
 
 var routes = [
   {
@@ -40,7 +42,7 @@ var routes = [
     path: "/pegawai",
     name: "Pegawai",
     icon: "fas fa-user-tie",
-    component: Index,
+    component: PegawaiIndex,
     layout: "/admin",
     isActive: true
   },
@@ -74,6 +76,14 @@ var routes = [
       },
     ],
     isActive: true
+  },
+  {
+    path: "/detail-pegawai/:id",
+    name: "Detail Pegawai",
+    icon: "fas fa-user-tie",
+    component: PegawaiDetails,
+    layout: "/admin",
+    isActive: false
   },
   {
     path: "/detail-absensi",
