@@ -76,14 +76,6 @@ var routes = [
     isActive: true
   },
   {
-    path: "/tambah-absensi",
-    name: "Absen Pegawai",
-    icon: "",
-    component: TambahAbsensi,
-    layout: "/admin",
-    isActive: false
-  },
-  {
     path: "/detail-absensi",
     name: "Detail Absen Pegawai",
     icon: "",
@@ -92,28 +84,35 @@ var routes = [
     isActive: false
   },
   {
-    path: "/lembur",
     name: "Lembur",
     icon: "fas fa-moon",
-    component: Lembur,
-    layout: "/admin",
+    subMenu: [
+      {
+        path: "/pengajuan-lembur",
+        name: "Pengajuan Lembur",
+        icon: "fas fa-plus",
+        component: PengajuanLembur,
+        layout: "/admin",
+        isActive: true
+      },
+      {
+        path: "/lembur",
+        name: "Daftar Lembur",
+        icon: "fas fa-list-alt",
+        component: Lembur,
+        layout: "/admin",
+        isActive: true
+      },
+      {
+        path: "/permintaan-lembur",
+        name: "Permintaan Lembur",
+        icon: "fas fa-check",
+        component: PermintaanLembur,
+        layout: "/admin",
+        isActive: true
+      },
+    ],
     isActive: true
-  },
-  {
-    path: "/permintaan-lembur",
-    name: "Permintaan Lembur",
-    icon: "",
-    component: PermintaanLembur,
-    layout: "/admin",
-    isActive: false
-  },
-  {
-    path: "/pengajuan-lembur",
-    name: "Pengajuan Lembur",
-    icon: "",
-    component: PengajuanLembur,
-    layout: "/admin",
-    isActive: false
   },
   {
     path: "/user-profile",
