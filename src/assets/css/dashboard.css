@@ -1,0 +1,31 @@
+.absensi-card .card-header {
+    border-bottom: none;
+}
+
+.absensi-card .card {
+    border: none;
+    box-shadow: -6px -6px 20px rgba(255, 255, 255, 1),
+        6px 6px 20px rgba(0, 0, 0, .1);
+}
+
+.absensi-card .card:hover {
+    box-shadow: inset 6px 6px 15px rgba(255, 255, 255, 1),
+        inset -6px -6px 15px rgba(0, 0, 0, .03);
+}
+
+.lembur-card .card {
+    border: none;
+    box-shadow: -5px -5px 20px rgb(39, 56, 128, .2),
+        6px 6px 20px rgb(15, 22, 49, .8);
+}
+
+.lembur-card .card:hover {
+    box-shadow: inset 5px 5px 20px rgb(39, 56, 128, .1),
+        inset -6px -6px 20px rgb(15, 22, 49, .45);
+}
+
+.lembur-card button {
+    border: none;
+    box-shadow: -5px -5px 20px rgb(39, 56, 128, .2),
+        6px 6px 20px rgb(15, 22, 49, .8);
+}
