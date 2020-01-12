@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
                                             <h2 className=" mb-0">Absensi Hari Ini</h2>
                                         </div>
                                         <div className="col">
-                                            <Nav className="justify-content-end" pills>
+                                            <Nav className="justify-content-end mt-3 mt-xl-0" pills>
                                                 <NavItem>
                                                     <NavLink
                                                         className={classnames("py-2 px-3", {
@@ -97,7 +97,7 @@ class Dashboard extends React.Component {
                                                         href="#pablo"
                                                         onClick={e => this.toggleNavs(e, 1)}
                                                     >
-                                                        <span className="d-none d-md-block">Lihat Semua</span>
+                                                        Lihat Semua
                                                     </NavLink>
                                                 </NavItem>
                                             </Nav>
@@ -106,33 +106,33 @@ class Dashboard extends React.Component {
                                 </CardHeader>
                                 <CardBody>
                                     <Row>
-                                        <Col lg={12} className="col-12">
+                                        <Col xl={12} className="col-12">
                                             <Card body className="my-2">
                                                 <Row>
-                                                    <Col lg={8} className="col-12">
-                                                        <CardTitle className="m-0">Lisa</CardTitle>
-                                                        <CardText>
-                                                            <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">17:30</span>
-                                                        </CardText>
-                                                    </Col>
-                                                    <Col lg={4} className="col-12 d-flex justify-content-center align-items-center">
-                                                        <Link className="text-white" to={``}>
-                                                            <Button color="white" className="w-70 h-70">
-                                                                <i className="fas fa-eye text-primary"></i>
-                                                            </Button>
-                                                        </Link>
-                                                    </Col>
+                                                    <Col lg={8} className="col-6">
+                                                            <CardTitle className="m-0">Alisa</CardTitle>
+                                                            <CardText>
+                                                                <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">16:30</span>
+                                                            </CardText>
+                                                        </Col>
+                                                        <Col lg={4} className="col-6 text-right">
+                                                            <Link className="text-white" to={``}>
+                                                                <Button color="white" className="w-70 h-70">
+                                                                    <i className="fas fa-eye text-primary"></i>
+                                                                </Button>
+                                                            </Link>
+                                                        </Col>
                                                 </Row>
                                             </Card>
                                             <Card body className="my-2">
                                                 <Row>
-                                                    <Col lg={8} className="col-12">
+                                                    <Col lg={8} className="col-6">
                                                         <CardTitle className="m-0">Andy Rachmat</CardTitle>
                                                         <CardText>
                                                             <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">17:30</span>
                                                         </CardText>
                                                     </Col>
-                                                    <Col lg={4} className="col-12 d-flex justify-content-center align-items-center">
+                                                    <Col lg={4} className="col-6 text-right">
                                                         <Link className="text-white" to={``}>
                                                             <Button color="white" className="w-70 h-70">
                                                                 <i className="fas fa-eye text-primary"></i>
@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
                                             <h2 className="text-white mb-0">Pengajuan Lembur</h2>
                                         </div>
                                         <div className="col">
-                                            <Nav className="justify-content-end" pills>
+                                            <Nav className="justify-content-end mt-3 mt-xl-0" pills>
                                                 <NavItem>
                                                     <NavLink
                                                         className={classnames("py-2 px-3", {
@@ -166,8 +166,7 @@ class Dashboard extends React.Component {
                                                         href="#pablo"
                                                         onClick={e => this.toggleNavs(e, 1)}
                                                     >
-                                                        <span className="d-none d-md-block">Lihat Semua</span>
-                                                        <span className="d-md-none">M</span>
+                                                        Lihat Semua
                                                     </NavLink>
                                                 </NavItem>
                                             </Nav>
@@ -179,13 +178,13 @@ class Dashboard extends React.Component {
                                         <Col lg={12} className="col-12">
                                             <Card className="bg-gradient-default text-white my-2" body>
                                                 <Row>
-                                                    <Col lg={8} className="col-12">
+                                                    <Col lg={8} className="col-6">
                                                         <CardTitle className="m-0">Bayu Setiawan</CardTitle>
                                                         <CardText>
                                                             Sampai Jam <span className="font-weight-bold">17:30</span>
                                                         </CardText>
                                                     </Col>
-                                                    <Col lg={4} className="col-12 d-flex justify-content-center align-items-center">
+                                                    <Col lg={4} className="col-6 d-flex justify-content-end align-items-center">
                                                         <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
                                                             <Button className="w-70 h-70 bg-success text-white">
                                                                 <i className="fas fa-check text-white"></i>
@@ -201,13 +200,13 @@ class Dashboard extends React.Component {
                                             </Card>
                                             <Card className="bg-gradient-default text-white my-2" body>
                                                 <Row>
-                                                    <Col lg={8} className="col-12">
+                                                    <Col lg={8} className="col-6">
                                                         <CardTitle className="m-0">Fadhil Dhanendra</CardTitle>
                                                         <CardText>
                                                             Sampai Jam <span className="font-weight-bold">20:00</span>
                                                         </CardText>
                                                     </Col>
-                                                    <Col lg={4} className="col-12 d-flex justify-content-center align-items-center">
+                                                    <Col lg={4} className="col-6 d-flex justify-content-end align-items-center">
                                                         <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
                                                             <Button className="w-70 h-70 bg-success text-white">
                                                                 <i className="fas fa-check text-white"></i>
