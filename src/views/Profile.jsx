@@ -49,13 +49,19 @@ class Profile extends React.Component {
             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
                 <CardBody className="pt-0 pt-md-4 text-center">
-                  <img
-                    alt="..."
-                    height="200"
-                    className="rounded-circle"
-                    src={require("assets/img/theme/team-4-800x800.jpg")}
-                  />
-                  <Button style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
+                  <Row>
+                    <Col className="col-12">
+                      <img
+                        alt="..."
+                        height="200"
+                        className="rounded-circle"
+                        src={require("assets/img/theme/team-4-800x800.jpg")}
+                      />
+                    </Col>
+                    <Col className="col-12">
+                      <Button style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>
