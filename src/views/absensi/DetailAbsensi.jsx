@@ -30,7 +30,7 @@ class TambahAbsensi extends React.Component {
                       <h2 className="m-0">Detail Absensi</h2>
                     </Col>
                     <Col className="text-right" xs="4">
-                      <Button color="primary" onClick={() => this.props.history.push('absensi')}>
+                      <Button color="primary" onClick={() => this.props.history.goBack()}>
                         <i className="fas fa-arrow-left"></i>
                       </Button>
                     </Col>

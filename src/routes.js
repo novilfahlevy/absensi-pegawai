@@ -46,6 +46,14 @@ var routes = [
     icon: "far fa-list-alt",
     subMenu: [
       {
+        path: "/tambah-absensi",
+        name: "Tambah Absensi",
+        icon: "fas fa-plus",
+        component: TambahAbsensi,
+        layout: "/admin",
+        isActive: true
+      },
+      {
         path: "/absensi",
         name: "Absensi Pegawai",
         icon: "fas fa-user-tie",
@@ -61,14 +69,6 @@ var routes = [
         layout: "/admin",
         isActive: true
       },
-      {
-        path: "/tambah-absensi",
-        name: "Tambah Absensi",
-        icon: "fas fa-plus",
-        component: TambahAbsensi,
-        layout: "/admin",
-        isActive: true
-      }
     ],
     isActive: true
   },
