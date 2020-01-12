@@ -23,12 +23,11 @@ import BootstrapTable from 'react-bootstrap-table-next';
 
 import Swal from 'sweetalert2';
 
-class Absensi extends React.Component {
+class RiwayatAbsensi extends React.Component {
   state = {
     absensi: Array(6).fill(null).map((a, i) => ({
       id: i+1,
       tanggal: '2019-10-02',
-      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
       jam_masuk: '08:30:00',
       jam_pulang: '16:15:00',
       total_waktu: '08:15:00',
@@ -96,14 +95,6 @@ class Absensi extends React.Component {
       }),
       align: 'center'
     }, {
-      dataField: 'nama_pegawai',
-      text: 'Nama Pegawai',
-      headerStyle: () => ({
-        width: '200px',
-        textAlign: 'center'
-      }),
-      align: 'left'
-    }, {
       dataField: 'jam_masuk',
       text: 'Waktu Masuk',
       headerStyle: () => ({
@@ -150,7 +141,7 @@ class Absensi extends React.Component {
             <Col>
               <Card>
                 <CardHeader>
-                  <h2 className="m-0">Absensi Pegawai</h2>
+                  <h2 className="m-0">Riwayat Absensi</h2>
                 </CardHeader>
                 <CardBody>
                   <BootstrapTable 
@@ -169,4 +160,4 @@ class Absensi extends React.Component {
   }
 }
 
-export default withRouter(Absensi);
+export default withRouter(RiwayatAbsensi);

@@ -33,7 +33,7 @@ class Admin extends React.Component {
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if ( 'layout' in prop && prop.layout === '/admin' ) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -41,19 +41,34 @@ class Admin extends React.Component {
             key={key}
           />
         );
-      } else {
-        return null;
-      }
+      } 
+      else if ( 'subMenu' in prop ) {
+        return prop.subMenu.map((prop, key) => {
+          return (
+            <Route
+              path={prop.layout + prop.path}
+              component={prop.component}
+              key={key}
+            />
+          );
+        });
+      } 
+      else return null;
     });
   };
   getBrandText = path => {
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        this.props.location.pathname.indexOf(
-          routes[i].layout + routes[i].path
-        ) !== -1
-      ) {
-        return routes[i].name;
+    for ( let i = 0; i < routes.length; i++ ) {
+      let menu = routes[i];
+      if ( path.includes(menu.layout + menu.path) ) {
+        return menu.name;
+      }
+      if ( 'subMenu' in menu ) {
+        for( let j = 0; j < menu.subMenu.length; j++ ) {
+          let subMenu = menu.subMenu[j];
+          if ( path.includes(subMenu.layout + subMenu.path) ) {
+            return subMenu.name;
+          }
+        }
       }
     }
     return "Brand";
