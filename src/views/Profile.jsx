@@ -48,7 +48,7 @@ class Profile extends React.Component {
           <Row>
             <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
               <Card className="card-profile shadow">
-                <CardBody className="pt-0 pt-md-4 text-center">
+                <CardBody className="pt-4 text-center">
                   <Row>
                     <Col className="col-12">
                       <img
