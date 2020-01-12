@@ -90,14 +90,17 @@ class Absensi extends React.Component {
     }, {
       dataField: 'tanggal',
       text: 'Tanggal',
+      headerAlign: 'center',
       align: 'center'
     }, {
       dataField: 'nama_pegawai',
       text: 'Nama Pegawai',
+      headerAlign: 'center',
       align: 'left'
     }, {
       dataField: 'jam_masuk',
       text: 'Waktu Masuk',
+      headerAlign: 'center',
       align: 'center'
     }, {
       dataField: 'jam_pulang',

@@ -89,10 +89,12 @@ class RiwayatAbsensi extends React.Component {
     }, {
       dataField: 'tanggal',
       text: 'Tanggal',
+      headerAlign: 'center',
       align: 'center'
     }, {
       dataField: 'jam_masuk',
       text: 'Waktu Masuk',
+      headerAlign: 'center',
       align: 'center'
     }, {
       dataField: 'jam_pulang',
