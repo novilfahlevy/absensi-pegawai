@@ -71,7 +71,7 @@ class PegawaiDetails extends Component {
                                                     <h3>Email</h3>
                                                     <h5>{this.state.pegawai.email}</h5>
                                                 </Col>
-                                                <Col md="12">
+                                                <Col md="12" style={{ marginTop: "1rem" }}>
                                                     <h3>Address</h3>
                                                     <h5>{this.state.pegawai.phone}</h5>
                                                 </Col>
