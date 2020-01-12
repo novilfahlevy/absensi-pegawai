@@ -26,6 +26,7 @@ import Lembur from 'views/lembur/Lembur.jsx';
 import PermintaanLembur from 'views/lembur/PermintaanLembur.jsx';
 import PengajuanLembur from 'views/lembur/PengajuanLembur.jsx';
 import Register from 'views/auth/Register.jsx';
+import Dashboard from 'views/dashboard/Dashboard.jsx'
 import JamKerja from 'views/jam-kerja/JamKerja.jsx';
 import PegawaiIndex from 'views/pegawai/PegawaiIndex.jsx';
 import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
@@ -35,7 +36,7 @@ var routes = [
     path: "/index",
     name: "Dashboard",
     icon: "fas fa-tachometer-alt",
-    component: Index,
+    component: Dashboard,
     layout: "/admin",
     isActive: true
   },
