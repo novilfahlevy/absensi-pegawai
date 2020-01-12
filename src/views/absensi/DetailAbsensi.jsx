@@ -57,10 +57,7 @@ class TambahAbsensi extends React.Component {
                           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
                         </p>
                       </ListGroupItem>
-                      <ListGroupItem>
-                        <h3>Keterangan Lembur</h3>
-                        <p className="m-0">-</p>
-                      </ListGroupItem>
+                      <Button color="primary" className="mt-3">Lihat Keterangan Lembur</Button>
                     </ListGroup>
                   </Row>
                 </CardBody>
