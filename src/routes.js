@@ -17,9 +17,20 @@
 */
 import Index from "views/Index.jsx";
 import Profile from "views/Profile.jsx";
+import Absensi from 'views/absensi/Absensi.jsx';
+import TambahAbsensi from 'views/absensi/TambahAbsensi.jsx';
+import DetailAbsensi from 'views/absensi/DetailAbsensi.jsx';
+import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Login from 'views/auth/Login.jsx';
+import Lembur from 'views/lembur/Lembur.jsx';
+import PermintaanLembur from 'views/lembur/PermintaanLembur.jsx';
+import PengajuanLembur from 'views/lembur/PengajuanLembur.jsx';
 import Register from 'views/auth/Register.jsx';
 import Dashboard from 'views/dashboard/Dashboard.jsx'
+import JamKerja from 'views/jam-kerja/JamKerja.jsx';
+import PegawaiIndex from 'views/pegawai/PegawaiIndex.jsx';
+import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
+
 var routes = [
   {
     path: "/index",
@@ -33,23 +44,93 @@ var routes = [
     path: "/pegawai",
     name: "Pegawai",
     icon: "fas fa-user-tie",
-    component: Index,
+    component: PegawaiIndex,
     layout: "/admin",
     isActive: true
   },
   {
-    path: "/absensi",
     name: "Absensi",
     icon: "far fa-list-alt",
-    component: Index,
-    layout: "/admin",
+    subMenu: [
+      {
+        path: "/tambah-absensi",
+        name: "Tambah Absensi",
+        icon: "fas fa-plus",
+        component: TambahAbsensi,
+        layout: "/admin",
+        isActive: true
+      },
+      {
+        path: "/absensi",
+        name: "Absensi Pegawai",
+        icon: "fas fa-user-tie",
+        component: Absensi,
+        layout: "/admin",
+        isActive: true
+      },
+      {
+        path: "/riwayat-absensi",
+        name: "Riwayat Absensi",
+        icon: "fas fa-history",
+        component: RiwayatAbsensi,
+        layout: "/admin",
+        isActive: true
+      },
+    ],
     isActive: true
   },
   {
-    path: "/lembur",
+    path: "/detail-pegawai/:id",
+    name: "Detail Pegawai",
+    icon: "fas fa-user-tie",
+    component: PegawaiDetails,
+    layout: "/admin",
+    isActive: false
+  },
+  {
+    path: "/detail-absensi",
+    name: "Detail Absen Pegawai",
+    icon: "",
+    component: DetailAbsensi,
+    layout: "/admin",
+    isActive: false
+  },
+  {
     name: "Lembur",
     icon: "fas fa-moon",
-    component: Index,
+    subMenu: [
+      {
+        path: "/pengajuan-lembur",
+        name: "Pengajuan Lembur",
+        icon: "fas fa-plus",
+        component: PengajuanLembur,
+        layout: "/admin",
+        isActive: true
+      },
+      {
+        path: "/lembur",
+        name: "Daftar Lembur",
+        icon: "fas fa-list-alt",
+        component: Lembur,
+        layout: "/admin",
+        isActive: true
+      },
+      {
+        path: "/permintaan-lembur",
+        name: "Permintaan Lembur",
+        icon: "fas fa-check",
+        component: PermintaanLembur,
+        layout: "/admin",
+        isActive: true
+      },
+    ],
+    isActive: true
+  },
+  {
+    path: "/jam-kerja",
+    name: "Jam Kerja",
+    icon: "fas fa-clock",
+    component: JamKerja,
     layout: "/admin",
     isActive: true
   },
