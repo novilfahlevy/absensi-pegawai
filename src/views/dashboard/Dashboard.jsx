@@ -110,18 +110,18 @@ class Dashboard extends React.Component {
                                             <Card body className="my-2">
                                                 <Row>
                                                     <Col lg={8} className="col-6">
-                                                            <CardTitle className="m-0">Alisa</CardTitle>
-                                                            <CardText>
-                                                                <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">16:30</span>
-                                                            </CardText>
-                                                        </Col>
-                                                        <Col lg={4} className="col-6 text-right">
-                                                            <Link className="text-white" to={``}>
-                                                                <Button color="white" className="w-70 h-70">
-                                                                    <i className="fas fa-eye text-primary"></i>
-                                                                </Button>
-                                                            </Link>
-                                                        </Col>
+                                                        <CardTitle className="m-0">Alisa</CardTitle>
+                                                        <CardText>
+                                                            <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">16:30</span>
+                                                        </CardText>
+                                                    </Col>
+                                                    <Col lg={4} className="col-6 text-right">
+                                                        <Link className="text-white" to={``}>
+                                                            <Button color="white" className="w-70 h-70">
+                                                                <i className="fas fa-eye text-primary"></i>
+                                                            </Button>
+                                                        </Link>
+                                                    </Col>
                                                 </Row>
                                             </Card>
                                             <Card body className="my-2">
@@ -154,7 +154,7 @@ class Dashboard extends React.Component {
                                             <h6 className="text-uppercase text-light ls-1 mb-1">
                                                 Overview
                                             </h6>
-                                            <h2 className="text-white mb-0">Pengajuan Lembur</h2>
+                                            <h2 className="text-white mb-0">Permintaan Lembur</h2>
                                         </div>
                                         <div className="col">
                                             <Nav className="justify-content-end mt-3 mt-xl-0" pills>
