@@ -35,7 +35,7 @@ var routes = [
   {
     path: "/index",
     name: "Dashboard",
-    icon: "fas fa-tachometer-alt",
+    icon: "fas fa-tachometer-alt text-primary",
     component: Dashboard,
     layout: "/admin",
     isActive: true
@@ -43,7 +43,7 @@ var routes = [
   {
     path: "/pegawai",
     name: "Pegawai",
-    icon: "fas fa-user-tie",
+    icon: "fas fa-user-tie text-danger",
     component: PegawaiIndex,
     layout: "/admin",
     isActive: true
@@ -55,7 +55,7 @@ var routes = [
       {
         path: "/tambah-absensi",
         name: "Tambah Absensi",
-        icon: "fas fa-plus",
+        icon: "fas fa-plus text-green",
         component: TambahAbsensi,
         layout: "/admin",
         isActive: true
@@ -63,7 +63,7 @@ var routes = [
       {
         path: "/absensi",
         name: "Absensi Pegawai",
-        icon: "fas fa-user-tie",
+        icon: "fas fa-user-tie text-red",
         component: Absensi,
         layout: "/admin",
         isActive: true
@@ -97,12 +97,12 @@ var routes = [
   },
   {
     name: "Lembur",
-    icon: "fas fa-moon",
+    icon: "fas fa-moon text-purple",
     subMenu: [
       {
         path: "/pengajuan-lembur",
         name: "Pengajuan Lembur",
-        icon: "fas fa-plus",
+        icon: "fas fa-plus text-green",
         component: PengajuanLembur,
         layout: "/admin",
         isActive: true
@@ -110,7 +110,7 @@ var routes = [
       {
         path: "/lembur",
         name: "Daftar Lembur",
-        icon: "fas fa-list-alt",
+        icon: "fas fa-list-alt text-purple",
         component: Lembur,
         layout: "/admin",
         isActive: true
@@ -118,7 +118,7 @@ var routes = [
       {
         path: "/permintaan-lembur",
         name: "Permintaan Lembur",
-        icon: "fas fa-check",
+        icon: "fas fa-check text-danger",
         component: PermintaanLembur,
         layout: "/admin",
         isActive: true
@@ -129,7 +129,7 @@ var routes = [
   {
     path: "/jam-kerja",
     name: "Jam Kerja",
-    icon: "fas fa-clock",
+    icon: "fas fa-clock text-yellow",
     component: JamKerja,
     layout: "/admin",
     isActive: true
@@ -137,7 +137,7 @@ var routes = [
   {
     path: "/user-profile",
     name: "User Profile",
-    icon: "fas fa-user",
+    icon: "fas fa-user text-blue  ",
     component: Profile,
     layout: "/admin",
     isActive: true
