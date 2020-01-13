@@ -33,7 +33,7 @@ class Admin extends React.Component {
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if ( 'layout' in prop && prop.layout === '/admin' ) {
+      if ('layout' in prop && prop.layout === '/admin') {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -41,8 +41,8 @@ class Admin extends React.Component {
             key={key}
           />
         );
-      } 
-      else if ( 'subMenu' in prop ) {
+      }
+      else if ('subMenu' in prop) {
         return prop.subMenu.map((prop, key) => {
           return (
             <Route
@@ -52,20 +52,20 @@ class Admin extends React.Component {
             />
           );
         });
-      } 
+      }
       else return null;
     });
   };
   getBrandText = path => {
-    for ( let i = 0; i < routes.length; i++ ) {
+    for (let i = 0; i < routes.length; i++) {
       let menu = routes[i];
-      if ( path.includes(menu.layout + menu.path) ) {
+      if (path.includes(menu.layout + menu.path)) {
         return menu.name;
       }
-      if ( 'subMenu' in menu ) {
-        for( let j = 0; j < menu.subMenu.length; j++ ) {
+      if ('subMenu' in menu) {
+        for (let j = 0; j < menu.subMenu.length; j++) {
           let subMenu = menu.subMenu[j];
-          if ( path.includes(subMenu.layout + subMenu.path) ) {
+          if (path.includes(subMenu.layout + subMenu.path)) {
             return subMenu.name;
           }
         }
@@ -81,7 +81,7 @@ class Admin extends React.Component {
           routes={routes}
           logo={{
             innerLink: "/admin/index",
-            imgSrc: require("assets/img/brand/argon-react.png"),
+            imgSrc: require("assets/img/brand/logo-ori.png"),
             imgAlt: "..."
           }}
         />
