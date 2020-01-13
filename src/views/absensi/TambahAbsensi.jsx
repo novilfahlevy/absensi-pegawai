@@ -55,15 +55,21 @@ class TambahAbsensi extends React.Component {
             </Col>
             <Col lg="5">
               <Card>
-                <CardBody>
-                  <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" />
-                </CardBody>
-                <CardBody>
-                  <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" width="100%" height="300" />
-                  <Button color="primary" className="mt-3 w-100">Foto</Button>
-                </CardBody>
+                <Row>
+                  <Col md="6" lg="12">
+                    <CardBody>
+                      <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" />
+                    </CardBody>
+                  </Col>
+                  <Col md="6" lg="12">
+                    <CardBody>
+                      <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" width="100%" height="300" />
+                      <Button color="primary" className="mt-3 w-100">Foto</Button>
+                    </CardBody>
+                  </Col>
+                </Row>
               </Card>
             </Col>
           </Row>
