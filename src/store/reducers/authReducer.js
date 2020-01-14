@@ -1,5 +1,4 @@
 const initState = {
-  isUserAuthenticated: false,
   user: {
     id: 1,
     name: null,
@@ -14,8 +13,7 @@ export default (state = initState, action) => {
   switch ( action.type ) {
     case 'LOGIN_SUCCESS' :
       state = { 
-        ...state, 
-        isUserAuthenticated: true, 
+        ...state,
         user: action.user, 
         isLoginLoading: false,
         isLoginError: false,
@@ -36,7 +34,6 @@ export default (state = initState, action) => {
     case 'LOGOUT' :
       state = { 
         ...state, 
-        isUserAuthenticated: false, 
         user: {},
         isLoginLoading: false,
         isLoginError: false,

@@ -17,10 +17,12 @@
 */
 /*eslint-disable*/
 import React from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { NavLink as NavLinkRRD, Link, withRouter } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 import SidebarDropdownItem from 'components/Sidebar/SidebarDropdownItem.jsx';
+import { connect } from 'react-redux';
+import { logout } from 'store/actions/authActions.js';
 
 // reactstrap components
 import {
@@ -160,7 +162,7 @@ class Sidebar extends React.Component {
                   <span>My profile</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                <DropdownItem href="#pablo" onClick={e => {e.preventDefault(); this.props.logout()}}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
@@ -227,4 +229,9 @@ Sidebar.propTypes = {
   })
 };
 
-export default Sidebar;
+export default connect(
+  null,
+  (dispatch, ownProps) => ({
+    logout: () => dispatch(logout(ownProps.history.push))
+  })
+)(withRouter(Sidebar));

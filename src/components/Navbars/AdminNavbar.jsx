@@ -16,7 +16,9 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { logout } from 'store/actions/authActions.js';
 // reactstrap components
 import {
   DropdownMenu,
@@ -70,7 +72,7 @@ class AdminNavbar extends React.Component {
                     <span>My profile</span>
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={e => {e.preventDefault(); this.props.logout()}}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
@@ -84,4 +86,9 @@ class AdminNavbar extends React.Component {
   }
 }
 
-export default AdminNavbar;
+export default connect(
+  null,
+  (dispatch, ownProps) => ({
+    logout: () => dispatch(logout(ownProps.history.push))
+  })
+)(withRouter(AdminNavbar));

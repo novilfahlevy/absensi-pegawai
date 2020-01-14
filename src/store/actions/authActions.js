@@ -1,4 +1,5 @@
 import API from 'store/api.js';
+import Swal from 'sweetalert2';
 
 export const login = ({ email, password }, push) => {
   return dispatch => {
@@ -21,8 +22,23 @@ export const login = ({ email, password }, push) => {
   };
 }
 
-export const logout = () => {
+export const logout = push => {
   return dispatch => {
-    // Logout logic
+    Swal.fire({
+      title: 'Apakah anda ingin logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Logout',
+      cancelButtonText: 'Gak jadi!',
+      reverseButton: true
+    }).then((result) => {
+      if (result.value) {
+        localStorage.setItem('isUserAuthenticated', 0);
+        dispatch({ type: 'LOGOUT' });
+        push('/auth/login');
+      }
+    })
   };
 }
