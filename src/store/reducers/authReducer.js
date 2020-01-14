@@ -1,6 +1,10 @@
 const initState = {
   isUserAuthenticated: false,
-  user: {},
+  user: {
+    id: null,
+    name: null,
+    token: null
+  },
   isLoginLoading: false,
   isLoginError: false,
   errorMessage: ''
