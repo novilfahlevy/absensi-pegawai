@@ -22,6 +22,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { withRouter } from 'react-router-dom';
 import { Alert } from 'reactstrap';
+import LoadingButton from 'assets/ui/LoadingButton.jsx';
 
 // reactstrap components
 import {
@@ -90,16 +91,10 @@ class Login extends React.Component {
                         </InputGroup>
                         { errors.password && touched.password ? <FormFeedback className="d-block mt-1">{errors.password}</FormFeedback> : null }
                       </FormGroup>
-                      <div className="text-center">
-                        {
-                          this.props.isLoginLoading ? (
-                            <h2>Loading...</h2>
-                          ) : (
-                            <Button className="my-4" color="primary" type="submit">
-                              Masuk
-                            </Button>
-                          )
-                        }
+                      <div className="text-center d-flex justify-content-center">
+                        <LoadingButton color="primary" condition={this.props.isLoginLoading} type="submit">
+                          Masuk
+                        </LoadingButton>
                       </div>
                     </Form>
                   )
