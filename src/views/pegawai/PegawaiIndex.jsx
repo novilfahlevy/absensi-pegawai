@@ -58,7 +58,7 @@ class PegawaiIndex extends React.Component {
         })
     }
     componentDidMount() {
-        API.get('users')
+        API.get('user')
             .then(res => {
                 this.setState({ pegawai: res.data })
                 this.setState({
@@ -94,14 +94,11 @@ class PegawaiIndex extends React.Component {
     }
     render() {
         const columns = [{
-            dataField: 'username',
-            text: 'Username'
+            dataField: 'name',
+            text: 'Nama'
         }, {
             dataField: 'email',
             text: 'Email'
-        }, {
-            dataField: 'address.street',
-            text: 'Alamat'
         }, {
             dataField: 'actions',
             text: 'Opsi',
