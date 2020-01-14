@@ -30,7 +30,7 @@ export default (state = initState, action) => {
         isLoginLoading: false
       };
       break;
-    case 'LOGIN_LOADING_START' :
+    case 'LOGIN_LOADING' :
       state = { ...state, isLoginLoading: true };
       break;
     case 'LOGOUT' :

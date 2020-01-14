@@ -2,20 +2,22 @@ import API from 'store/api.js';
 
 export const login = ({ email, password }, push) => {
   return dispatch => {
-    dispatch({ type: 'LOGIN_LOADING_START' });
+    dispatch({ type: 'LOGIN_LOADING' });
 
-    API.post('/auth/login', {
-      email, password
-    })
+    API.post('/auth/login', { email, password })
     .then(response => {
-      if( response.status === 200 ) {
-        dispatch({ 
-          type: "LOGIN_SUCCESS",
-          user: response.data.message
-        });
+      console.log(response);
+      if ( response.data.status === 200 ) {
+        dispatch({ type: 'LOGIN_SUCCESS', user: response.data.message });
         push('/admin/index');
       }
+      else {
+        dispatch({ type: 'LOGIN_FAILED', errorMessage: response.data.message });
+      }
     })
+    .catch(error => {
+      dispatch({ type: 'LOGIN_FAILED', errorMessage: error.message });
+    });
   };
 }
 
