@@ -6,7 +6,6 @@ export const login = ({ email, password }, push) => {
 
     API.post('/auth/login', { email, password })
     .then(response => {
-      console.log(response);
       if ( response.data.status === 200 ) {
         dispatch({ type: 'LOGIN_SUCCESS', user: response.data.message });
         localStorage.setItem('isUserAuthenticated', 1);
