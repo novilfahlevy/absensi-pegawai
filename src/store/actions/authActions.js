@@ -9,6 +9,7 @@ export const login = ({ email, password }, push) => {
       console.log(response);
       if ( response.data.status === 200 ) {
         dispatch({ type: 'LOGIN_SUCCESS', user: response.data.message });
+        localStorage.setItem('isUserAuthenticated', 1);
         push('/admin/index');
       }
       else {

@@ -26,7 +26,7 @@ import AuthFooter from "components/Footers/AuthFooter.jsx";
 
 import routes from "routes.js";
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 class Auth extends React.Component {
   componentDidMount() {
@@ -51,11 +51,7 @@ class Auth extends React.Component {
     });
   };
   render() {
-    // if( this.props.isUserAuthenticaed ) {
-    //   return <Redirect to="/admin/index" />;
-    // }
-
-    return (
+    return !Number(localStorage.getItem('isUserAuthenticated')) ? (
       <>
         <div className="main-content">
           <AuthNavbar />
@@ -94,12 +90,12 @@ class Auth extends React.Component {
         </div>
         <AuthFooter />
       </>
-    );
+    ) : <Redirect to="/admin/index" />
   }
 }
 
 export default connect(
   state => ({
-    isUserAuthenticaed: state.auth.isUserAuthenticated
+    isUserAuthenticated: state.auth.isUserAuthenticated
   })
-)(Auth);
+)(withRouter(Auth));

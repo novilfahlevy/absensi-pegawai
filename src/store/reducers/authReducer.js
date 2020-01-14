@@ -1,5 +1,5 @@
 const initState = {
-  isUserAuthenticated: true,
+  isUserAuthenticated: false,
   user: {
     id: 1,
     name: null,
