@@ -1,48 +1,88 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
+import { connect } from 'react-redux';
+import { Formik, Form as FormikForm, Field } from 'formik';
+import * as Yup from 'yup';
+import { addPegawai } from './../../store/actions/pegawaiActions';
+import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
+
 class PegawaiForm extends Component {
     state = {
-        modal: false,
-        unmountOnClose: false,
+        modal: false
     }
     toggle = () => this.setState({ modal: !this.state.modal });
-    changeUnmountOnClose = e => {
-        let value = e.target.value;
-        this.setState({ unmountOnClose: JSON.parse(value) });
-    }
     render() {
-        const { unmountOnClose } = this.state;
+        const AddPegawaiSchema = Yup.object().shape({
+            name: Yup.string()
+                .min(2, 'Too short!')
+                .required('Required'),
+            email: Yup.string()
+                .email('Invalid email')
+                .required('Required'),
+        })
         return (
             <>
-                <Modal isOpen={this.props.modal} toggle={this.props.toggle} unmountOnClose={unmountOnClose}>
-                    <ModalHeader toggle={this.props.toggle}>
-                        <h2>Form Pegawai</h2>
-                    </ModalHeader>
-                    <ModalBody>
-                        <Form>
-                            <FormGroup>
-                                <label className="form-control-label" htmlFor="input-username">
-                                    Username
-                            </label>
-                                <Input className="form-control-alternative" id="input-username" placeholder="Username" type="text" />
-                            </FormGroup>
-                        </Form>
-                        <Form>
-                            <FormGroup>
-                                <label className="form-control-label" htmlFor="input-email">
-                                    Email
-                            </label>
-                                <Input type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
-                            </FormGroup>
-                        </Form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-                        <Button color="primary">Tambah</Button>{' '}
-                    </ModalFooter>
+                <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
+                    <Formik
+                        initialValues={{
+                            name: '',
+                            email: '',
+                            password: ''
+                        }}
+                        validationSchema={AddPegawaiSchema}
+                        onSubmit={data => {
+                            this.props.addPegawai(data);
+                            this.props.toggle()
+                        }}
+                    >
+                        {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
+                            <Form onSubmit={handleSubmit}>
+                                <ModalHeader toggle={this.props.toggle}>
+                                    <h2>Form Pegawai</h2>
+                                </ModalHeader>
+                                <ModalBody>
+                                    <FormGroup>
+                                        <label className="form-control-label" htmlFor="input-username">
+                                            Nama
+                                        </label>
+                                        <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-username" type="text" />
+                                        {errors.name && touched.name ? (
+                                            <FormFeedback>{errors.name}</FormFeedback>
+                                        ) : null}
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label className="form-control-label" htmlFor="input-email">
+                                            Email
+                                        </label>
+                                        <Input onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
+                                        {errors.email && touched.email ? (
+                                            <FormFeedback>{errors.email}</FormFeedback>
+                                        ) : null}
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label className="form-control-label" htmlFor="input-password">
+                                            Password
+                                        </label>
+                                        <Input onChange={handleChange} value={values.password} name="password" type="password" className="form-control-alternative" id="input-password" placeholder="Password" />
+                                        {errors.password && touched.password ? (
+                                            <FormFeedback>{errors.password}</FormFeedback>
+                                        ) : null}
+                                    </FormGroup>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+                                    <Button type="submit" color="primary">Tambah</Button>
+                                </ModalFooter>
+                            </Form>
+                        )}
+                    </Formik>
                 </Modal>
             </>
         )
     }
 }
-export default PegawaiForm;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPegawai: pegawai => dispatch(addPegawai(pegawai))
+    }
+}
+export default connect(null, mapDispatchToProps)(PegawaiForm);

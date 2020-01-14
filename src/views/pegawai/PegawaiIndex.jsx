@@ -60,7 +60,7 @@ class PegawaiIndex extends React.Component {
     componentDidMount() {
         API.get('user')
             .then(res => {
-                this.setState({ pegawai: res.data })
+                this.setState({ pegawai: res.data.user })
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
@@ -188,5 +188,4 @@ class PegawaiIndex extends React.Component {
         );
     }
 }
-
 export default withRouter(PegawaiIndex);
