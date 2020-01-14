@@ -46,6 +46,7 @@ import {
 import { Link } from 'react-router-dom'
 import DashboardHeader from "components/Headers/DashboardHeader.jsx";
 import "./../../assets/css/dashboard.css"
+import { connect } from "react-redux";
 class Dashboard extends React.Component {
     state = {
         activeNav: 1,
@@ -234,4 +235,9 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+export default connect(
+    state => {
+        console.log(state);
+        return {};
+    }
+)(Dashboard);

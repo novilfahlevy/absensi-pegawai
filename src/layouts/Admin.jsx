@@ -24,6 +24,8 @@ import AdminNavbar from "components/Navbars/AdminNavbar.jsx";
 import AdminFooter from "components/Footers/AdminFooter.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import routes from "routes.js";
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class Admin extends React.Component {
   componentDidUpdate(e) {
@@ -74,6 +76,10 @@ class Admin extends React.Component {
     return "Brand";
   };
   render() {
+    // if( !this.props.isUserAuthenticaed ) {
+    //   return <Redirect to="/auth/login" />;
+    // }
+
     return (
       <>
         <Sidebar
@@ -100,4 +106,8 @@ class Admin extends React.Component {
   }
 }
 
-export default Admin;
+export default connect(
+  state => ({
+    isUserAuthenticated: state.auth.isUserAuthenticated
+  })
+)(Admin);

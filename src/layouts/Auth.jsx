@@ -25,6 +25,8 @@ import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
 import AuthFooter from "components/Footers/AuthFooter.jsx";
 
 import routes from "routes.js";
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class Auth extends React.Component {
   componentDidMount() {
@@ -49,6 +51,10 @@ class Auth extends React.Component {
     });
   };
   render() {
+    // if( this.props.isUserAuthenticaed ) {
+    //   return <Redirect to="/admin/index" />;
+    // }
+
     return (
       <>
         <div className="main-content">
@@ -92,4 +98,8 @@ class Auth extends React.Component {
   }
 }
 
-export default Auth;
+export default connect(
+  state => ({
+    isUserAuthenticaed: state.auth.isUserAuthenticated
+  })
+)(Auth);
