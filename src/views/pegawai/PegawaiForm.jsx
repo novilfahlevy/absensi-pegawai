@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Formik, Form as FormikForm, Field } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { addPegawai } from './../../store/actions/pegawaiActions';
-import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup } from 'reactstrap';
 
 class PegawaiForm extends Component {
     state = {
@@ -53,9 +53,9 @@ class PegawaiForm extends Component {
                                         <label className="form-control-label" htmlFor="input-email">
                                             Email
                                         </label>
-                                        <Input onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
+                                        <Input nvalid={errors.email && touched.email ? true : false} onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
                                         {errors.email && touched.email ? (
-                                            <FormFeedback>{errors.email}</FormFeedback>
+                                            <FormFeedback className="d-block">{errors.email}</FormFeedback>
                                         ) : null}
                                     </FormGroup>
                                     <FormGroup>

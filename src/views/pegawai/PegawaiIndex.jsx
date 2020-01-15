@@ -3,7 +3,6 @@ import React from "react";
 
 // reactstrap components
 import {
-    Badge,
     Card,
     CardHeader,
     CardFooter,
@@ -15,10 +14,6 @@ import {
     Container,
     Button,
     Row,
-    UncontrolledDropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
 
 } from "reactstrap";
 // core components
@@ -66,25 +61,9 @@ class PegawaiIndex extends React.Component {
                         return {
                             ...p, actions:
                                 <>
-                                    <UncontrolledDropdown>
-                                        <DropdownToggle size="sm">
-                                            <i className="fas fa-ellipsis-v"></i>
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <DropdownItem onClick={this.deletePegawai} style={{ cursor: 'pointer' }}>
-                                                <i className="fas fa-trash-alt text-danger"></i>
-                                                Delete
-                                            </DropdownItem>
-                                            <DropdownItem style={{ cursor: 'pointer' }}>
-                                                <i className="fas fa-pencil-alt text-success"></i>
-                                                Edit
-                                            </DropdownItem>
-                                            <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
-                                                <i className="fas fa-eye text-primary"></i>
-                                                Detail
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
+                                    <Button className="bg-primary text-white" onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
+                                        <i className="fas fa-eye"></i>
+                                    </Button>
                                 </>
                         };
                     })
@@ -102,7 +81,7 @@ class PegawaiIndex extends React.Component {
         }, {
             dataField: 'actions',
             text: 'Opsi',
-            headerStyle: { width: '70px', textAlign: 'center' },
+            headerStyle: { width: '110px', textAlign: 'center' },
             align: 'center'
         }];
         const { pegawai } = this.state;

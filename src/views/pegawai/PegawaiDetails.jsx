@@ -3,7 +3,6 @@ import {
     Card,
     CardHeader,
     CardBody,
-    Form,
     Container,
     Row,
     Col
@@ -16,14 +15,10 @@ class PegawaiDetails extends Component {
     state = {
         pegawai: {}
     }
-    getData() {
-
-    }
     componentDidMount() {
-        API.get(`users/${this.props.match.params.id}`)
+        API.get(`user/${this.props.match.params.id}`)
             .then(res => {
-                this.setState({ pegawai: res.data })
-                console.log(this.state.pegawai)
+                this.setState({ pegawai: res.data.user })
             })
             .catch(err => console.log(err))
     }
@@ -61,19 +56,15 @@ class PegawaiDetails extends Component {
                                 </CardHeader>
                                 <CardBody>
                                     <div className="pl-lg-4">
-                                        {this.state.pegawai.username ?
+                                        {this.state.pegawai.name ?
                                             <Row>
                                                 <Col lg="12">
-                                                    <h3>Username</h3>
-                                                    <h5>{this.state.pegawai.username}</h5>
+                                                    <h3>Nama</h3>
+                                                    <h5>{this.state.pegawai.name}</h5>
                                                 </Col>
                                                 <Col lg="12" style={{ marginTop: "1rem" }}>
                                                     <h3>Email</h3>
                                                     <h5>{this.state.pegawai.email}</h5>
-                                                </Col>
-                                                <Col md="12" style={{ marginTop: "1rem" }}>
-                                                    <h3>Address</h3>
-                                                    <h5>{this.state.pegawai.phone}</h5>
                                                 </Col>
                                             </Row> : <p className="text-center">Loading...</p>}
                                     </div>
