@@ -17,7 +17,12 @@ export const login = ({ email, password }, push) => {
       }
     })
     .catch(error => {
-      dispatch({ type: 'LOGIN_FAILED', errorMessage: error.message });
+      if ( error.message === 'Network Error' ) {
+        dispatch({ type: 'LOGIN_FAILED', errorMessage: 'Koneksi terputus, pastikan anda sedang dalam keadaan online.' });
+      }
+      else {
+        dispatch({ type: 'LOGIN_FAILED', errorMessage: error.message });
+      }
     });
   };
 }
