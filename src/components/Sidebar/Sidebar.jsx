@@ -154,6 +154,11 @@ class Sidebar extends React.Component {
                       src={require("assets/img/theme/team-1-800x800.jpg")}
                     />
                   </span>
+                  {/* <Media className="ml-2 d-none d-lg-block">
+                    <span className="mb-0 text-sm font-weight-bold">
+                      {JSON.parse(localStorage.getItem('auth')).name}
+                    </span>
+                  </Media> */}
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>

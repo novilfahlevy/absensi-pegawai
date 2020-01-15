@@ -1,9 +1,4 @@
 const initState = {
-  user: {
-    id: 1,
-    name: null,
-    token: null
-  },
   isLoginLoading: false,
   isLoginError: false,
   errorMessage: ''
@@ -14,7 +9,6 @@ export default (state = initState, action) => {
     case 'LOGIN_SUCCESS' :
       state = { 
         ...state,
-        user: action.user, 
         isLoginLoading: false,
         isLoginError: false,
         errorMessage: ''
@@ -34,7 +28,6 @@ export default (state = initState, action) => {
     case 'LOGOUT' :
       state = { 
         ...state, 
-        user: {},
         isLoginLoading: false,
         isLoginError: false,
         errorMessage: '' 

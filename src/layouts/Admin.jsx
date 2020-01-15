@@ -102,8 +102,4 @@ class Admin extends React.Component {
   }
 }
 
-export default connect(
-  state => ({
-    token: state.auth.user.token
-  })
-)(withRouter(Admin));
+export default connect()(withRouter(Admin));

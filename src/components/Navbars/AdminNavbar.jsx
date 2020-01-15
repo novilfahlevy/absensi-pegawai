@@ -59,9 +59,9 @@ class AdminNavbar extends React.Component {
                         src={require("assets/img/theme/team-4-800x800.jpg")}
                       />
                     </span>
-                    <Media className="ml-2 d-none d-lg-block">
+                    <Media className="ml-2">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                      {JSON.parse(localStorage.getItem('auth')).name}
                       </span>
                     </Media>
                   </Media>
