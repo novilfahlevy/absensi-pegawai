@@ -14,11 +14,11 @@ const pegawaiReducer = (initState = state, action) => {
             console.log('tambah pegawai berhasil');
             return action.res;
         case 'ADD_PEGAWAI_ERROR':
-            Swal.fire({
-                icon: 'Gagal!',
-                title: 'Oops...',
-                text: 'Sesuatu terjadi! Coba sekali lagi...',
-            })
+            Swal.fire(
+                'Gagal!',
+                'Pegawai gagal ditambahkan! Coba sekali lagi!',
+                'error'
+            )
             console.log('tambah pegawai gagal');
             return action.err;
         default:

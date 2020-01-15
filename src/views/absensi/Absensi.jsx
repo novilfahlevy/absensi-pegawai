@@ -29,8 +29,7 @@ class Absensi extends React.Component {
       id: i+1,
       tanggal: '2019-10-02',
       nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
-      jam_masuk: '08:30:00',
-      jam_pulang: '16:15:00',
+      waktu_kerja: '08:30:00 - 16:15:00',
       total_waktu: '08:15:00',
       opsi: (
         <UncontrolledDropdown>
@@ -98,16 +97,11 @@ class Absensi extends React.Component {
       headerAlign: 'center',
       align: 'left'
     }, {
-      dataField: 'jam_masuk',
-      text: 'Waktu Masuk',
+      dataField: 'waktu_kerja',
+      text: 'Waktu Kerja',
       headerAlign: 'center',
       align: 'center'
-    }, {
-      dataField: 'jam_pulang',
-      text: 'Waktu Pulang',
-      headerAlign: 'center',
-      align: 'center'
-    }, {
+    },  {
       dataField: 'total_waktu',
       text: 'Total Waktu',
       headerAlign: 'center',

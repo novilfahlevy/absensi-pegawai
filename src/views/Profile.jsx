@@ -29,11 +29,15 @@ import {
   Col,
   Input,
   FormGroup,
-  FormFeedback
+  FormFeedback,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButtonDropdown,
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
 import ProfileForm from "./ProfileForm.jsx";
+import LoadingButton from "./../components/ui/LoadingButton.jsx";
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -42,12 +46,14 @@ import Swal from 'sweetalert2';
 class Profile extends React.Component {
   state = {
     modalOpen: false,
+    isLoading: false,
     user: {}
   }
   toggleModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen })
   }
   changePassword = (data) => {
+    this.setState({ isLoading: true })
     const post = {
       ...data,
       user_id: this.props.user_id
@@ -59,13 +65,15 @@ class Profile extends React.Component {
           'Password berhasil diubah',
           'success'
         )
+        this.setState({ isLoading: false })
       })
       .catch(err => {
-        Swal.fire({
-          icon: 'Gagal!',
-          title: 'Mengubah Password Gagal!',
-          text: err.message,
-        })
+        Swal.fire(
+          'Gagal!',
+          'Password gagal diubah! Coba sekali lagi!',
+          'error'
+        )
+        this.setState({ isLoading: false })
       })
   }
   componentDidMount = () => {
@@ -76,7 +84,7 @@ class Profile extends React.Component {
       .catch(err => console.log(err))
   }
   render() {
-    const { modalOpen, user } = this.state;
+    const { modalOpen, user, isLoading } = this.state;
     const changePasswordSchema = Yup.object().shape({
       new_password: Yup.string()
         .min(8, 'Password terlalu pendek')
@@ -148,8 +156,11 @@ class Profile extends React.Component {
                       new_password: ''
                     }}
                     validationSchema={changePasswordSchema}
-                    onSubmit={data => this.changePassword(data)}
-                  >{({ errors, touched, handleSubmit, handleChange, values }) => (
+                    onSubmit={data => {
+                      this.changePassword(data);
+
+                    }}
+                  >{({ errors, resetForm, touched, handleSubmit, handleChange, values }) => (
                     <Form onSubmit={handleSubmit}>
                       <Row>
                         <Col lg={12}>
@@ -157,7 +168,14 @@ class Profile extends React.Component {
                             <label className="form-control-label" htmlFor="input-current-password">
                               Password Sekarang
                             </label>
-                            <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type="password" />
+                            <InputGroup>
+                              <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type="password" />
+                              <InputGroupAddon addonType="append">
+                                <Button type="submit" color="primary" name="button-1">
+                                  <i className="fas fa-eye text-white"></i>
+                                </Button>
+                              </InputGroupAddon>
+                            </InputGroup>
                             {errors.current_password && touched.current_password ? (
                               <FormFeedback className="d-block">{errors.current_password}</FormFeedback>
                             ) : null}
@@ -168,14 +186,23 @@ class Profile extends React.Component {
                             <label className="form-control-label" htmlFor="input-new-password">
                               Password Baru
                             </label>
-                            <Input onChange={handleChange} value={values.new_password} name="new_password" type="password" className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
+                            <InputGroup>
+                              <Input onChange={handleChange} value={values.new_password} name="new_password" type="password" className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
+                              <InputGroupAddon addonType="append">
+                                <Button type="submit" color="primary" name="button-1">
+                                  <i className="fas fa-eye text-white"></i>
+                                </Button>
+                              </InputGroupAddon>
+                            </InputGroup>
                             {errors.new_password && touched.new_password ? (
                               <FormFeedback className="d-block">{errors.new_password}</FormFeedback>
                             ) : null}
                           </FormGroup>
                         </Col>
                         <Col lg={12} className="col-12">
-                          <Button type="submit" color="primary" >Ubah</Button>
+                          <LoadingButton color="primary" condition={isLoading}>
+                            Ubah
+                          </LoadingButton>
                         </Col>
                       </Row>
                     </Form>

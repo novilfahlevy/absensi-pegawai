@@ -2,18 +2,18 @@ import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
 
-import { 
-  Container, 
-  Row, 
-  Col, 
-  Card, 
-  CardBody, 
-  CardHeader, 
-  Button, 
-  UncontrolledDropdown, 
-  DropdownItem, 
-  DropdownMenu, 
-  DropdownToggle 
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardHeader,
+  Button,
+  UncontrolledDropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle
 } from 'reactstrap';
 
 import { withRouter } from 'react-router-dom';
@@ -25,11 +25,10 @@ import BootstrapTable from 'react-bootstrap-table-next';
 class Lembur extends React.Component {
   state = {
     lembur: Array(6).fill(null).map((a, i) => ({
-      id: i+1,
+      id: i + 1,
       tanggal: '2019-10-02',
       nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
-      waktu_mulai: '08:30:00',
-      waktu_selesai: '16:15:00',
+      waktu: '08:30:00 - 16:15:00',
       total_waktu: '08:15:00',
       opsi: (
         <UncontrolledDropdown>
@@ -37,7 +36,7 @@ class Lembur extends React.Component {
             <i className="fas fa-ellipsis-v"></i>
           </DropdownToggle>
           <DropdownMenu right>
-            <DropdownItem onClick={() => this.deleteLembur(i+1)} style={{ cursor: 'pointer' }}>
+            <DropdownItem onClick={() => this.deleteLembur(i + 1)} style={{ cursor: 'pointer' }}>
               <i className="fas fa-trash-alt text-danger"></i>
               Hapus
             </DropdownItem>
@@ -94,18 +93,8 @@ class Lembur extends React.Component {
       headerAlign: 'center',
       align: 'left'
     }, {
-      dataField: 'waktu_mulai',
-      text: 'Waktu Mulai',
-      headerAlign: 'center',
-      align: 'center'
-    }, {
-      dataField: 'waktu_selesai',
-      text: 'Waktu Selesai',
-      headerAlign: 'center',
-      align: 'center'
-    }, {
-      dataField: 'total_waktu',
-      text: 'Total Waktu',
+      dataField: 'waktu',
+      text: 'Waktu Kerja',
       headerAlign: 'center',
       align: 'center'
     }, {
@@ -128,14 +117,14 @@ class Lembur extends React.Component {
                   <h2 className="m-0">Lembur</h2>
                 </CardHeader>
                 <CardBody>
-                  <BootstrapTable 
-                    keyField="id" 
-                    columns={columns} 
-                    data={this.state.lembur} 
-                    // pagination={paginationFactory()}
+                  <BootstrapTable
+                    keyField="id"
+                    columns={columns}
+                    data={this.state.lembur}
+                  // pagination={paginationFactory()}
                   />
                 </CardBody>
-              </Card> 
+              </Card>
             </Col>
           </Row>
         </Container>
