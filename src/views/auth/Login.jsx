@@ -22,7 +22,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { withRouter } from 'react-router-dom';
 import { Alert } from 'reactstrap';
-import LoadingButton from 'assets/ui/LoadingButton.jsx';
+import LoadingButton from 'components/ui/LoadingButton.jsx';
 
 // reactstrap components
 import {

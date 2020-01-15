@@ -76,7 +76,7 @@ class Admin extends React.Component {
     return "Brand";
   };
   render() {
-    return Number(localStorage.getItem('isUserAuthenticated')) ? (
+    return Number(localStorage.getItem('auth')) ? (
       <>
         <Sidebar
           {...this.props}

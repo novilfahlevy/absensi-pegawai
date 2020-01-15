@@ -9,7 +9,7 @@ export const login = ({ email, password }, push) => {
     .then(response => {
       if ( response.data.status === 200 ) {
         dispatch({ type: 'LOGIN_SUCCESS', user: response.data.message });
-        localStorage.setItem('isUserAuthenticated', 1);
+        localStorage.setItem('auth', 1);
         push('/admin/index');
       }
       else {
@@ -35,7 +35,7 @@ export const logout = push => {
       reverseButton: true
     }).then((result) => {
       if (result.value) {
-        localStorage.setItem('isUserAuthenticated', 0);
+        localStorage.setItem('auth', 0);
         dispatch({ type: 'LOGOUT' });
         push('/auth/login');
       }
