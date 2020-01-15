@@ -58,7 +58,7 @@ class Login extends React.Component {
       <>
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
-            <CardBody className="px-lg-5 py-lg-5">
+            <CardBody className="px-lg-5 py-5 py-lg-5">
               {this.props.isLoginError && <Alert color="danger">{this.props.errorMessage}</Alert>}
               <Formik 
                 initialValues={{ email: '', password: '' }}

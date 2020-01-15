@@ -54,8 +54,8 @@ class Auth extends React.Component {
     return !Number(localStorage.getItem('auth')) ? (
       <>
         <div className="main-content">
-          <AuthNavbar />
-          <div className="header bg-gradient-info py-7 py-lg-8">
+          {/* <AuthNavbar /> */}
+          <div className="header bg-gradient-info py-6 py-lg-6">
             <Container>
               <div className="header-body text-center mb-7">
                 <Row className="justify-content-center">
