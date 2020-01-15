@@ -133,12 +133,12 @@ class Sidebar extends React.Component {
           </button>
           {/* Brand */}
           {logo ? (
-            <NavbarBrand className="pt-3" {...navbarBrandProps}>
+            <NavbarBrand className="pt-0 pt-md-3" {...navbarBrandProps}>
               <img
                 alt={logo.imgAlt}
                 className="navbar-brand-img"
                 src={logo.imgSrc}
-                style={{ transform: 'scale(2.5)' }}
+                style={{ transform: 'scale(2.8)' }}
               />
             </NavbarBrand>
           ) : null}
@@ -174,10 +174,10 @@ class Sidebar extends React.Component {
             <div className="navbar-collapse-header d-md-none">
               <Row>
                 {logo ? (
-                  <Col className="collapse-brand" xs="6">
+                  <Col className="collapse-brand pl-4" xs="8">
                     {logo.innerLink ? (
                       <Link to={logo.innerLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
+                        <img alt={logo.imgAlt} src={logo.imgSrc} style={{ transform: 'scale(2)' }} />
                       </Link>
                     ) : (
                       <a href={logo.outterLink}>
@@ -186,7 +186,7 @@ class Sidebar extends React.Component {
                     )}
                   </Col>
                 ) : null}
-                <Col className="collapse-close" xs="6">
+                <Col className="collapse-close d-flex justify-content-end" xs="4">
                   <button
                     className="navbar-toggler"
                     type="button"
