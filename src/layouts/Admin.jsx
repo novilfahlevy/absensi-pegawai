@@ -76,7 +76,7 @@ class Admin extends React.Component {
     return "Brand";
   };
   render() {
-    return Number(localStorage.getItem('auth')) ? (
+    return Boolean(localStorage.getItem('auth')) ? (
       <>
         <Sidebar
           {...this.props}
@@ -104,6 +104,6 @@ class Admin extends React.Component {
 
 export default connect(
   state => ({
-    isUserAuthenticated: state.auth.isUserAuthenticated
+    token: state.auth.user.token
   })
 )(withRouter(Admin));

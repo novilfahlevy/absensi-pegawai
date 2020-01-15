@@ -51,7 +51,7 @@ class Auth extends React.Component {
     });
   };
   render() {
-    return !Number(localStorage.getItem('auth')) ? (
+    return !Boolean(localStorage.getItem('auth')) ? (
       <>
         <div className="main-content">
           {/* <AuthNavbar /> */}
