@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Button } from 'reactstrap';
-import 'assets/css/assets/ui/loading.css';
+import 'assets/css/components/ui/loading.css';
 
 class LoadingButton extends React.Component {
   render() {
