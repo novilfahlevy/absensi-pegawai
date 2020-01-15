@@ -47,10 +47,20 @@ class Profile extends React.Component {
   state = {
     modalOpen: false,
     isLoading: false,
+    currentPasswordType: true,
+    newPasswordType: true,
     user: {}
   }
   toggleModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen })
+  }
+  togglePasswordType = password => {
+    if ( password === 'current' ) {
+      this.setState({ currentPasswordType: !this.state.currentPasswordType  });
+    }
+    else {
+      this.setState({ newPasswordType: !this.state.newPasswordType  });
+    }
   }
   changePassword = (data) => {
     this.setState({ isLoading: true })
@@ -169,9 +179,9 @@ class Profile extends React.Component {
                               Password Sekarang
                             </label>
                             <InputGroup>
-                              <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type="password" />
+                              <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type={this.state.currentPasswordType ? 'password' : 'text'} />
                               <InputGroupAddon addonType="append">
-                                <Button type="submit" color="primary" name="button-1">
+                                <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('current')}>
                                   <i className="fas fa-eye text-white"></i>
                                 </Button>
                               </InputGroupAddon>
@@ -187,9 +197,9 @@ class Profile extends React.Component {
                               Password Baru
                             </label>
                             <InputGroup>
-                              <Input onChange={handleChange} value={values.new_password} name="new_password" type="password" className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
+                              <Input onChange={handleChange} value={values.new_password} name="new_password" type={this.state.newPasswordType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
                               <InputGroupAddon addonType="append">
-                                <Button type="submit" color="primary" name="button-1">
+                                <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('new')}>
                                   <i className="fas fa-eye text-white"></i>
                                 </Button>
                               </InputGroupAddon>
