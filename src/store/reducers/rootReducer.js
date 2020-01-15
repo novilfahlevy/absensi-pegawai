@@ -5,8 +5,8 @@ import pegawaiReducer from './pegawaiReducer.js'
 
 export default createStore(
   combineReducers({
-    authReducer,
-    pegawaiReducer
+    auth: authReducer,
+    pegawai: pegawaiReducer
   }),
   applyMiddleware(thunk)
 );

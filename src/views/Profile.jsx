@@ -26,20 +26,64 @@ import {
   Form,
   Container,
   Row,
-  Col
+  Col,
+  Input,
+  FormGroup,
+  FormFeedback
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
 import ProfileForm from "./ProfileForm.jsx";
+import { connect } from 'react-redux';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import API from './../store/api.js'
+import Swal from 'sweetalert2';
 class Profile extends React.Component {
   state = {
-    modalOpen: false
+    modalOpen: false,
+    user: {}
   }
   toggleModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen })
   }
+  changePassword = (data) => {
+    const post = {
+      ...data,
+      user_id: this.props.user_id
+    }
+    API.post(`user/password`, post)
+      .then(res => {
+        Swal.fire(
+          'Berhasil!',
+          'Password berhasil diubah',
+          'success'
+        )
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: 'Gagal!',
+          title: 'Mengubah Password Gagal!',
+          text: err.message,
+        })
+      })
+  }
+  componentDidMount = () => {
+    API.get(`user/${this.props.user_id}`)
+      .then(res => {
+        this.setState({ user: res.data.user });
+      })
+      .catch(err => console.log(err))
+  }
   render() {
-    const { modalOpen } = this.state;
+    const { modalOpen, user } = this.state;
+    const changePasswordSchema = Yup.object().shape({
+      new_password: Yup.string()
+        .min(8, 'Password terlalu pendek')
+        .required('Password baru wajib diisi!'),
+      current_password: Yup.string()
+        .required('Password sekarang wajib diisi!')
+    })
     return (
       <>
         <UserHeader />
@@ -69,39 +113,74 @@ class Profile extends React.Component {
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
-                    <Col xs="8">
+                    <Col xs="12">
                       <h3 className="mb-0">Akun Saya</h3>
-                    </Col>
-                    <Col className="text-right" xs="4">
-                      <Button color="success" onClick={this.toggleModal} size="sm">
-                        Ubah Profile
-                      </Button>
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <Form>
-                    <div className="pl-lg-4">
+                  <div className="pl-lg-4">
+                    {user.name ? <Row>
+                      <Col lg="12">
+                        <h3>Nama</h3>
+                        <h5>{user.name}</h5>
+                      </Col>
+                      <Col lg="12" style={{ marginTop: "1.5rem" }}>
+                        <h3>Email</h3>
+                        <h5>{user.email}</h5>
+                      </Col>
+                    </Row> : <Row><Col xs={12}><p className="text-center">Loading...</p></Col></Row>}
+                  </div>
+                </CardBody>
+              </Card>
+              <Card className="mt-2">
+                <CardHeader>
+                  <Row className="align-items-center">
+                    <Col xs="12">
+                      <h3 className="mb-0">Ubah Password</h3>
+                    </Col>
+                  </Row>
+                </CardHeader>
+                <CardBody>
+                  <Formik
+                    initialValues={{
+                      current_password: '',
+                      new_password: ''
+                    }}
+                    validationSchema={changePasswordSchema}
+                    onSubmit={data => this.changePassword(data)}
+                  >{({ errors, touched, handleSubmit, handleChange, values }) => (
+                    <Form onSubmit={handleSubmit}>
                       <Row>
-                        <Col lg="12">
-                          <h3>Username</h3>
-                          <h5>Novil Fahlevy</h5>
+                        <Col lg={12}>
+                          <FormGroup>
+                            <label className="form-control-label" htmlFor="input-current-password">
+                              Password Sekarang
+                            </label>
+                            <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type="password" />
+                            {errors.current_password && touched.current_password ? (
+                              <FormFeedback className="d-block">{errors.current_password}</FormFeedback>
+                            ) : null}
+                          </FormGroup>
                         </Col>
-                        <Col lg="12" style={{ marginTop: "1.5rem" }}>
-                          <h3>Email</h3>
-                          <h5>MirrorBottle24@gmail.com</h5>
+                        <Col lg={12}>
+                          <FormGroup>
+                            <label className="form-control-label" htmlFor="input-new-password">
+                              Password Baru
+                            </label>
+                            <Input onChange={handleChange} value={values.new_password} name="new_password" type="password" className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
+                            {errors.new_password && touched.new_password ? (
+                              <FormFeedback className="d-block">{errors.new_password}</FormFeedback>
+                            ) : null}
+                          </FormGroup>
+                        </Col>
+                        <Col lg={12} className="col-12">
+                          <Button type="submit" color="primary" >Ubah</Button>
                         </Col>
                       </Row>
-                    </div>
-                    <div className="pl-lg-4" style={{ marginTop: "1.5rem" }}>
-                      <Row>
-                        <Col md="12">
-                          <h3>Address</h3>
-                          <h5>Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09</h5>
-                        </Col>
-                      </Row>
-                    </div>
-                  </Form>
+                    </Form>
+                  )}
+                  </Formik>
                 </CardBody>
               </Card>
             </Col>
@@ -112,5 +191,9 @@ class Profile extends React.Component {
     );
   }
 }
-
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    user_id: state.auth.user.id
+  }
+}
+export default connect(mapStateToProps)(Profile);
