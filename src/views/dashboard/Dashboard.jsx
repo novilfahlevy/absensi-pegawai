@@ -45,7 +45,7 @@ import {
 } from "variables/charts.jsx";
 import { Link } from 'react-router-dom'
 import DashboardHeader from "components/Headers/DashboardHeader.jsx";
-import "./../../assets/css/dashboard.css"
+import "./../../assets/css/dashboard.css";
 class Dashboard extends React.Component {
     state = {
         activeNav: 1,
