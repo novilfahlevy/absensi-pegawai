@@ -15,7 +15,6 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-
 import Profile from "views/Profile.jsx";
 import Absensi from 'views/absensi/Absensi.jsx';
 import DetailAbsensi from 'views/absensi/DetailAbsensi.jsx';
@@ -32,7 +31,7 @@ var routes = [
     path: "/index",
     name: "Dashboard",
     icon: "fas fa-tachometer-alt text-primary",
-    component: Dashboard,
+    component: props => <Dashboard {...props} />,
     layout: "/admin",
     isActive: true
   },
@@ -96,7 +95,7 @@ var routes = [
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: props => <Login {...props} />,
     layout: "/auth",
     isActive: false
   },

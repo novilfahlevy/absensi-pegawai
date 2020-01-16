@@ -16,7 +16,9 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { logout } from 'store/actions/authActions.js';
 // reactstrap components
 import {
   DropdownMenu,
@@ -57,9 +59,9 @@ class AdminNavbar extends React.Component {
                         src={require("assets/img/theme/team-4-800x800.jpg")}
                       />
                     </span>
-                    <Media className="ml-2 d-none d-lg-block">
+                    <Media className="ml-2">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                      {this.props.username}
                       </span>
                     </Media>
                   </Media>
@@ -70,7 +72,7 @@ class AdminNavbar extends React.Component {
                     <span>My profile</span>
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={e => {e.preventDefault(); this.props.logout()}}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
@@ -84,4 +86,11 @@ class AdminNavbar extends React.Component {
   }
 }
 
-export default AdminNavbar;
+export default connect(
+  state => ({
+    username: state.auth.user.name
+  }),
+  (dispatch, ownProps) => ({
+    logout: () => dispatch(logout(ownProps.history.push))
+  })
+)(withRouter(AdminNavbar));

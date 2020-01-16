@@ -25,6 +25,8 @@ import AuthNavbar from "components/Navbars/AuthNavbar.jsx";
 import AuthFooter from "components/Footers/AuthFooter.jsx";
 
 import routes from "routes.js";
+import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
 
 class Auth extends React.Component {
   componentDidMount() {
@@ -49,11 +51,11 @@ class Auth extends React.Component {
     });
   };
   render() {
-    return (
+    return !Boolean(localStorage.getItem('auth')) ? (
       <>
         <div className="main-content">
-          <AuthNavbar />
-          <div className="header bg-gradient-info py-7 py-lg-8">
+          {/* <AuthNavbar /> */}
+          <div className="header bg-gradient-info py-6 py-lg-6">
             <Container>
               <div className="header-body text-center mb-7">
                 <Row className="justify-content-center">
@@ -88,8 +90,12 @@ class Auth extends React.Component {
         </div>
         <AuthFooter />
       </>
-    );
+    ) : <Redirect to="/admin/index" />
   }
 }
 
-export default Auth;
+export default connect(
+  state => ({
+    isUserAuthenticated: state.auth.isUserAuthenticated
+  })
+)(withRouter(Auth));
