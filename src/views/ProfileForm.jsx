@@ -1,33 +1,53 @@
 import React, { Component } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
+import API from './../store/api.js';
+import { connect } from 'react-redux';
+import { changeProfile } from './../store/actions/profileActions.js';
+import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
 class ProfileForm extends Component {
+    state = {
+        file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
+        real_file: null
+    }
+    handleSubmit = e => {
+        e.preventDefault();
+        const data = {
+            user_id: this.props.user_id,
+            profile: this.state.real_file
+        }
+        // console.log(data)
+        this.props.changeProfile(data);
+        this.props.toggle();
+    }
+    handleChange = e => {
+        this.setState({
+            file: URL.createObjectURL(e.target.files[0]),
+            real_file: e.target.files[0]
+        })
+    }
     render() {
         return (
             <>
                 <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                    <Form>
+                    <Form onSubmit={this.handleSubmit}>
                         <ModalHeader toggle={this.props.toggle}>
-                            <h2>Ubah Data Profile</h2>
+                            <h2>Ubah Gambar Profile</h2>
                         </ModalHeader>
                         <ModalBody>
-                            <FormGroup>
-                                <label className="form-control-label" htmlFor="input-username">
-                                    Username
-                            </label>
-                                <Input className="form-control-alternative" id="input-username" placeholder="Username" type="text" />
-                            </FormGroup>
-                            <FormGroup>
-                                <label className="form-control-label" htmlFor="input-email">
-                                    Email
-                            </label>
-                                <Input type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
-                            </FormGroup>
-                            <FormGroup>
-                                <label className="form-control-label" htmlFor="input-email">
-                                    Address
-                            </label>
-                                <Input type="textarea" rows={5} id="input-email" placeholder="Write your address" />
-                            </FormGroup>
+                            <Row>
+                                <Col className="col-12 text-center">
+                                    <h2 className="font-weight-light">Your New Profile Will Be Shown Below</h2>
+                                    <img
+                                        alt="..."
+                                        height="200"
+                                        width="200"
+                                        style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
+                                        className="rounded-circle"
+                                        src={this.state.file}
+                                        id="change-profile-preview"
+                                    />
+                                    <input onChange={this.handleChange} type="file" name="new-profile" id="change-profile-source"></input>
+                                </Col>
+                            </Row>
                         </ModalBody>
                         <ModalFooter>
                             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
@@ -39,4 +59,14 @@ class ProfileForm extends Component {
         )
     }
 }
-export default ProfileForm;
+const mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.user.id
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeProfile: data => dispatch(changeProfile(data))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);
