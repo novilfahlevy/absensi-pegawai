@@ -68,14 +68,13 @@ class Profile extends React.Component {
       ...data,
       user_id: this.props.user_id
     }
-    API.post(`user/password`, post)
+    API.put(`user/password`, post)
       .then(res => {
         Swal.fire(
           'Berhasil!',
           'Password berhasil diubah',
           'success'
         )
-        this.setState({ isLoading: false })
       })
       .catch(err => {
         Swal.fire(
@@ -83,8 +82,8 @@ class Profile extends React.Component {
           'Password gagal diubah! Coba sekali lagi!',
           'error'
         )
-        this.setState({ isLoading: false })
       })
+      .finally(() => this.setState({ isLoading: false }));
   }
   componentDidMount = () => {
     API.get(`user/${this.props.user_id}`)

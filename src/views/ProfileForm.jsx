@@ -6,7 +6,7 @@ class ProfileForm extends Component {
             <>
                 <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
                     <Form>
-                        <ModalHeader toggle={this.props.toggle}>
+                        <ModalHeader>
                             <h2>Ubah Data Profile</h2>
                         </ModalHeader>
                         <ModalBody>
