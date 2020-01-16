@@ -109,6 +109,7 @@ class Sidebar extends React.Component {
     let navbarBrandProps;
     if (logo && logo.innerLink) {
       navbarBrandProps = {
+
         to: logo.innerLink,
         tag: Link
       };
@@ -156,7 +157,7 @@ class Sidebar extends React.Component {
                   </span>
                   {/* <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      {JSON.parse(localStorage.getItem('auth')).name}
+                      {this.props.username}
                     </span>
                   </Media> */}
                 </Media>
@@ -235,7 +236,9 @@ Sidebar.propTypes = {
 };
 
 export default connect(
-  null,
+  state => ({
+    username: state.auth.user.name
+  }),
   (dispatch, ownProps) => ({
     logout: () => dispatch(logout(ownProps.history.push))
   })

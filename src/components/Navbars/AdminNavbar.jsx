@@ -61,7 +61,7 @@ class AdminNavbar extends React.Component {
                     </span>
                     <Media className="ml-2">
                       <span className="mb-0 text-sm font-weight-bold">
-                      {JSON.parse(localStorage.getItem('auth')).name}
+                      {this.props.username}
                       </span>
                     </Media>
                   </Media>
@@ -87,7 +87,9 @@ class AdminNavbar extends React.Component {
 }
 
 export default connect(
-  null,
+  state => ({
+    username: state.auth.user.name
+  }),
   (dispatch, ownProps) => ({
     logout: () => dispatch(logout(ownProps.history.push))
   })

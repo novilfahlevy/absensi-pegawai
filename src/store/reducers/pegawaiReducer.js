@@ -9,7 +9,6 @@ const pegawaiReducer = (initState = state, action) => {
             console.log('tambah pegawai berhasil');
             return action.res;
         case 'ADD_PEGAWAI_ERROR':
-            console.log('tambah pegawai gagal');
             return action.err;
         default:
             return state;

@@ -26,8 +26,15 @@ import Sidebar from "components/Sidebar/Sidebar.jsx";
 import routes from "routes.js";
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
+import { storeUserData } from 'store/actions/authActions.js';
 
 class Admin extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.props.storeUserData(localStorage.getItem('auth'));
+  }
+
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -76,7 +83,7 @@ class Admin extends React.Component {
     return "Brand";
   };
   render() {
-    return Boolean(localStorage.getItem('auth')) ? (
+    return Boolean(localStorage.getItem('auth')) && JSON.parse(atob(localStorage.getItem('auth'))).name ? (
       <>
         <Sidebar
           {...this.props}
@@ -102,4 +109,9 @@ class Admin extends React.Component {
   }
 }
 
-export default connect()(withRouter(Admin));
+export default connect(
+  null,
+  dispatch => ({
+    storeUserData: data => dispatch(storeUserData(data))
+  })
+)(withRouter(Admin));

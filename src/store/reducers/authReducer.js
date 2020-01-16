@@ -1,4 +1,8 @@
 const initState = {
+  user: {
+    id: null,
+    name: null
+  },
   isLoginLoading: false,
   isLoginError: false,
   errorMessage: ''
@@ -6,6 +10,13 @@ const initState = {
 
 export default (state = initState, action) => {
   switch ( action.type ) {
+    case 'STORE_USER_DATA' :
+      state = { 
+        ...state,
+        user: action.user
+      };
+      break;
+
     case 'LOGIN_SUCCESS' :
       state = { 
         ...state,

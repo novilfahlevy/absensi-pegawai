@@ -235,9 +235,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default connect(
-    state => {
-        console.log(state);
-        return {};
-    }
-)(Dashboard);
+export default connect()(Dashboard);

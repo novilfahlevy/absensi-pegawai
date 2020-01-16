@@ -9,7 +9,7 @@ export const login = ({ email, password }, push) => {
     .then(response => {
       if ( response.data.status === 200 ) {
         dispatch({ type: 'LOGIN_SUCCESS' });
-        localStorage.setItem('auth', JSON.stringify({ ...response.data.message }));
+        localStorage.setItem('auth', btoa(JSON.stringify({ ...response.data.message })));
         push('/admin/index');
       }
       else {
@@ -46,4 +46,10 @@ export const logout = push => {
       }
     })
   };
+}
+
+export const storeUserData = data => {
+  return dispatch => {
+    dispatch({ type: 'STORE_USER_DATA', user: JSON.parse(atob(data)) });
+  }
 }
