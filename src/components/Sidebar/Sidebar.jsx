@@ -17,10 +17,12 @@
 */
 /*eslint-disable*/
 import React from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { NavLink as NavLinkRRD, Link, withRouter } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 import SidebarDropdownItem from 'components/Sidebar/SidebarDropdownItem.jsx';
+import { connect } from 'react-redux';
+import { logout } from 'store/actions/authActions.js';
 
 // reactstrap components
 import {
@@ -203,7 +205,122 @@ class Sidebar extends React.Component {
                 </Container>
             </Navbar>
         );
+<<<<<<< HEAD
     }
+=======
+      }
+    });
+  };
+  render() {
+    const { bgColor, routes, logo } = this.props;
+    let navbarBrandProps;
+    if (logo && logo.innerLink) {
+      navbarBrandProps = {
+
+        to: logo.innerLink,
+        tag: Link
+      };
+    } else if (logo && logo.outterLink) {
+      navbarBrandProps = {
+        href: logo.outterLink,
+        target: "_blank"
+      };
+    }
+    return (
+      <Navbar
+        className="navbar-vertical fixed-left navbar-light bg-white"
+        expand="md"
+        id="sidenav-main"
+      >
+        <Container fluid>
+          {/* Toggler */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            onClick={this.toggleCollapse}
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          {/* Brand */}
+          {logo ? (
+            <NavbarBrand className="pt-0 pt-md-3" {...navbarBrandProps}>
+              <img
+                alt={logo.imgAlt}
+                className="navbar-brand-img"
+                src={logo.imgSrc}
+                style={{ transform: 'scale(2.8)' }}
+              />
+            </NavbarBrand>
+          ) : null}
+          {/* User */}
+          <Nav className="align-items-center d-md-none">
+            <UncontrolledDropdown nav>
+              <DropdownToggle nav>
+                <Media className="align-items-center">
+                  <span className="avatar avatar-sm rounded-circle">
+                    <img
+                      alt="..."
+                      src={require("assets/img/theme/team-1-800x800.jpg")}
+                    />
+                  </span>
+                  {/* <Media className="ml-2 d-none d-lg-block">
+                    <span className="mb-0 text-sm font-weight-bold">
+                      {this.props.username}
+                    </span>
+                  </Media> */}
+                </Media>
+              </DropdownToggle>
+              <DropdownMenu className="dropdown-menu-arrow" right>
+                <DropdownItem to="/admin/user-profile" tag={Link}>
+                  <i className="ni ni-single-02" />
+                  <span>My profile</span>
+                </DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem href="#pablo" onClick={e => {e.preventDefault(); this.props.logout()}}>
+                  <i className="ni ni-user-run" />
+                  <span>Logout</span>
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+          </Nav>
+          {/* Collapse */}
+          <Collapse navbar isOpen={this.state.collapseOpen}>
+            {/* Collapse header */}
+            <div className="navbar-collapse-header d-md-none">
+              <Row>
+                {logo ? (
+                  <Col className="collapse-brand pl-4" xs="8">
+                    {logo.innerLink ? (
+                      <Link to={logo.innerLink}>
+                        <img alt={logo.imgAlt} src={logo.imgSrc} style={{ transform: 'scale(2)' }} />
+                      </Link>
+                    ) : (
+                      <a href={logo.outterLink}>
+                        <img alt={logo.imgAlt} src={logo.imgSrc} />
+                      </a>
+                    )}
+                  </Col>
+                ) : null}
+                <Col className="collapse-close d-flex justify-content-end" xs="4">
+                  <button
+                    className="navbar-toggler"
+                    type="button"
+                    onClick={this.toggleCollapse}
+                  >
+                    <span />
+                    <span />
+                  </button>
+                </Col>
+              </Row>
+            </div>
+            {/* Navigation */}
+            <Nav navbar>{this.createLinks(routes)}</Nav>
+          </Collapse>
+        </Container>
+      </Navbar>
+    );
+  }
+>>>>>>> e0adc74ad5f72cc2c8acb11216ac68c8b8c455e4
 }
 
 Sidebar.defaultProps = {
@@ -227,4 +344,11 @@ Sidebar.propTypes = {
     })
 };
 
-export default Sidebar;
+export default connect(
+  state => ({
+    username: state.auth.user.name
+  }),
+  (dispatch, ownProps) => ({
+    logout: () => dispatch(logout(ownProps.history.push))
+  })
+)(withRouter(Sidebar));

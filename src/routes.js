@@ -15,16 +15,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "views/Index.jsx";
+import React from 'react';
 import Profile from "views/Profile.jsx";
 import Absensi from 'views/absensi/Absensi.jsx';
-import TambahAbsensi from 'views/absensi/TambahAbsensi.jsx';
 import DetailAbsensi from 'views/absensi/DetailAbsensi.jsx';
-import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Login from 'views/auth/Login.jsx';
 import Lembur from 'views/lembur/Lembur.jsx';
-import PermintaanLembur from 'views/lembur/PermintaanLembur.jsx';
-import PengajuanLembur from 'views/lembur/PengajuanLembur.jsx';
 import Register from 'views/auth/Register.jsx';
 import Dashboard from 'views/dashboard/Dashboard.jsx'
 import JamKerja from 'views/jam-kerja/JamKerja.jsx';
@@ -36,7 +32,7 @@ var routes = [
     path: "/index",
     name: "Dashboard",
     icon: "fas fa-tachometer-alt text-primary",
-    component: Dashboard,
+    component: props => <Dashboard {...props} />,
     layout: "/admin",
     isActive: true
   },
@@ -44,39 +40,16 @@ var routes = [
     path: "/pegawai",
     name: "Pegawai",
     icon: "fas fa-user-tie text-danger",
-    component: PegawaiIndex,
+    component: props => <PegawaiIndex {...props} />,
     layout: "/admin",
     isActive: true
   },
   {
+    path: "/absensi",
     name: "Absensi",
-    icon: "far fa-list-alt",
-    subMenu: [
-      {
-        path: "/tambah-absensi",
-        name: "Tambah Absensi",
-        icon: "fas fa-plus text-green",
-        component: TambahAbsensi,
-        layout: "/admin",
-        isActive: true
-      },
-      {
-        path: "/absensi",
-        name: "Absensi Pegawai",
-        icon: "fas fa-user-tie text-red",
-        component: Absensi,
-        layout: "/admin",
-        isActive: true
-      },
-      {
-        path: "/riwayat-absensi",
-        name: "Riwayat Absensi",
-        icon: "fas fa-history",
-        component: RiwayatAbsensi,
-        layout: "/admin",
-        isActive: true
-      },
-    ],
+    icon: "fas fa-list-alt text-red",
+    component: Absensi,
+    layout: "/admin",
     isActive: true
   },
   {
@@ -96,34 +69,11 @@ var routes = [
     isActive: false
   },
   {
+    path: "/lembur",
     name: "Lembur",
     icon: "fas fa-moon text-purple",
-    subMenu: [
-      {
-        path: "/pengajuan-lembur",
-        name: "Pengajuan Lembur",
-        icon: "fas fa-plus text-green",
-        component: PengajuanLembur,
-        layout: "/admin",
-        isActive: true
-      },
-      {
-        path: "/lembur",
-        name: "Daftar Lembur",
-        icon: "fas fa-list-alt text-purple",
-        component: Lembur,
-        layout: "/admin",
-        isActive: true
-      },
-      {
-        path: "/permintaan-lembur",
-        name: "Permintaan Lembur",
-        icon: "fas fa-check text-danger",
-        component: PermintaanLembur,
-        layout: "/admin",
-        isActive: true
-      },
-    ],
+    component: Lembur,
+    layout: "/admin",
     isActive: true
   },
   {
@@ -146,7 +96,7 @@ var routes = [
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
-    component: Login,
+    component: props => <Login {...props} />,
     layout: "/auth",
     isActive: false
   },

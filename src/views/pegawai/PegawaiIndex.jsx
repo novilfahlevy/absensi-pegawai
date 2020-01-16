@@ -100,7 +100,7 @@ class PegawaiIndex extends React.Component {
                                             <h2 className="mb-0">Daftar Pegawai</h2>
                                         </Col>
                                         <Col className="text-right" xs="4">
-                                            <Button color="primary" href="#pablo" onClick={this.toggleModal} size="md">
+                                            <Button color="primary" onClick={this.toggleModal} size="md">
                                                 Tambah Pegawai
                                             </Button>
                                         </Col>

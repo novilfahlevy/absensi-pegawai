@@ -47,38 +47,43 @@ class Profile extends React.Component {
     state = {
         modalOpen: false,
         isLoading: false,
+        currentPasswordType: true,
+        newPasswordType: true,
         user: {}
     }
     toggleModal = () => {
         this.setState({ modalOpen: !this.state.modalOpen })
     }
+    togglePasswordType = password => {
+        if (password === 'current') {
+            this.setState({ currentPasswordType: !this.state.currentPasswordType });
+        }
+        else {
+            this.setState({ newPasswordType: !this.state.newPasswordType });
+        }
+    }
     changePassword = (data) => {
-        return new Promise((resolve, reject) => {
-            this.setState({ isLoading: true })
-            const post = {
-                ...data,
-                user_id: this.props.user_id
-            }
-            API.put(`user/password`, post)
-                .then(res => {
-                    Swal.fire(
-                        'Berhasil!',
-                        'Password berhasil diubah',
-                        'success'
-                    )
-                    this.setState({ isLoading: false })
-                    return resolve();
-                })
-                .catch(err => {
-                    Swal.fire(
-                        'Gagal!',
-                        'Password gagal diubah! Coba sekali lagi!',
-                        'error'
-                    )
-                    this.setState({ isLoading: false })
-                    return reject();
-                })
-        })
+        this.setState({ isLoading: true })
+        const post = {
+            ...data,
+            user_id: this.props.user_id
+        }
+        API.put(`user/password`, post)
+            .then(res => {
+                Swal.fire(
+                    'Berhasil!',
+                    'Password berhasil diubah',
+                    'success'
+                )
+            })
+            .catch(err => {
+                Swal.fire(
+                    'Gagal!',
+                    'Password gagal diubah! Coba sekali lagi!',
+                    'error'
+                )
+            })
+            .finally(() => this.setState({ isLoading: false }));
     }
     componentDidMount = () => {
         API.get(`user/${this.props.user_id}`)
@@ -100,7 +105,7 @@ class Profile extends React.Component {
             <>
                 <UserHeader />
                 {/* Page content */}
-                <Container className="mt--7" fluid >
+                <Container className="mt--7" fluid>
                     <Row>
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">
@@ -110,13 +115,12 @@ class Profile extends React.Component {
                                             <img
                                                 alt="..."
                                                 height="200"
-                                                style={{ border: "6px solid #eee" }}
-                                                className="rounded-circle profile-image"
-                                                src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
+                                                className="rounded-circle"
+                                                src={require("assets/img/theme/team-4-800x800.jpg")}
                                             />
                                         </Col>
                                         <Col className="col-12">
-                                            <Button style={{ marginTop: "1rem" }} onClick={this.toggleModal} color="primary" size="md">Ubah Gambar Profile</Button>
+                                            <Button style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
                                         </Col>
                                     </Row>
                                 </CardBody>
@@ -174,11 +178,11 @@ class Profile extends React.Component {
                                                     <FormGroup>
                                                         <label className="form-control-label" htmlFor="input-current-password">
                                                             Password Sekarang
-                                                        </label>
+                                                    </label>
                                                         <InputGroup>
-                                                            <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type="password" />
+                                                            <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type={this.state.currentPasswordType ? 'password' : 'text'} />
                                                             <InputGroupAddon addonType="append">
-                                                                <Button type="submit" color="primary" name="button-1">
+                                                                <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('current')}>
                                                                     <i className="fas fa-eye text-white"></i>
                                                                 </Button>
                                                             </InputGroupAddon>
@@ -194,9 +198,9 @@ class Profile extends React.Component {
                                                             Password Baru
                                                         </label>
                                                         <InputGroup>
-                                                            <Input onChange={handleChange} value={values.new_password} name="new_password" type="password" className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
+                                                            <Input onChange={handleChange} value={values.new_password} name="new_password" type={this.state.newPasswordType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
                                                             <InputGroupAddon addonType="append">
-                                                                <Button type="submit" color="primary" name="button-1">
+                                                                <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('new')}>
                                                                     <i className="fas fa-eye text-white"></i>
                                                                 </Button>
                                                             </InputGroupAddon>
@@ -206,11 +210,6 @@ class Profile extends React.Component {
                                                         ) : null}
                                                     </FormGroup>
                                                 </Col>
-                                                <Col lg={12} className="col-12">
-                                                    <LoadingButton color="primary" condition={isLoading}>
-                                                        Ubah
-                                                    </LoadingButton>
-                                                </Col>
                                             </Row>
                                         </Form>
                                     )}
@@ -219,10 +218,9 @@ class Profile extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    <ProfileForm modal={modalOpen} toggle={this.toggleModal} />
                 </Container>
-            </>
-        );
+                <ProfileForm modal={modalOpen} toggle={this.toggleModal} />
+            </>)
     }
 }
 const mapStateToProps = (state) => {
