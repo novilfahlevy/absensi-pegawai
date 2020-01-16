@@ -32,7 +32,9 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
 
-    this.props.storeUserData(localStorage.getItem('auth'));
+    if ( localStorage.getItem('auth') ) {
+      this.props.storeUserData(localStorage.getItem('auth'));
+    }
   }
 
   componentDidUpdate(e) {
