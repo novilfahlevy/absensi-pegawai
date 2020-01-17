@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import API from './../store/api.js';
+import LoadingButton from 'components/ui/LoadingButton.jsx'
 import { connect } from 'react-redux';
 import { changeProfile } from './../store/actions/profileActions.js';
 import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
@@ -11,6 +11,7 @@ class ProfileForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file });
+        this.props.getData()
         this.props.toggle();
     }
     handleChange = e => {
@@ -61,7 +62,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeProfile: data => dispatch(changeProfile(data))
+        changeProfile: (data, callback) => dispatch(changeProfile(data, callback))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);

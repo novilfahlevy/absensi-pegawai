@@ -68,7 +68,6 @@ class Profile extends React.Component {
             ...data,
             user_id: this.props.user_id
         }
-
         API().post(`user/password`, post)
             .then(res => {
                 Swal.fire(
@@ -86,12 +85,15 @@ class Profile extends React.Component {
             })
             .finally(() => this.setState({ isLoading: false }));
     }
-    componentDidMount = () => {
+    getData = () => {
         API().get(`user/${this.props.user_id}`)
             .then(res => {
                 this.setState({ user: res.data.user });
             })
             .catch(err => console.log(err))
+    }
+    componentDidMount = () => {
+        this.getData();
     }
     render() {
         const { modalOpen, user, isLoading } = this.state;
@@ -223,7 +225,7 @@ class Profile extends React.Component {
                         </Col>
                     </Row>
                 </Container>
-                <ProfileForm modal={modalOpen} toggle={this.toggleModal} />
+                <ProfileForm getData={this.getData} modal={modalOpen} toggle={this.toggleModal} />
             </>)
     }
 }
