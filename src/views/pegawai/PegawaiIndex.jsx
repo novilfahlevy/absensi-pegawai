@@ -14,7 +14,9 @@ import {
     Container,
     Button,
     Row,
-
+    InputGroup,
+    Input,
+    InputGroupAddon
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.jsx";
@@ -107,6 +109,12 @@ class PegawaiIndex extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
+                                    <InputGroup className="mb-3">
+                                        <Input type="search" name="search" id="search" placeholder="Cari pegawai" />
+                                        <InputGroupAddon addonType="append">
+                                            <Button color="primary">Cari</Button>
+                                        </InputGroupAddon>
+                                    </InputGroup>
                                     <BootstrapTable keyField="id" data={pegawai} columns={columns}></BootstrapTable>
                                 </CardBody>
                                 <CardFooter className="py-4">
