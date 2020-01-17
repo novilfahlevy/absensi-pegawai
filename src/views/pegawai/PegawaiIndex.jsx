@@ -53,7 +53,7 @@ class PegawaiIndex extends React.Component {
         })
     }
     componentDidMount() {
-        API.get('user')
+        API().get('user')
             .then(res => {
                 this.setState({ pegawai: res.data.user })
                 this.setState({

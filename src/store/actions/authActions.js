@@ -5,12 +5,12 @@ export const login = ({ email, password }, push) => {
   return dispatch => {
     dispatch({ type: 'LOGIN_LOADING' });
 
-    api.post('/auth/login', { email, password })
+    api().post('/auth/login', { email, password })
     .then(response => {
       if ( response.data.status === 200 ) {
         dispatch({ type: 'LOGIN_SUCCESS' });
         localStorage.setItem('auth', btoa(JSON.stringify({ ...response.data.message })));
-        localStorage.setItem('token', response.data.message.token);
+        // localStorage.setItem('token', response.data.message.token);
         push('/admin/index');
       }
       else {
@@ -42,7 +42,6 @@ export const logout = push => {
     }).then((result) => {
       if (result.value) {
         localStorage.removeItem('auth');
-        localStorage.removeItem('token');
         dispatch({ type: 'LOGOUT' });
         push('/auth/login');
       }
