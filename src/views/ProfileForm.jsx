@@ -10,12 +10,7 @@ class ProfileForm extends Component {
     }
     handleSubmit = e => {
         e.preventDefault();
-        const data = {
-            user_id: this.props.user_id,
-            profile: this.state.real_file
-        }
-        // console.log(data)
-        this.props.changeProfile(data);
+        this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file });
         this.props.toggle();
     }
     handleChange = e => {

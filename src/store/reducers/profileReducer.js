@@ -19,7 +19,7 @@ const profileReducer = (initState = state, action) => {
                 'error'
             )
             console.log('tambah pegawai gagal');
-            return action.err.response.data;
+            return action.err;
         default:
             return state;
     }

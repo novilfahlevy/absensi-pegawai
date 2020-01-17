@@ -115,12 +115,14 @@ class Profile extends React.Component {
                                             <img
                                                 alt="..."
                                                 height="200"
+                                                width="200"
                                                 className="rounded-circle"
-                                                src={require("assets/img/theme/team-4-800x800.jpg")}
+                                                style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
+                                                src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
                                             />
                                         </Col>
                                         <Col className="col-12">
-                                            <Button style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
+                                            <Button onClick={this.toggleModal} style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
                                         </Col>
                                     </Row>
                                 </CardBody>
