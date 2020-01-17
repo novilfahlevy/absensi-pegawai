@@ -36,9 +36,18 @@ const  remoteTable = (props) => {
       loading={ props.isLoaded }
       noDataIndication={ () => <NoDataIndication /> }
       pagination={ paginationFactory({ 
-        page: Math.ceil(props.data.length / 10), 
-        sizePerPage: 10, 
-        totalSize: props.data.length
+        page: Math.ceil(props.data.length / 5), 
+        sizePerPage: 5, 
+        totalSize: props.data.length,
+        sizePerPageList: [{
+          text: '5', value: 5
+        }, {
+          text: '10', value: 10
+        }, {
+          text: '20', value: 20
+        }, {
+          text: 'Tampilkan Semua', value: props.data.length
+        }]
       }) }
       onTableChange={ props => alert(props) }
       overlay={ overlayFactory(
