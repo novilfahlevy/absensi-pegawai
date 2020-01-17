@@ -5,7 +5,7 @@ export const changeProfile = (data) => {
         let sendData = new FormData();
         sendData.append('profile', data.profile)
         sendData.append('user_id', data.user_id);
-        API.post('user/edit', sendData, {
+        API().post('user/edit', sendData, {
             headers: {
                 'content-type': 'multipart/form-data'
             }
