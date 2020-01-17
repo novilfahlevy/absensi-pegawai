@@ -19,7 +19,7 @@ export const login = ({ email, password }, push) => {
     })
     .catch(error => {
       if ( error.message === 'Network Error' ) {
-        dispatch({ type: 'LOGIN_FAILED', errorMessage: 'Koneksi terputus, pastikan anda sedang dalam keadaan online.' });
+        dispatch({ type: 'LOGIN_FAILED', errorMessage: 'Tidak ada koneksi.' });
       }
       else {
         dispatch({ type: 'LOGIN_FAILED', errorMessage: error.message });
