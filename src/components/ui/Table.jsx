@@ -2,6 +2,7 @@ import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import overlayFactory from 'react-bootstrap-table2-overlay';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { connect } from 'react-redux';
 import {
@@ -49,6 +50,7 @@ const  remoteTable = (props) => {
           text: 'Tampilkan Semua', value: props.data.length
         }]
       }) }
+      filter={filterFactory()}
       onTableChange={ props => alert(props) }
       overlay={ overlayFactory(
         { 

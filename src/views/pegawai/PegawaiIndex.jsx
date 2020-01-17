@@ -26,6 +26,7 @@ import PegawaiForm from './PegawaiForm'
 import Swal from 'sweetalert2';
 import { withRouter } from 'react-router-dom';
 import Table from 'components/ui/Table.jsx';
+import { selectFilter } from 'react-bootstrap-table2-filter';
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
@@ -77,7 +78,8 @@ class PegawaiIndex extends React.Component {
     render() {
         const columns = [{
             dataField: 'name',
-            text: 'Nama'
+            text: 'Nama',
+            sort: true
         }, {
             dataField: 'email',
             text: 'Email'
