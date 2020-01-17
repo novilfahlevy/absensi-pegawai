@@ -150,12 +150,6 @@ class Sidebar extends React.Component {
             <UncontrolledDropdown nav>
               <DropdownToggle nav>
                 <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={require("assets/img/theme/team-1-800x800.jpg")}
-                    />
-                  </span>
                   {/* <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
                       {this.props.username}
