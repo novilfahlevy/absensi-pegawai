@@ -1,6 +1,6 @@
 import API from './../api.js';
 
-export const changeProfile = (data) => {
+export const changeProfile = (data, callback) => {
     return (dispatch, getState) => {
         let sendData = new FormData();
         sendData.append('profile', data.profile)
@@ -10,7 +10,9 @@ export const changeProfile = (data) => {
                 'content-type': 'multipart/form-data'
             }
         })
-            .then(res => dispatch({ type: 'CHANGE_PROFILE_SUCCESS', res }))
+            .then(res => {
+                dispatch({ type: 'CHANGE_PROFILE_SUCCESS', res })
+            })
             .catch(err => dispatch({ type: 'CHANGE_PROFILE_ERROR', err }))
     }
 }
