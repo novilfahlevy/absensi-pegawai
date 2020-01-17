@@ -16,7 +16,7 @@ class PegawaiDetails extends Component {
         pegawai: {}
     }
     componentDidMount() {
-        API.get(`user/${this.props.match.params.id}`)
+        API().get(`user/${this.props.match.params.id}`)
             .then(res => {
                 this.setState({ pegawai: res.data.user })
             })

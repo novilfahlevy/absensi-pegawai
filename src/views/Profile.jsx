@@ -68,7 +68,8 @@ class Profile extends React.Component {
             ...data,
             user_id: this.props.user_id
         }
-        API.post(`user/password`, post)
+
+        API().post(`user/password`, post)
             .then(res => {
                 Swal.fire(
                     'Berhasil!',
@@ -86,7 +87,7 @@ class Profile extends React.Component {
             .finally(() => this.setState({ isLoading: false }));
     }
     componentDidMount = () => {
-        API.get(`user/${this.props.user_id}`)
+        API().get(`user/${this.props.user_id}`)
             .then(res => {
                 this.setState({ user: res.data.user });
             })
@@ -211,6 +212,7 @@ class Profile extends React.Component {
                                                             <FormFeedback className="d-block">{errors.new_password}</FormFeedback>
                                                         ) : null}
                                                     </FormGroup>
+                                                    <LoadingButton color="primary" condition={this.state.isLoading} type="submit">Ubah Password</LoadingButton>
                                                 </Col>
                                             </Row>
                                         </Form>
