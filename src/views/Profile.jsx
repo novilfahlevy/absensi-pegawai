@@ -38,6 +38,7 @@ import {
 import UserHeader from "components/Headers/UserHeader.jsx";
 import ProfileForm from "./ProfileForm.jsx";
 import LoadingButton from "./../components/ui/LoadingButton.jsx";
+import Loading from "./../components/ui/Loading.jsx";
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -112,14 +113,14 @@ class Profile extends React.Component {
                     <Row>
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">
-                                <CardBody className="pt-4 text-center">
+                                <CardBody className="text-center">
                                     <Row>
                                         <Col className="col-12">
                                             <img
                                                 alt="..."
                                                 height="200"
                                                 width="200"
-                                                className="rounded-circle"
+                                                className="rounded"
                                                 style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
                                                 src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
                                             />
@@ -151,7 +152,7 @@ class Profile extends React.Component {
                                                 <h3>Email</h3>
                                                 <h5>{user.email}</h5>
                                             </Col>
-                                        </Row> : <Row><Col xs={12}><p className="text-center">Loading...</p></Col></Row>}
+                                        </Row> : <Row><Col xs={12} className="d-flex justify-content-center"><Loading /></Col></Row>}
                                     </div>
                                 </CardBody>
                             </Card>

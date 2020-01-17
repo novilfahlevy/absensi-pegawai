@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import LoadingButton from 'components/ui/LoadingButton.jsx'
 import { connect } from 'react-redux';
 import { changeProfile } from './../store/actions/profileActions.js';
-import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
+import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput } from 'reactstrap';
 class ProfileForm extends Component {
     state = {
         file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
@@ -41,7 +41,9 @@ class ProfileForm extends Component {
                                         src={this.state.file}
                                         id="change-profile-preview"
                                     />
-                                    <input onChange={this.handleChange} type="file" name="new-profile" id="change-profile-source"></input>
+                                    <FormGroup>
+                                        <CustomInput onChange={this.handleChange} type="file" name="new-profile" id="change-profile-source" className="mt-4" label="Pilih gambar profile" />
+                                    </FormGroup>
                                 </Col>
                             </Row>
                         </ModalBody>
