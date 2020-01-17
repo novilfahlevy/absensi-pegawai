@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 import Header from "components/Headers/Header.jsx";
 import API from './../../store/api.js'
 import { Link } from 'react-router-dom';
+import Loading from 'components/ui/Loading.jsx';
 class PegawaiDetails extends Component {
     state = {
         pegawai: {}
@@ -66,7 +67,7 @@ class PegawaiDetails extends Component {
                                                     <h3>Email</h3>
                                                     <h5>{this.state.pegawai.email}</h5>
                                                 </Col>
-                                            </Row> : <p className="text-center">Loading...</p>}
+                                            </Row> : <Row><Col className="d-flex justify-content-center"><Loading /></Col></Row>}
                                     </div>
                                 </CardBody>
                             </Card>
