@@ -68,7 +68,7 @@ class Profile extends React.Component {
             ...data,
             user_id: this.props.user_id
         }
-        API.put(`user/password`, post)
+        API.post(`user/password`, post)
             .then(res => {
                 Swal.fire(
                     'Berhasil!',

@@ -1,0 +1,25 @@
+.jam-kerja-btn {
+    box-shadow: none;
+    background: white;
+    border: none;
+    box-shadow: -6px -6px 20px rgba(255, 255, 255, 1),
+        6px 6px 20px rgba(0, 0, 0, .1);
+}
+
+.jam-kerja-btn:hover {
+    background: #fff;
+    box-shadow: inset 6px 6px 15px rgba(255, 255, 255, 1),
+        inset -6px -6px 15px rgba(0, 0, 0, .03);
+}
+
+.jam-kerja-btn.jam-kerja-btn-active {
+    box-shadow: none;
+    background: rgb(47, 77, 211);
+    border: none;
+    box-shadow: -6px -6px 20px rgba(255, 255, 255, 1),
+        6px 6px 20px rgba(0, 0, 0, .1);
+}
+
+.jam-kerja-btn.jam-kerja-btn-active h3 {
+    color: #fff !important;
+}
