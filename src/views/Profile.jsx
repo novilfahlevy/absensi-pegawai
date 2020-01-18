@@ -81,11 +81,20 @@ class Profile extends React.Component {
                 )
             })
             .catch(err => {
-                Swal.fire(
-                    'Gagal!',
-                    'Password gagal diubah! Coba sekali lagi!',
-                    'error'
-                )
+                if ( err.response.status === 422 ) {
+                    Swal.fire(
+                        'Gagal!',
+                        'Password lama anda salah!',
+                        'error'
+                    )
+                }
+                else {
+                    Swal.fire(
+                        'Gagal!',
+                        'Password gagal diubah! Coba sekali lagi!',
+                        'error'
+                    )
+                }
             })
             .finally(() => this.setState({ isLoading: false }));
     }
