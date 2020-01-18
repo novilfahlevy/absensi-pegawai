@@ -215,7 +215,7 @@ class Profile extends React.Component {
                                                             <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type={this.state.currentPasswordType ? 'password' : 'text'} />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('current')}>
-                                                                    <i className="fas fa-eye text-white"></i>
+                                                                    <i className={`fas fa-eye${!this.state.currentPasswordType ? '-slash' : ''} text-white`}></i>
                                                                 </Button>
                                                             </InputGroupAddon>
                                                         </InputGroup>
@@ -233,7 +233,7 @@ class Profile extends React.Component {
                                                             <Input onChange={handleChange} value={values.new_password} name="new_password" type={this.state.newPasswordType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('new')}>
-                                                                    <i className="fas fa-eye text-white"></i>
+                                                                    <i className={`fas fa-eye${!this.state.newPasswordType ? '-slash' : ''} text-white`}></i>
                                                                 </Button>
                                                             </InputGroupAddon>
                                                         </InputGroup>
@@ -251,7 +251,7 @@ class Profile extends React.Component {
                                                             <Input onChange={handleChange} value={values.new_password_confirmation} name="new_password_confirmation" type={this.state.newPasswordConfirmationType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukan Ulang Password Baru" />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('confirmation')}>
-                                                                    <i className="fas fa-eye text-white"></i>
+                                                                    <i className={`fas fa-eye${!this.state.newPasswordConfirmationType ? '-slash' : ''} text-white`}></i>
                                                                 </Button>
                                                             </InputGroupAddon>
                                                         </InputGroup>
