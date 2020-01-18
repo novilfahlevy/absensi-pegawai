@@ -35,6 +35,25 @@ class PegawaiIndex extends React.Component {
     toggleModal = () => {
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
     }
+    getDataPegawai = () => {
+        API().get('user')
+            .then(res => {
+                this.setState({ pegawai: res.data.user })
+                this.setState({
+                    pegawai: this.state.pegawai.map(p => {
+                        return {
+                            ...p, actions:
+                                <>
+                                    <Button className="bg-primary text-white" onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
+                                        <i className="fas fa-eye"></i>
+                                    </Button>
+                                </>
+                        };
+                    })
+                })
+            })
+            .catch(err => console.log(err))
+    }
     deletePegawai() {
         Swal.fire({
             title: 'Apa anda yakin?',
@@ -57,23 +76,7 @@ class PegawaiIndex extends React.Component {
         })
     }
     componentDidMount() {
-        API().get('user')
-            .then(res => {
-                this.setState({ pegawai: res.data.user })
-                this.setState({
-                    pegawai: this.state.pegawai.map(p => {
-                        return {
-                            ...p, actions:
-                                <>
-                                    <Button className="bg-primary text-white" onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
-                                        <i className="fas fa-eye"></i>
-                                    </Button>
-                                </>
-                        };
-                    })
-                })
-            })
-            .catch(err => console.log(err))
+        this.getDataPegawai();
     }
     render() {
         const columns = [{
@@ -123,7 +126,7 @@ class PegawaiIndex extends React.Component {
                             </Card>
                         </div>
                     </Row>
-                    <PegawaiForm modal={this.state.modalIsOpen} toggle={this.toggleModal} />
+                    <PegawaiForm modal={this.state.modalIsOpen} toggle={this.toggleModal} getDataPegawai={this.getDataPegawai} />
                 </Container>
             </>
         );

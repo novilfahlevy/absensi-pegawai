@@ -31,6 +31,7 @@ class PegawaiForm extends Component {
                         validationSchema={AddPegawaiSchema}
                         onSubmit={data => {
                             this.props.addPegawai(data);
+                            this.props.getDataPegawai();
                             this.props.toggle()
                         }}
                     >
