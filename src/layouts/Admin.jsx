@@ -82,7 +82,7 @@ class Admin extends React.Component {
         }
       }
     }
-    return "Brand";
+    return "";
   };
   render() {
     return Boolean(localStorage.getItem('auth')) && JSON.parse(atob(localStorage.getItem('auth'))).name ? (
