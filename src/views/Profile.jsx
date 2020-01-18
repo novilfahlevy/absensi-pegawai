@@ -248,7 +248,7 @@ class Profile extends React.Component {
                                                             Konfirmasi Password Baru
                                                         </label>
                                                         <InputGroup>
-                                                            <Input onChange={handleChange} value={values.new_password_confirmation} name="new_password_confirmation" type={this.state.newPasswordConfirmationType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukan Ulang Password Baru" />
+                                                            <Input onChange={handleChange} value={values.new_password_confirmation} name="new_password_confirmation" type={this.state.newPasswordConfirmationType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukan ulang password baru..." />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('confirmation')}>
                                                                     <i className={`fas fa-eye${!this.state.newPasswordConfirmationType ? '-slash' : ''} text-white`}></i>
