@@ -22,6 +22,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import Swal from 'sweetalert2';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 
 class Absensi extends React.Component {
   state = {
@@ -122,7 +123,6 @@ class Absensi extends React.Component {
 
     return (
       <>
-        <Header />
         <Container className="mt--7">
           <Row>
             <Col>
@@ -147,4 +147,4 @@ class Absensi extends React.Component {
   }
 }
 
-export default withRouter(Absensi);
+export default withRouter(FadeIn(Absensi, Header));

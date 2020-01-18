@@ -38,6 +38,8 @@ import {
     Col
 } from "reactstrap";
 
+import FadeIn from 'components/hoc/FadeIn.jsx';
+
 // core components
 import {
     chartOptions,
@@ -74,7 +76,6 @@ class Dashboard extends React.Component {
     render() {
         return (
             <>
-                <DashboardHeader />
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     <Row>
@@ -235,4 +236,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default connect()(Dashboard);
+export default connect()(FadeIn(Dashboard, DashboardHeader));

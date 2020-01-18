@@ -27,6 +27,7 @@ import Swal from 'sweetalert2';
 import { withRouter } from 'react-router-dom';
 import Table from 'components/ui/Table.jsx';
 import { selectFilter } from 'react-bootstrap-table2-filter';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
@@ -96,7 +97,6 @@ class PegawaiIndex extends React.Component {
         const { pegawai } = this.state;
         return (
             <>
-                <Header />
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     {/* Table */}
@@ -133,4 +133,4 @@ class PegawaiIndex extends React.Component {
         );
     }
 }
-export default withRouter(PegawaiIndex);
+export default withRouter(FadeIn(PegawaiIndex, Header));

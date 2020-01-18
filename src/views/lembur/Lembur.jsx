@@ -18,6 +18,7 @@ import {
 
 import { withRouter } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -108,7 +109,6 @@ class Lembur extends React.Component {
 
     return (
       <>
-        <Header />
         <Container className="mt--7">
           <Row>
             <Col>
@@ -133,4 +133,4 @@ class Lembur extends React.Component {
   }
 }
 
-export default withRouter(Lembur);
+export default withRouter(FadeIn(Lembur, Header));

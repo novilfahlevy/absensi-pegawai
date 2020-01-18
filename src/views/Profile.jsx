@@ -44,6 +44,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import API from './../store/api.js'
 import Swal from 'sweetalert2';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 class Profile extends React.Component {
     state = {
         modalOpen: false,
@@ -117,9 +118,9 @@ class Profile extends React.Component {
             current_password: Yup.string()
                 .required('Password sekarang wajib diisi!')
         })
+
         return (
             <>
-                <UserHeader />
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     <Row>
@@ -244,4 +245,4 @@ const mapStateToProps = (state) => {
         user_id: state.auth.user.id
     }
 }
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(FadeIn(Profile, UserHeader));
