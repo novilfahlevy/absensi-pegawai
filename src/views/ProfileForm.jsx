@@ -47,7 +47,6 @@ class ProfileForm extends Component {
                         <ModalBody>
                             <Row>
                                 <Col className="col-12 text-center">
-                                    <h2 className="font-weight-light">Your New Profile Will Be Shown Below</h2>
                                     <img
                                         alt="..."
                                         height="200"
