@@ -48,7 +48,9 @@ class Profile extends React.Component {
     state = {
         modalOpen: false,
         isLoading: false,
+        currentPassword: '',
         currentPasswordType: true,
+        newPassword: '',
         newPasswordType: true,
         user: {}
     }
@@ -63,7 +65,7 @@ class Profile extends React.Component {
             this.setState({ newPasswordType: !this.state.newPasswordType });
         }
     }
-    changePassword = (data) => {
+    changePassword = (data, callback) => {
         this.setState({ isLoading: true })
         const post = {
             ...data,
@@ -71,6 +73,7 @@ class Profile extends React.Component {
         }
         API().post(`user/password`, post)
             .then(res => {
+                callback();
                 Swal.fire(
                     'Berhasil!',
                     'Password berhasil diubah',
@@ -172,10 +175,8 @@ class Profile extends React.Component {
                                         }}
                                         validationSchema={changePasswordSchema}
                                         onSubmit={(data, actions) => {
-                                            this.changePassword(data)
-                                                .then(() => {
-                                                    actions.resetForm();
-                                                })
+                                            console.log(data, actions);
+                                            this.changePassword(data, () => actions.resetForm())
                                         }}
                                     >{({ errors, resetForm, touched, handleSubmit, handleChange, values }) => (
                                         <Form onSubmit={handleSubmit}>
