@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import LoadingButton from 'components/ui/LoadingButton.jsx'
 import { connect } from 'react-redux';
 import { changeProfile } from './../store/actions/profileActions.js';
-import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput } from 'reactstrap';
+import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput, FormFeedback } from 'reactstrap';
 class ProfileForm extends Component {
     state = {
         file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
-        real_file: null
+        real_file: null,
+        file_name: '',
+        error: null
     }
     handleSubmit = e => {
         e.preventDefault();
@@ -18,7 +20,21 @@ class ProfileForm extends Component {
         this.setState({
             file: URL.createObjectURL(e.target.files[0]),
             real_file: e.target.files[0]
-        })
+        }, () => {
+            this.setState({ file_name: this.state.real_file.name });
+
+            if ( this.state.real_file.size > 2000000 ) {
+                this.setState({ error: 'Ukuran gambar terlalu besar, maksimal 2MB.' });
+                return;
+            }
+
+            if ( !['jpg', 'png', 'jpeg'].includes(this.state.real_file.type.replace('image/', '')) ) {
+                this.setState({ error: 'Jenis gambar hanya boleh JPEG, JPG, dan PNG.' });
+                return;
+            }
+
+            this.setState({ error: null });
+        });
     }
     render() {
         return (
@@ -43,13 +59,19 @@ class ProfileForm extends Component {
                                     />
                                     <FormGroup>
                                         <CustomInput onChange={this.handleChange} type="file" name="new-profile" id="change-profile-source" className="mt-4" label="Pilih gambar profile" />
+                                        {this.state.file_name && <p className="mt-3">
+                                            {this.state.file_name}
+                                        </p>}
+                                        {this.state.error && <FormFeedback className="d-block mt-3">
+                                            {this.state.error}
+                                        </FormFeedback>}
                                     </FormGroup>
                                 </Col>
                             </Row>
                         </ModalBody>
                         <ModalFooter>
                             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-                            <Button type="submit" color="primary">Ubah</Button>{' '}
+                            <Button type="submit" color="primary" disabled={Boolean(this.state.error)}>Ubah</Button>{' '}
                         </ModalFooter>
                     </Form>
                 </Modal>
