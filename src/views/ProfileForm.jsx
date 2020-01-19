@@ -73,7 +73,7 @@ class ProfileForm extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-                            <LoadingButton type="submit" color="primary" condition={this.state.isLoading} disabled={Boolean(this.state.error)}>Ubah</LoadingButton>{' '}
+                            <LoadingButton type="submit" color="primary" condition={this.state.isLoading} disabled={Boolean(this.state.error)}>Ubah</LoadingButton>
                         </ModalFooter>
                     </Form>
                 </Modal>
