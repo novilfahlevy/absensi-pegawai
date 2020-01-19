@@ -13,11 +13,14 @@ class ProfileForm extends Component {
     }
     handleSubmit = e => {
         e.preventDefault();
-        this.setState({ isLoading: true });
-        this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file }, () => {
-            this.setState({ isLoading: false }, this.props.toggle) 
-            this.props.getData();
-        }, () => this.setState({ isLoading: false }));
+        if ( this.state.real_file ) {
+            this.setState({ isLoading: true });
+            this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file }, () => {
+                this.setState({ isLoading: false }, this.props.toggle) 
+                this.props.getData();
+            }, () => this.setState({ isLoading: false }));
+        }
+        else this.setState({ error: 'Masukan gambar yang ingin anda pakai.' });
     }
     handleChange = e => {
         this.setState({
