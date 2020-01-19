@@ -36,8 +36,8 @@ class PegawaiForm extends Component {
                             this.props.addPegawai(data, () => {
                                 this.props.getDataPegawai();
                                 this.props.toggle();
-                                this.setState({ isLoading: false });
-                            });
+                                this.setState({ isLoading: false })
+                            }, () => this.setState({ isLoading: false }));
                         }}
                     >
                         {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
@@ -88,7 +88,9 @@ class PegawaiForm extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        addPegawai: (pegawai, callback) => dispatch(addPegawai(pegawai, callback))
+        addPegawai: (pegawai, successcallback, errorCallback) => {
+            dispatch(addPegawai(pegawai, successcallback, errorCallback))
+        }
     }
 }
 export default connect(null, mapDispatchToProps)(PegawaiForm);
