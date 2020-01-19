@@ -16,8 +16,8 @@ class ProfileForm extends Component {
         this.setState({ isLoading: true });
         this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file }, () => {
             this.setState({ isLoading: false }, this.props.toggle) 
-        });
-        this.props.getData()
+            this.props.getData();
+        }, () => this.setState({ isLoading: false }));
     }
     handleChange = e => {
         this.setState({
@@ -88,7 +88,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeProfile: (data, callback) => dispatch(changeProfile(data, callback))
+        changeProfile: (data, successCallback, errorCallback) => {
+            dispatch(changeProfile(data, successCallback, errorCallback));
+        }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm);
