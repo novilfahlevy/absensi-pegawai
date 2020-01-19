@@ -8,13 +8,16 @@ class ProfileForm extends Component {
         file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
         real_file: null,
         file_name: '',
-        error: null
+        error: null,
+        isLoading: false
     }
     handleSubmit = e => {
         e.preventDefault();
-        this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file });
+        this.setState({ isLoading: true });
+        this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file }, () => {
+            this.setState({ isLoading: false }, this.props.toggle) 
+        });
         this.props.getData()
-        this.props.toggle();
     }
     handleChange = e => {
         this.setState({
@@ -71,7 +74,7 @@ class ProfileForm extends Component {
                         </ModalBody>
                         <ModalFooter>
                             <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-                            <Button type="submit" color="primary" disabled={Boolean(this.state.error)}>Ubah</Button>{' '}
+                            <LoadingButton type="submit" color="primary" condition={this.state.isLoading} disabled={Boolean(this.state.error)}>Ubah</LoadingButton>{' '}
                         </ModalFooter>
                     </Form>
                 </Modal>

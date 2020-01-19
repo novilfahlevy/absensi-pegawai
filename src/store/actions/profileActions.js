@@ -11,7 +11,8 @@ export const changeProfile = (data, callback) => {
             }
         })
             .then(res => {
-                dispatch({ type: 'CHANGE_PROFILE_SUCCESS', res })
+                dispatch({ type: 'CHANGE_PROFILE_SUCCESS', res });
+                callback();
             })
             .catch(err => dispatch({ type: 'CHANGE_PROFILE_ERROR', err }))
     }
