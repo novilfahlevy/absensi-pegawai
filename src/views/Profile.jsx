@@ -143,15 +143,25 @@ class Profile extends React.Component {
                             <Card className="card-profile shadow">
                                 <CardBody className="text-center">
                                     <Row>
-                                        <Col className="col-12">
-                                            <img
+                                        <Col className="col-12 d-flex justify-content-center">
+                                            {user.profile ? <img
                                                 alt="..."
                                                 height="200"
                                                 width="200"
                                                 className="rounded"
                                                 style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
                                                 src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
-                                            />
+                                            /> : (
+                                                <div 
+                                                    className="d-flex justify-content-center align-items-center" style={{ 
+                                                        width: '200px', 
+                                                        height: '200px', 
+                                                        border: '6px solid #eee' 
+                                                    }}
+                                                >
+                                                    <Loading />
+                                                </div>
+                                            )}
                                         </Col>
                                         <Col className="col-12">
                                             <Button onClick={this.toggleModal} style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
