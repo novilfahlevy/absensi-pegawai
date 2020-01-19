@@ -1,6 +1,6 @@
 import API from './../api.js';
 
-export const changeProfile = (data, successCallback, errorCallback) => {
+export const changeProfile = (data, success, error) => {
     return (dispatch, getState) => {
         let sendData = new FormData();
         sendData.append('profile', data.profile)
@@ -12,11 +12,11 @@ export const changeProfile = (data, successCallback, errorCallback) => {
         })
             .then(res => {
                 dispatch({ type: 'CHANGE_PROFILE_SUCCESS', res });
-                successCallback();
+                success();
             })
             .catch(err => {
                 dispatch({ type: 'CHANGE_PROFILE_ERROR', err });
-                errorCallback();
+                error();
             });
     }
 }

@@ -1,20 +1,20 @@
 import API from './../api.js';
 
-export const addPegawai = (pegawai, successCallback, errorCallback) => {
+export const addPegawai = (pegawai, success, error) => {
     return (dispatch, getState) => {
         API().post(`user/store`, pegawai)
             .then(res => {
                 dispatch({ type: 'ADD_PEGAWAI_SUCCESS', res });
-                successCallback();
+                success();
             })
             .catch(err => {
                 dispatch({ type: 'ADD_PEGAWAI_ERROR', err });
-                errorCallback(err);
+                error(err);
             });
     }
 }
 
-export const editPegawai = (pegawai, successCallback, errorCallback) => {
+export const editPegawai = (pegawai, success, error) => {
     return (dispatch, getState) => {
         alert(pegawai.name);
     }

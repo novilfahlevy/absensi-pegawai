@@ -59,7 +59,7 @@ class PegawaiIndex extends React.Component {
                         return {
                             ...p, actions:
                                 <>
-                                    <UncontrolledDropdown>
+                                    <UncontrolledDropdown style={{ zIndex: 999 }}>
                                         <DropdownToggle size="sm">
                                             <i className="fas fa-ellipsis-v"></i>
                                         </DropdownToggle>

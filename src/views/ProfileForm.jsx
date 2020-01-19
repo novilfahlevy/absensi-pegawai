@@ -91,8 +91,8 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeProfile: (data, successCallback, errorCallback) => {
-            dispatch(changeProfile(data, successCallback, errorCallback));
+        changeProfile: (data, success, error) => {
+            dispatch(changeProfile(data, success, error));
         }
     }
 }

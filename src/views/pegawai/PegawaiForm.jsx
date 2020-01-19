@@ -88,8 +88,8 @@ class PegawaiForm extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        addPegawai: (pegawai, successcallback, errorCallback) => {
-            dispatch(addPegawai(pegawai, successcallback, errorCallback))
+        addPegawai: (pegawai, success, error) => {
+            dispatch(addPegawai(pegawai, success, error))
         }
     }
 }
