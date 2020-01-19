@@ -4,10 +4,12 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { addPegawai } from './../../store/actions/pegawaiActions';
 import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup } from 'reactstrap';
+import LoadingButton from 'components/ui/LoadingButton.jsx';
 
 class PegawaiForm extends Component {
     state = {
-        modal: false
+        modal: false,
+        isLoading: false
     }
     toggle = () => this.setState({ modal: !this.state.modal });
     render() {
@@ -30,9 +32,12 @@ class PegawaiForm extends Component {
                         }}
                         validationSchema={AddPegawaiSchema}
                         onSubmit={data => {
-                            this.props.addPegawai(data);
-                            this.props.getDataPegawai();
-                            this.props.toggle()
+                            this.setState({ isLoading: true });
+                            this.props.addPegawai(data, () => {
+                                this.props.getDataPegawai();
+                                this.props.toggle();
+                                this.setState({ isLoading: false })
+                            }, () => this.setState({ isLoading: false }));
                         }}
                     >
                         {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
@@ -71,7 +76,7 @@ class PegawaiForm extends Component {
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
-                                    <Button type="submit" color="primary">Tambah</Button>
+                                    <LoadingButton type="submit" color="primary" condition={this.state.isLoading}>Tambah</LoadingButton>
                                 </ModalFooter>
                             </Form>
                         )}
@@ -83,7 +88,9 @@ class PegawaiForm extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        addPegawai: pegawai => dispatch(addPegawai(pegawai))
+        addPegawai: (pegawai, success, error) => {
+            dispatch(addPegawai(pegawai, success, error))
+        }
     }
 }
 export default connect(null, mapDispatchToProps)(PegawaiForm);

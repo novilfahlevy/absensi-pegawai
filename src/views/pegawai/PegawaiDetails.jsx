@@ -19,6 +19,7 @@ class PegawaiDetails extends Component {
     componentDidMount() {
         API().get(`user/${this.props.match.params.id}`)
             .then(res => {
+                console.log(res.data.user)
                 this.setState({ pegawai: res.data.user })
             })
             .catch(err => console.log(err))
@@ -36,7 +37,7 @@ class PegawaiDetails extends Component {
                                         alt="..."
                                         height="200"
                                         className="rounded-circle"
-                                        src={require("assets/img/theme/team-4-800x800.jpg")}
+                                        src={`http://127.0.0.1:8000/storage/profiles/${this.state.pegawai.profile || 'default.jpg'}`}
                                     />
                                 </CardBody>
                             </Card>

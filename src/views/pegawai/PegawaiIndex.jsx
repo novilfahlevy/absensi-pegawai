@@ -16,24 +16,39 @@ import {
     Row,
     InputGroup,
     Input,
-    InputGroupAddon
+    InputGroupAddon,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.jsx";
 import BootstrapTable from 'react-bootstrap-table-next';
 import API from '../../store/api.js';
 import PegawaiForm from './PegawaiForm'
+import EditPegawaiForm from './EditPegawaiForm'
+import { hapusPegawai } from 'store/actions/pegawaiActions.js';
 import Swal from 'sweetalert2';
 import { withRouter } from 'react-router-dom';
 import Table from 'components/ui/Table.jsx';
 import { selectFilter } from 'react-bootstrap-table2-filter';
+import FadeIn from 'components/hoc/FadeIn.jsx';
+import { connect } from 'react-redux';
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
         modalIsOpen: false,
+        editModalIsOpen: false,
+        pegawaiEdited: null
     }
     toggleModal = () => {
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
+    }
+    toggleEditModal = id => {
+        this.setState({ pegawaiEdited: id }, () => {
+            this.setState({ editModalIsOpen: !this.state.editModalIsOpen });
+        });
     }
     getDataPegawai = () => {
         API().get('user')
@@ -44,9 +59,40 @@ class PegawaiIndex extends React.Component {
                         return {
                             ...p, actions:
                                 <>
-                                    <Button className="bg-primary text-white" onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
-                                        <i className="fas fa-eye"></i>
-                                    </Button>
+                                    <UncontrolledDropdown style={{ zIndex: 999 }}>
+                                        <DropdownToggle size="sm">
+                                            <i className="fas fa-ellipsis-v"></i>
+                                        </DropdownToggle>
+                                        <DropdownMenu right>
+                                            <DropdownItem style={{ cursor: 'pointer' }} size="sm" onClick={() => this.toggleEditModal(p.id)}>
+                                                <i className="fas fa-pencil-alt text-success"></i>
+                                                Edit
+                                            </DropdownItem>
+                                            <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
+                                                Swal.fire({
+                                                    title: 'Apakah anda yakin?',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Hapus',
+                                                    cancelButtonText: 'Gak jadi!',
+                                                    reverseButton: true
+                                                }).then((result) => {
+                                                    if (result.value) {
+                                                        this.props.hapusPegawai(p.id)
+                                                    }
+                                                })
+                                            }}>
+                                                <i className="fas fa-trash-alt text-danger"></i>
+                                                Hapus
+                                            </DropdownItem>
+                                            <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
+                                                <i className="fas fa-list-alt text-primary"></i>
+                                                Detail
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
                                 </>
                         };
                     })
@@ -95,7 +141,6 @@ class PegawaiIndex extends React.Component {
         const { pegawai } = this.state;
         return (
             <>
-                <Header />
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     {/* Table */}
@@ -127,9 +172,17 @@ class PegawaiIndex extends React.Component {
                         </div>
                     </Row>
                     <PegawaiForm modal={this.state.modalIsOpen} toggle={this.toggleModal} getDataPegawai={this.getDataPegawai} />
+                    {this.state.editModalIsOpen && (
+                        <EditPegawaiForm modal={this.state.editModalIsOpen} toggle={this.toggleEditModal} pegawaiId={this.state.pegawaiEdited} />
+                    )}
                 </Container>
             </>
         );
     }
 }
-export default withRouter(PegawaiIndex);
+export default connect(
+    null,
+    dispatch => ({
+        hapusPegawai: id => dispatch(hapusPegawai(id))
+    })
+)(withRouter(FadeIn(PegawaiIndex, Header)));

@@ -44,6 +44,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import API from './../store/api.js'
 import Swal from 'sweetalert2';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 class Profile extends React.Component {
     state = {
         modalOpen: false,
@@ -52,6 +53,8 @@ class Profile extends React.Component {
         currentPasswordType: true,
         newPassword: '',
         newPasswordType: true,
+        newPasswordConfirmation: '',
+        newPasswordConfirmationType: true,
         user: {}
     }
     toggleModal = () => {
@@ -61,8 +64,11 @@ class Profile extends React.Component {
         if (password === 'current') {
             this.setState({ currentPasswordType: !this.state.currentPasswordType });
         }
-        else {
+        else if ( password === 'new' ) {
             this.setState({ newPasswordType: !this.state.newPasswordType });
+        }
+        else {
+            this.setState({ newPasswordConfirmationType: !this.state.newPasswordConfirmationType });
         }
     }
     changePassword = (data, resetForm) => {
@@ -110,16 +116,26 @@ class Profile extends React.Component {
     }
     render() {
         const { modalOpen, user, isLoading } = this.state;
+
+        Yup.addMethod(Yup.string, 'passwordConfirm', message => Yup.mixed().test({
+            name: 'passwordConfirm',
+            exclusive: false,
+            message,
+            test: function(value) { return value === this.resolve(Yup.ref('new_password')) }
+        }));
+
         const changePasswordSchema = Yup.object().shape({
             new_password: Yup.string()
                 .min(8, 'Password terlalu pendek')
                 .required('Password baru wajib diisi!'),
+            new_password_confirmation: Yup.string()
+                .passwordConfirm('Password tidak cocok!'),
             current_password: Yup.string()
                 .required('Password sekarang wajib diisi!')
         })
+
         return (
             <>
-                <UserHeader />
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     <Row>
@@ -127,15 +143,25 @@ class Profile extends React.Component {
                             <Card className="card-profile shadow">
                                 <CardBody className="text-center">
                                     <Row>
-                                        <Col className="col-12">
-                                            <img
+                                        <Col className="col-12 d-flex justify-content-center">
+                                            {user.profile ? <img
                                                 alt="..."
                                                 height="200"
                                                 width="200"
                                                 className="rounded"
                                                 style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
                                                 src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
-                                            />
+                                            /> : (
+                                                <div 
+                                                    className="d-flex justify-content-center align-items-center" style={{ 
+                                                        width: '200px', 
+                                                        height: '200px', 
+                                                        border: '6px solid #eee' 
+                                                    }}
+                                                >
+                                                    <Loading />
+                                                </div>
+                                            )}
                                         </Col>
                                         <Col className="col-12">
                                             <Button onClick={this.toggleModal} style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
@@ -180,7 +206,8 @@ class Profile extends React.Component {
                                     <Formik
                                         initialValues={{
                                             current_password: '',
-                                            new_password: ''
+                                            new_password: '',
+                                            new_password_confirmation: ''
                                         }}
                                         validationSchema={changePasswordSchema}
                                         onSubmit={(data, actions) => {
@@ -198,7 +225,7 @@ class Profile extends React.Component {
                                                             <Input onChange={handleChange} value={values.current_password} name="current_password" className="form-control-alternative" id="input-current-password" placeholder="Masukkan password sekarang..." type={this.state.currentPasswordType ? 'password' : 'text'} />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('current')}>
-                                                                    <i className="fas fa-eye text-white"></i>
+                                                                    <i className={`fas fa-eye${!this.state.currentPasswordType ? '-slash' : ''} text-white`}></i>
                                                                 </Button>
                                                             </InputGroupAddon>
                                                         </InputGroup>
@@ -208,7 +235,7 @@ class Profile extends React.Component {
                                                     </FormGroup>
                                                 </Col>
                                                 <Col lg={12}>
-                                                    <FormGroup>
+                                                <FormGroup>
                                                         <label className="form-control-label" htmlFor="input-new-password">
                                                             Password Baru
                                                         </label>
@@ -216,12 +243,30 @@ class Profile extends React.Component {
                                                             <Input onChange={handleChange} value={values.new_password} name="new_password" type={this.state.newPasswordType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukkan password baru..." />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('new')}>
-                                                                    <i className="fas fa-eye text-white"></i>
+                                                                    <i className={`fas fa-eye${!this.state.newPasswordType ? '-slash' : ''} text-white`}></i>
                                                                 </Button>
                                                             </InputGroupAddon>
                                                         </InputGroup>
                                                         {errors.new_password && touched.new_password ? (
                                                             <FormFeedback className="d-block">{errors.new_password}</FormFeedback>
+                                                        ) : null}
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg={12}>
+                                                    <FormGroup>
+                                                        <label className="form-control-label" htmlFor="input-new-password">
+                                                            Konfirmasi Password Baru
+                                                        </label>
+                                                        <InputGroup>
+                                                            <Input onChange={handleChange} value={values.new_password_confirmation} name="new_password_confirmation" type={this.state.newPasswordConfirmationType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukan ulang password baru..." />
+                                                            <InputGroupAddon addonType="append">
+                                                                <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('confirmation')}>
+                                                                    <i className={`fas fa-eye${!this.state.newPasswordConfirmationType ? '-slash' : ''} text-white`}></i>
+                                                                </Button>
+                                                            </InputGroupAddon>
+                                                        </InputGroup>
+                                                        {errors.new_password_confirmation && touched.new_password_confirmation ? (
+                                                            <FormFeedback className="d-block">{errors.new_password_confirmation}</FormFeedback>
                                                         ) : null}
                                                     </FormGroup>
                                                     <LoadingButton color="primary" condition={this.state.isLoading} type="submit">Ubah Password</LoadingButton>
@@ -244,4 +289,4 @@ const mapStateToProps = (state) => {
         user_id: state.auth.user.id
     }
 }
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(FadeIn(Profile, UserHeader));

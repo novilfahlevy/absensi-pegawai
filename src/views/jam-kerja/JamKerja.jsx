@@ -16,6 +16,7 @@ import {
 } from 'reactstrap';
 
 import Header from 'components/Headers/Header.jsx';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 import "./../../assets/css/jamKerja.css"
 class JamKerja extends React.Component {
     state = {
@@ -43,7 +44,6 @@ class JamKerja extends React.Component {
         const { hari_kerja, days } = this.state;
         return (
             <>
-                <Header />
                 <Container className="mt--7">
                     <Row>
                         <Col lg="12" className="col-12">
@@ -80,4 +80,4 @@ class JamKerja extends React.Component {
     }
 }
 
-export default JamKerja;
+export default FadeIn(JamKerja, Header);
