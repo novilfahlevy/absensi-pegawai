@@ -101,8 +101,8 @@ class EditPegawaiForm extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-      editPegawai: (pegawai, successcallback, errorCallback) => {
-        dispatch(editPegawai(pegawai, successcallback, errorCallback))
+      editPegawai: (pegawai, successCallback = () => {}, errorCallback = () => {}) => {
+        dispatch(editPegawai(pegawai, successCallback, errorCallback));
       }
     }
 }

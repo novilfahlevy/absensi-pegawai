@@ -28,11 +28,13 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import API from '../../store/api.js';
 import PegawaiForm from './PegawaiForm'
 import EditPegawaiForm from './EditPegawaiForm'
+import { hapusPegawai } from 'store/actions/pegawaiActions.js';
 import Swal from 'sweetalert2';
 import { withRouter } from 'react-router-dom';
 import Table from 'components/ui/Table.jsx';
 import { selectFilter } from 'react-bootstrap-table2-filter';
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import { connect } from 'react-redux';
 class PegawaiIndex extends React.Component {
     state = {
         pegawai: [],
@@ -66,7 +68,22 @@ class PegawaiIndex extends React.Component {
                                                 <i className="fas fa-pencil-alt text-success"></i>
                                                 Edit
                                             </DropdownItem>
-                                            <DropdownItem style={{ cursor: 'pointer' }}>
+                                            <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
+                                                Swal.fire({
+                                                    title: 'Apakah anda yakin?',
+                                                    icon: 'warning',
+                                                    showCancelButton: true,
+                                                    confirmButtonColor: '#3085d6',
+                                                    cancelButtonColor: '#d33',
+                                                    confirmButtonText: 'Hapus',
+                                                    cancelButtonText: 'Gak jadi!',
+                                                    reverseButton: true
+                                                }).then((result) => {
+                                                    if (result.value) {
+                                                        this.props.hapusPegawai(p.id)
+                                                    }
+                                                })
+                                            }}>
                                                 <i className="fas fa-trash-alt text-danger"></i>
                                                 Hapus
                                             </DropdownItem>
@@ -163,4 +180,9 @@ class PegawaiIndex extends React.Component {
         );
     }
 }
-export default withRouter(FadeIn(PegawaiIndex, Header));
+export default connect(
+    null,
+    dispatch => ({
+        hapusPegawai: id => dispatch(hapusPegawai(id))
+    })
+)(withRouter(FadeIn(PegawaiIndex, Header)));
