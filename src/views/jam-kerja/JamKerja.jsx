@@ -12,7 +12,12 @@ import {
     Label,
     CustomInput,
     Input,
-    Button
+    Button,
+    Carousel,
+    CarouselItem,
+    CarouselControl,
+    CarouselIndicators,
+    CarouselCaption
 } from 'reactstrap';
 
 import Header from 'components/Headers/Header.jsx';
@@ -21,8 +26,26 @@ import "./../../assets/css/jamKerja.css"
 class JamKerja extends React.Component {
     state = {
         hari_kerja: ["Senin"],
-        days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
+        hours: [...Array(24).keys()].map(i => i + 1),
+        days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
+        activeIndex: 0,
+        animating: false
     }
+    next = () => {
+        if (this.state.animating) return;
+        const nextIndex = this.state.activeIndex === this.state.hours.length - 1 ? 0 : this.state.activeIndex + 1;
+        this.setState({ activeIndex: nextIndex });
+    }
+    previous = () => {
+        if (this.state.animating) return;
+        const nextIndex = this.state.activeIndex === 0 ? this.state.hours.length - 1 : this.state.activeIndex - 1;
+        this.setState({ activeIndex: nextIndex });
+    }
+    goToIndex = (newIndex) => {
+        if (this.state.animating) return;
+        this.setState({ activeIndex: newIndex });
+    }
+
     handleClick = e => {
         let hari_kerja = []
         const element = document.getElementById(e.target.id)
@@ -40,8 +63,25 @@ class JamKerja extends React.Component {
         }, () => console.log(this.state.hari_kerja))
 
     }
+    handleSubmit = () => {
+        const jam_kerja = document.querySelector(".carousel-item.active h1").innerHTML;
+    }
+    componentDidMount() {
+        console.log(this.state)
+    }
     render() {
-        const { hari_kerja, days } = this.state;
+        const { hari_kerja, days, hours, activeIndex } = this.state;
+        const slides = hours.map((item) => {
+            return (
+                <CarouselItem onExiting={() => this.setState({ animating: true })}
+                    onExited={() => this.setState({ animating: false })}
+                    key={item}>
+                    <Card body >
+                        <h1>{item}</h1>
+                    </Card>
+                </CarouselItem>
+            );
+        });
         return (
             <>
                 <Container className="mt--7">
@@ -52,9 +92,12 @@ class JamKerja extends React.Component {
                                     <Row>
                                         <Col lg={6} className="col-12">
                                             <CardTitle><h2>Waktu Kerja</h2></CardTitle>
-                                            <FormGroup>
-                                                <Input type="number" name="waktu_kerja_datang" id="waktu_kerja_datang" />
-                                            </FormGroup>
+                                            <Carousel activeIndex={activeIndex} next={this.next} interval={false} previous={this.previous}>
+                                                {slides}
+                                                <CarouselControl style={{ backgroundImage: `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"` }} direction="prev" directionText="Previous" onClickHandler={this.previous} />
+                                                <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
+                                            </Carousel>
+                                            <h1 className="text-center display-4 font-weight-bold">Jam</h1>
                                         </Col>
                                         <Col lg={6} className="col-12">
                                             <CardTitle><h2>Hari Kerja</h2></CardTitle>
@@ -67,7 +110,7 @@ class JamKerja extends React.Component {
                                             })}
                                         </Col>
                                         <Col lg={12} className="col-12">
-                                            <Button color="primary" >Atur jam Kerja</Button>
+                                            <Button onClick={this.handleSubmit} color="primary" >Atur jam Kerja</Button>
                                         </Col>
                                     </Row>
                                 </CardBody>

@@ -33,6 +33,7 @@ import {
     InputGroup,
     InputGroupAddon,
     InputGroupButtonDropdown,
+
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
@@ -64,7 +65,7 @@ class Profile extends React.Component {
         if (password === 'current') {
             this.setState({ currentPasswordType: !this.state.currentPasswordType });
         }
-        else if ( password === 'new' ) {
+        else if (password === 'new') {
             this.setState({ newPasswordType: !this.state.newPasswordType });
         }
         else {
@@ -87,7 +88,7 @@ class Profile extends React.Component {
                 )
             })
             .catch(err => {
-                if ( err.response.status === 422 ) {
+                if (err.response.status === 422) {
                     Swal.fire(
                         'Gagal!',
                         'Password lama anda salah!',
@@ -121,7 +122,7 @@ class Profile extends React.Component {
             name: 'passwordConfirm',
             exclusive: false,
             message,
-            test: function(value) { return value === this.resolve(Yup.ref('new_password')) }
+            test: function (value) { return value === this.resolve(Yup.ref('new_password')) }
         }));
 
         const changePasswordSchema = Yup.object().shape({
@@ -152,16 +153,16 @@ class Profile extends React.Component {
                                                 style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
                                                 src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
                                             /> : (
-                                                <div 
-                                                    className="d-flex justify-content-center align-items-center" style={{ 
-                                                        width: '200px', 
-                                                        height: '200px', 
-                                                        border: '6px solid #eee' 
-                                                    }}
-                                                >
-                                                    <Loading />
-                                                </div>
-                                            )}
+                                                    <div
+                                                        className="d-flex justify-content-center align-items-center" style={{
+                                                            width: '200px',
+                                                            height: '200px',
+                                                            border: '6px solid #eee'
+                                                        }}
+                                                    >
+                                                        <Loading />
+                                                    </div>
+                                                )}
                                         </Col>
                                         <Col className="col-12">
                                             <Button onClick={this.toggleModal} style={{ marginTop: "1rem" }} color="primary" size="md">Ubah Gambar Profile</Button>
@@ -235,7 +236,7 @@ class Profile extends React.Component {
                                                     </FormGroup>
                                                 </Col>
                                                 <Col lg={12}>
-                                                <FormGroup>
+                                                    <FormGroup>
                                                         <label className="form-control-label" htmlFor="input-new-password">
                                                             Password Baru
                                                         </label>
