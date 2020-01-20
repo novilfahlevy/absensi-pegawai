@@ -149,7 +149,7 @@ class Profile extends React.Component {
                                                 alt="..."
                                                 height="200"
                                                 width="200"
-                                                className="rounded"
+                                                className="rounded-circle"
                                                 style={{ border: "6px solid #eee", backgroundSize: "cover", objectFit: "cover" }}
                                                 src={`http://127.0.0.1:8000/storage/profiles/${user.profile}`}
                                             /> : (
@@ -157,7 +157,8 @@ class Profile extends React.Component {
                                                         className="d-flex justify-content-center align-items-center" style={{
                                                             width: '200px',
                                                             height: '200px',
-                                                            border: '6px solid #eee'
+                                                            border: '6px solid #eee',
+                                                            borderRadius: "50%"
                                                         }}
                                                     >
                                                         <Loading />

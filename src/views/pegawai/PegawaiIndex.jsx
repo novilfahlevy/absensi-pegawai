@@ -20,7 +20,8 @@ import {
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    Form
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.jsx";
@@ -40,7 +41,8 @@ class PegawaiIndex extends React.Component {
         pegawai: [],
         modalIsOpen: false,
         editModalIsOpen: false,
-        pegawaiEdited: null
+        pegawaiEdited: null,
+        cariPegawaiKeyword: ''
     }
     toggleModal = () => {
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
@@ -121,6 +123,15 @@ class PegawaiIndex extends React.Component {
             }
         })
     }
+    handleCariChange = e => {
+        this.setState({ cariPegawaiKeyword: e.target.value })
+    }
+    handleCariSubmit = e => {
+        e.preventDefault();
+        API().get(`user/cari/${this.state.cariPegawaiKeyword}`)
+            .then(res => this.setState({ pegawai: res.data.data }))
+            .catch(err => console.log(err))
+    }
     componentDidMount() {
         this.getDataPegawai();
     }
@@ -160,12 +171,14 @@ class PegawaiIndex extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <InputGroup className="mb-3">
-                                        <Input type="search" name="search" id="search" placeholder="Cari pegawai" />
-                                        <InputGroupAddon addonType="append">
-                                            <Button color="primary">Cari</Button>
-                                        </InputGroupAddon>
-                                    </InputGroup>
+                                    <Form onSubmit={this.handleCariSubmit}>
+                                        <InputGroup className="mb-3">
+                                            <Input onChange={this.handleCariChange} type="search" name="search" id="search" placeholder="Cari pegawai" />
+                                            <InputGroupAddon addonType="append">
+                                                <Button disabled={this.state.cariPegawaiKeyword === '' ? true : false} type="submit" color="primary">Cari</Button>
+                                            </InputGroupAddon>
+                                        </InputGroup>
+                                    </Form>
                                     <Table data={pegawai} columns={columns}></Table>
                                 </CardBody>
                             </Card>

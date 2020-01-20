@@ -19,7 +19,7 @@ import Loading from 'components/ui/Loading.jsx';
 const remoteTable = (props) => {
   const NoDataIndication = () => (
     <div className="m-3" style={{ color: '#b2b2b2' }}>
-      <Loading />
+      <p className="text-center">Tidak ada data...</p>
     </div>
   );
 
@@ -38,9 +38,9 @@ const remoteTable = (props) => {
       loading={props.isLoaded}
       noDataIndication={() => <NoDataIndication />}
       pagination={paginationFactory({
-        page: Math.ceil(props.data.length / 5),
+        page: Math.ceil((props.data ? props.data.length : 1) / 5),
         sizePerPage: 5,
-        totalSize: props.data.length,
+        totalSize: (props.data ? props.data.length : 1),
         sizePerPageList: [{
           text: '5', value: 5
         }, {
@@ -48,7 +48,7 @@ const remoteTable = (props) => {
         }, {
           text: '20', value: 20
         }, {
-          text: 'Tampilkan Semua', value: props.data.length
+          text: 'Tampilkan Semua', value: (props.data ? props.data.length : 0)
         }]
       })}
       filter={filterFactory()}
