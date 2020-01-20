@@ -128,9 +128,15 @@ class PegawaiIndex extends React.Component {
     }
     handleCariSubmit = e => {
         e.preventDefault();
-        API().get(`user/cari/${this.state.cariPegawaiKeyword}`)
-            .then(res => this.setState({ pegawai: res.data.data }))
-            .catch(err => console.log(err))
+        if (this.state.cariPegawaiKeyword === '') {
+            this.getDataPegawai();
+        } else {
+            API().get(`user/cari/${this.state.cariPegawaiKeyword}`)
+                .then(res => this.setState({ pegawai: res.data.data }))
+                .catch(err => console.log(err))
+        }
+
+
     }
     componentDidMount() {
         this.getDataPegawai();
@@ -175,7 +181,7 @@ class PegawaiIndex extends React.Component {
                                         <InputGroup className="mb-3">
                                             <Input onChange={this.handleCariChange} type="search" name="search" id="search" placeholder="Cari pegawai" />
                                             <InputGroupAddon addonType="append">
-                                                <Button disabled={this.state.cariPegawaiKeyword === '' ? true : false} type="submit" color="primary">Cari</Button>
+                                                <Button type="submit" color="primary">Cari</Button>
                                             </InputGroupAddon>
                                         </InputGroup>
                                     </Form>
