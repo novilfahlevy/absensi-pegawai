@@ -256,11 +256,11 @@ class Profile extends React.Component {
                                                 </Col>
                                                 <Col lg={12}>
                                                     <FormGroup>
-                                                        <label className="form-control-label" htmlFor="input-new-password">
+                                                        <label className="form-control-label" htmlFor="input-new-password-confirmation">
                                                             Konfirmasi Password Baru
                                                         </label>
                                                         <InputGroup>
-                                                            <Input onChange={handleChange} value={values.new_password_confirmation} name="new_password_confirmation" type={this.state.newPasswordConfirmationType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password" placeholder="Masukan ulang password baru..." />
+                                                            <Input onChange={handleChange} value={values.new_password_confirmation} name="new_password_confirmation" type={this.state.newPasswordConfirmationType ? 'password' : 'text'} className="form-control-alternative" id="input-new-password-confirmation" placeholder="Masukan ulang password baru..." />
                                                             <InputGroupAddon addonType="append">
                                                                 <Button type="button" color="primary" name="button-1" onClick={() => this.togglePasswordType('confirmation')}>
                                                                     <i className={`fas fa-eye${!this.state.newPasswordConfirmationType ? '-slash' : ''} text-white`}></i>
