@@ -8,10 +8,8 @@ import LoadingButton from 'components/ui/LoadingButton.jsx';
 
 class PegawaiForm extends Component {
     state = {
-        modal: false,
         isLoading: false
     }
-    toggle = () => this.setState({ modal: !this.state.modal });
     render() {
         const AddPegawaiSchema = Yup.object().shape({
             name: Yup.string()

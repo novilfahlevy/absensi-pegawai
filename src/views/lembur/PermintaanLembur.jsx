@@ -12,6 +12,9 @@ import {
   Button,
   CardText,
   CardTitle,
+  Modal,
+  ModalHeader,
+  ModalBody
 } from 'reactstrap';
 
 import { withRouter, Link } from 'react-router-dom';
@@ -26,47 +29,40 @@ class PermintaanLembur extends React.Component {
     }
     return (
       <>
-        <Header />
-        <Container className="mt--7">
-          <Row>
-            <Col>
-              <Card>
-                <CardHeader>
-                  <h2 className="m-0">Permintaan Lembur</h2>
-                </CardHeader>
-                <CardBody>
-                  <Card body style={styles.card}>
-                    <Row>
-                      <Col lg={8} sm={12} className="col-6 col-sm-12">
-                        <CardTitle className="m-0">Fadhil Dhanendra</CardTitle>
-                        <CardText>
-                          <span className="font-weight-bold">20:00</span> - <span className="font-weight-bold">22:00</span>
-                          <span className="font-weight-bold d-block mt-2">Keterangan : </span>
-                          <p className="m-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque aliquam laudantium facilis consequatur enim vel nisi amet! Dolor, facilis corporis?</p>
-                        </CardText>
-                      </Col>
-                      <Col lg={4} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
-                        <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
-                          <Button className="w-70 h-70 bg-success text-white">
-                            <i className="fas fa-check text-white"></i>
-                          </Button>
-                        </Link>
-                        <Link className="text-white" to={``}>
-                          <Button className="w-70 h-70 bg-danger text-white">
-                            <i className="fas fa-times text-white"></i>
-                          </Button>
-                        </Link>
-                      </Col>
-                    </Row>
-                  </Card>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
+        <Modal size="lg" isOpen={this.props.modal} toggle={this.props.toggle}>
+          <ModalHeader toggle={this.props.toggle}>
+            <h2 className="m-0">Permintaan Lembur</h2>
+          </ModalHeader>
+          <ModalBody>
+            <Card body style={styles.card}>
+              <Row>
+                <Col lg={12} sm={12} className="col-6 col-sm-12">
+                  <CardTitle className="m-0">Fadhil Dhanendra</CardTitle>
+                  <CardText>
+                    <span className="font-weight-bold">20:00</span> - <span className="font-weight-bold">22:00</span>
+                    <span className="font-weight-bold d-block mt-2">Keterangan : </span>
+                    <p className="m-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque aliquam laudantium facilis consequatur enim vel nisi amet! Dolor, facilis corporis?</p>
+                  </CardText>
+                </Col>
+                <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
+                  <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
+                    <Button className="w-70 h-70 bg-success text-white">
+                      <i className="fas fa-check text-white"></i>
+                    </Button>
+                  </Link>
+                  <Link className="text-white" to={``}>
+                    <Button className="w-70 h-70 bg-danger text-white">
+                      <i className="fas fa-times text-white"></i>
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
+            </Card>
+          </ModalBody>
+        </Modal>
       </>
     );
   }
 }
 
-export default withRouter(PermintaanLembur);
+export default PermintaanLembur;

@@ -9,22 +9,26 @@ import {
   Card,
   CardBody,
   CardHeader,
+  CardTitle,
+  CardText,
   Button,
   UncontrolledDropdown,
   DropdownItem,
   DropdownMenu,
-  DropdownToggle
+  DropdownToggle,
+  Badge
 } from 'reactstrap';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
-
+import PermintaanLembur from './PermintaanLembur.jsx'
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class Lembur extends React.Component {
   state = {
+    modalIsOpen: false,
     lembur: Array(6).fill(null).map((a, i) => ({
       id: i + 1,
       tanggal: '2019-10-02',
@@ -50,6 +54,9 @@ class Lembur extends React.Component {
       )
     }))
   };
+  toggleModal = () => {
+    this.setState({ modalIsOpen: !this.state.modalIsOpen })
+  }
 
   deleteLembur = id => {
     Swal.fire({
@@ -114,20 +121,49 @@ class Lembur extends React.Component {
             <Col>
               <Card>
                 <CardHeader>
-                  <h2 className="m-0">Lembur</h2>
+                  <Row className="align-items-center">
+                    <Col xs="8">
+                      <h2 className="mb-0">Lembur</h2>
+                    </Col>
+                    <Col className="text-right" xs="4">
+                      <Button color="primary" onClick={this.toggleModal} size="md">
+                        Permintaan Lembur
+                      </Button>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <BootstrapTable
-                    keyField="id"
-                    columns={columns}
-                    data={this.state.lembur}
-                  // pagination={paginationFactory()}
-                  />
+                  <Card body>
+                    <Row>
+                      <Col lg={12} sm={12} className="col-6 col-sm-12">
+                        <CardTitle className="mb-2">
+                          <Row>
+                            <Col lg={8}>
+                              <h2>Fadhil Dhanendra</h2>
+                            </Col>
+                            <Col lg={4} className="text-right">
+                              <span className="font-weight-bold d-block">28 Januari, 2019</span>
+                              <span className="font-weight-bold">20:00</span> - <span className="font-weight-bold">22:00</span>
+                            </Col>
+                          </Row>
+                        </CardTitle>
+                        <CardText>
+                          <span className="font-weight-bold d-block mt-lg-4">Keterangan : </span>
+                          <p className="m-0">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque aliquam laudantium facilis consequatur enim vel nisi amet! Dolor, facilis corporis?</p>
+                        </CardText>
+                      </Col>
+                      <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
+                        <h2><Badge href="#" color="danger">Ditolak</Badge></h2>
+                      </Col>
+                    </Row>
+                  </Card>
                 </CardBody>
               </Card>
             </Col>
           </Row>
+          <PermintaanLembur modal={this.state.modalIsOpen} toggle={this.toggleModal} />
         </Container>
+
       </>
     );
   }
