@@ -27,10 +27,7 @@ class EditPegawaiForm extends Component {
               .required('Nama tidak boleh kosong.'),
             email: Yup.string()
               .email('Email tidak valid.')
-              .required('Email harus diisi.'),
-            password: Yup.string()
-              .min(8, 'Password minimal harus berisi 8 karakter.')
-              .required('Password tidak boleh kosong.'),
+              .required('Email harus diisi.')
         })
 
         return (
@@ -44,8 +41,7 @@ class EditPegawaiForm extends Component {
                                 <Formik
                                 initialValues={{
                                     name: this.state.pegawai.name,
-                                    email: this.state.pegawai.email,
-                                    password: ''
+                                    email: this.state.pegawai.email
                                 }}
                                 validationSchema={EditPegawaiSchema}
                                 onSubmit={data => {
@@ -75,15 +71,6 @@ class EditPegawaiForm extends Component {
                                                 <Input nvalid={errors.email && touched.email ? true : false} onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
                                                 {errors.email && touched.email ? (
                                                     <FormFeedback className="d-block">{errors.email}</FormFeedback>
-                                                ) : null}
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <label className="form-control-label" htmlFor="input-password">
-                                                    Password
-                                                </label>
-                                                <Input onChange={handleChange} value={values.password} name="password" type="password" className="form-control-alternative" id="input-password" placeholder="Password" />
-                                                {errors.password && touched.password ? (
-                                                    <FormFeedback className="d-block">{errors.password}</FormFeedback>
                                                 ) : null}
                                             </FormGroup>
                                         <ModalFooter>
