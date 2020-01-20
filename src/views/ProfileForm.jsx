@@ -16,7 +16,12 @@ class ProfileForm extends Component {
         if ( this.state.real_file ) {
             this.setState({ isLoading: true });
             this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file }, () => {
-                this.setState({ isLoading: false }, this.props.toggle) 
+                this.setState({ 
+                    isLoading: false, 
+                    file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
+                    real_file: null,
+                    file_name: ''
+                }, this.props.toggle);
                 this.props.getData();
             }, () => this.setState({ isLoading: false }));
         }
@@ -63,7 +68,7 @@ class ProfileForm extends Component {
                                         id="change-profile-preview"
                                     />
                                     <FormGroup>
-                                        <CustomInput onChange={this.handleChange} type="file" name="new-profile" id="change-profile-source" className="mt-4" label="Pilih gambar profile" />
+                                        <CustomInput onChange={this.handleChange} type="file" name="new-profile" id="change-profile-source" className="mt-4" label="Pilih gambar profile" disabled={this.state.isLoading} />
                                         {this.state.file_name && <p className="mt-3">
                                             {this.state.file_name}
                                         </p>}
