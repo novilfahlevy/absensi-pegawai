@@ -1,5 +1,7 @@
 import React from 'react';
-
+import API from '../../store/api.js';
+import { Alert } from 'components/ui/Swalert.jsx'
+import Swal from 'sweetalert2'
 import {
     Container,
     Row,
@@ -25,10 +27,11 @@ import FadeIn from 'components/hoc/FadeIn.jsx';
 import "./../../assets/css/jamKerja.css"
 class JamKerja extends React.Component {
     state = {
-        hari_kerja: ["Senin"],
+        hari_kerja: [],
         hours: [...Array(24).keys()].map(i => i + 1),
-        days: ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
+        days: ["Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"],
         activeIndex: 0,
+        jam_kerja: 0,
         animating: false
     }
     next = () => {
@@ -46,28 +49,49 @@ class JamKerja extends React.Component {
         this.setState({ activeIndex: newIndex });
     }
 
-    handleClick = e => {
+    handleClick = day => {
         let hari_kerja = []
-        const element = document.getElementById(e.target.id)
-        if (this.state.hari_kerja.includes(e.target.value)) {
-            element.classList.remove('jam-kerja-btn-active')
+        if (this.state.hari_kerja.includes(day)) {
             hari_kerja = this.state.hari_kerja.filter(kerja => {
-                return kerja !== e.target.value
+                return kerja !== day
             });
-        } else {
-            element.classList.add('jam-kerja-btn-active')
-            hari_kerja = [...this.state.hari_kerja, e.target.value];
-        }
-        this.setState({
-            hari_kerja: hari_kerja
-        }, () => console.log(this.state.hari_kerja))
-
+        } else { hari_kerja = [...this.state.hari_kerja, day]; }
+        this.setState({ hari_kerja: hari_kerja })
     }
     handleSubmit = () => {
         const jam_kerja = document.querySelector(".carousel-item.active h1").innerHTML;
+        const data = {
+            waktu_kerja: jam_kerja,
+            hari_kerja: this.state.hari_kerja.join(', ')
+        }
+        API().post('/admin/waktuKerja', data)
+            .then(res => {
+                Swal.fire(
+                    'Berhasil!',
+                    'Jam kerja telah diganti!',
+                    'success'
+                );
+                this.getData()
+            })
+            .catch(err => {
+                console.log(err)
+                Swal.fire(
+                    'Gagal!',
+                    'Jam kerja gagal diganti!',
+                    'error'
+                );
+            })
+    }
+    getData = () => {
+        API().get('/admin/waktuKerja')
+            .then(res => {
+
+                this.setState({ hari_kerja: res.data.data[0].hari_kerja.split(", "), jam_kerja: res.data.data[0].waktu_kerja });
+            })
+            .catch(err => console.log(err))
     }
     componentDidMount() {
-        console.log(this.state)
+        this.getData()
     }
     render() {
         const { hari_kerja, days, hours, activeIndex } = this.state;
@@ -76,7 +100,7 @@ class JamKerja extends React.Component {
                 <CarouselItem onExiting={() => this.setState({ animating: true })}
                     onExited={() => this.setState({ animating: false })}
                     key={item}>
-                    <Card body >
+                    <Card body id={item}>
                         <h1>{item}</h1>
                     </Card>
                 </CarouselItem>
@@ -91,7 +115,10 @@ class JamKerja extends React.Component {
                                 <CardBody>
                                     <Row>
                                         <Col lg={6} className="col-12">
-                                            <CardTitle><h2>Waktu Kerja</h2></CardTitle>
+                                            <CardTitle>
+                                                <h2>Waktu Kerja</h2>
+                                                <h4>Jam Kerja Sekarang : {this.state.jam_kerja} Jam</h4>
+                                            </CardTitle>
                                             <Carousel activeIndex={activeIndex} next={this.next} interval={false} previous={this.previous}>
                                                 {slides}
                                                 <CarouselControl style={{ backgroundImage: `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"` }} direction="prev" directionText="Previous" onClickHandler={this.previous} />
@@ -103,14 +130,14 @@ class JamKerja extends React.Component {
                                             <CardTitle><h2>Hari Kerja</h2></CardTitle>
                                             {days.map(day => {
                                                 return (
-                                                    <Button id={day} onClick={this.handleClick} value={day} className={`w-100 ${hari_kerja.includes(day) && 'jam-kerja-btn-active'} jam-kerja-btn  text-center d-flex justify-content-center mb-3`} style={{ height: '3rem' }}>
+                                                    <Button id={day} onClick={() => this.handleClick(day)} value={day} className={`w-100 ${hari_kerja.includes(day) && 'jam-kerja-btn-active'} jam-kerja-btn  text-center d-flex justify-content-center mb-3`} style={{ height: '3rem' }}>
                                                         <h3>{day}</h3>
                                                     </Button>
                                                 )
                                             })}
                                         </Col>
                                         <Col lg={12} className="col-12">
-                                            <Button onClick={this.handleSubmit} color="primary" >Atur jam Kerja</Button>
+                                            <Button color="primary" type="button" onClick={this.handleSubmit}>Atur Jam Ke</Button>
                                         </Col>
                                     </Row>
                                 </CardBody>

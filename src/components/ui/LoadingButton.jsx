@@ -5,7 +5,7 @@ import { Button } from 'reactstrap';
 class LoadingButton extends React.Component {
   render() {
     return (
-      <Button color={this.props.color} className={`d-flex justify-content-center align-content-center ${this.props.className || ''}`} style={{ position: 'relative' }} disabled={this.props.condition || this.props.disabled}>
+      <Button type={this.props.type || "button"} color={this.props.color} className={`d-flex justify-content-center align-content-center ${this.props.className || ''}`} style={{ position: 'relative' }} disabled={this.props.condition || this.props.disabled}>
         <span style={{ opacity: this.props.condition ? 1 : 0, position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}>
           <svg xmlns="http://www.w3.org/2000/svg" style={{ 'margin': 'auto', background: 'none', display: 'block', shapeRendering: 'auto' }} width="50px" height="40px" viewBox="0 0 100 100">
             <rect x="17.5" y="30" width="15" height="40" fill="#ffffff">

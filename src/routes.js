@@ -26,7 +26,7 @@ import Dashboard from 'views/dashboard/Dashboard.jsx'
 import JamKerja from 'views/jam-kerja/JamKerja.jsx';
 import PegawaiIndex from 'views/pegawai/PegawaiIndex.jsx';
 import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
-
+import LaporanPegawai from 'views/pegawai/LaporanPegawai.jsx';
 var routes = [
   {
     path: "/index",
@@ -57,6 +57,13 @@ var routes = [
     name: "Detail Pegawai",
     icon: "fas fa-user-tie",
     component: PegawaiDetails,
+    layout: "/admin",
+    isActive: false
+  }, {
+    path: "/laporan-pegawai",
+    name: "Laporan Pegawai",
+    icon: "",
+    component: LaporanPegawai,
     layout: "/admin",
     isActive: false
   },

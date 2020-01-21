@@ -212,12 +212,15 @@ class PegawaiIndex extends React.Component {
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
-                                        <Col xs="8">
+                                        <Col xs="6">
                                             <h2 className="mb-0">Daftar Pegawai</h2>
                                         </Col>
-                                        <Col className="text-right" xs="4">
+                                        <Col className="text-right" xs="6">
                                             <Button color="primary" onClick={this.toggleModal} size="md">
                                                 Tambah Pegawai
+                                            </Button>
+                                            <Button color="success" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
+                                                Laporan Pegawai
                                             </Button>
                                         </Col>
                                     </Row>

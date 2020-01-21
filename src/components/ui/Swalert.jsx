@@ -3,13 +3,14 @@ import Swal from 'sweetalert2';
 
 /*
   Contoh:
-  <Alert type="danger" text="Gagal!" buttonText="OK!" />  
+  <Alert type="danger" title="Gagal!" text="Gagal!" buttonText="OK!" />  
 */
 
 export class Alert extends React.Component {
   componentDidMount() {
     Swal.fire({
       html: `<h2>${this.props.text}</h2>`,
+      title: this.props.title,
       icon: this.props.type,
       confirmButtonColor: '#3085d6',
       confirmButtonText: this.props.buttonText || 'OK',
@@ -22,7 +23,7 @@ export class Alert extends React.Component {
 
 /*
   Contoh:
-  <Confirm type="success" text="Mau gak?" confirmText="Iya!" cancelText="Gak!" callback={result => alert(result)} />
+  <Confirm title="" type="success" text="Mau gak?" confirmText="Iya!" cancelText="Gak!" callback={result => alert(result)} />
 */
 
 export class Confirm extends React.Component {
@@ -30,6 +31,7 @@ export class Confirm extends React.Component {
     Swal.fire({
       html: `<h2>${this.props.text}</h2>`,
       icon: this.props.type,
+      title: this.props.title,
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonText: this.props.cancelText || 'Gak jadi!',
