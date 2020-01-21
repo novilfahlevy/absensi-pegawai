@@ -16,7 +16,7 @@
 
 */
 import React from "react";
-
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 // reactstrap components
 import {
     Button,
@@ -134,7 +134,6 @@ class Profile extends React.Component {
             current_password: Yup.string()
                 .required('Password sekarang wajib diisi!')
         })
-
         return (
             <>
                 {/* Page content */}
@@ -170,6 +169,38 @@ class Profile extends React.Component {
                                         </Col>
                                     </Row>
                                 </CardBody>
+                            </Card>
+                            <Card className="mt-4 p-4">
+                                <div style={{ width: "60%", margin: "auto" }}>
+                                    <CircularProgressbarWithChildren style={{ width: "20px" }} value={24} maxValue={100}>
+                                        <div className="text-center">
+                                            <h1>24</h1>
+                                            <span>Jam</span>
+                                        </div>
+                                    </CircularProgressbarWithChildren>
+                                </div>
+                                <Row>
+                                    <Col lg={6}>
+                                        <div style={{ margin: "auto" }}>
+                                            <CircularProgressbarWithChildren value={24} maxValue={100} styles={{ path: { stroke: '#FFD600' } }}>
+                                                <div className="text-center">
+                                                    <h1>10x</h1>
+                                                    <span>Lembur</span>
+                                                </div>
+                                            </CircularProgressbarWithChildren>
+                                        </div>
+                                    </Col>
+                                    <Col lg={6}>
+                                        <div style={{ margin: "auto" }}>
+                                            <CircularProgressbarWithChildren value={24} maxValue={100} styles={{ path: { stroke: '#F53A5F' } }}>
+                                                <div className="text-center">
+                                                    <h1>7x</h1>
+                                                    <span>Terlambat</span>
+                                                </div>
+                                            </CircularProgressbarWithChildren>
+                                        </div>
+                                    </Col>
+                                </Row>
                             </Card>
                         </Col>
                         <Col className="order-xl-1" xl="8">

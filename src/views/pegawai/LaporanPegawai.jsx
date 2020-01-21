@@ -2,6 +2,9 @@ import React from 'react';
 import PieChart from './../../components/ui/PieChart.jsx';
 import { Bar, Line } from 'react-chartjs-2'
 import Header from "components/Headers/Header.jsx";
+import Table from 'components/ui/Table.jsx';
+import { selectFilter } from 'react-bootstrap-table2-filter';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 import {
     Card,
     CardHeader,
@@ -25,6 +28,7 @@ import {
 } from "reactstrap";
 class LaporanPegawai extends React.Component {
     state = {
+        pegawai: [],
         line_data: {
             labels: ['January', 'February', 'March',
                 'April', 'May'],
@@ -61,9 +65,22 @@ class LaporanPegawai extends React.Component {
         }
     }
     render() {
+        const columns = [{
+            dataField: 'name',
+            text: 'Nama',
+            sort: true
+        }, {
+            dataField: 'email',
+            text: 'Email'
+        }, {
+            dataField: 'actions',
+            text: 'Opsi',
+            headerStyle: { width: '110px', textAlign: 'center' },
+            align: 'center'
+        }];
+        const { pegawai } = this.state
         return (
             <>
-                <Header />
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     {/* Table */}
@@ -86,7 +103,7 @@ class LaporanPegawai extends React.Component {
                             </Card>
                             <Row className="mt-4">
                                 <Col lg={6} sm={6}>
-                                    <Card>
+                                    <Card className="shadow">
                                         <CardHeader>
                                             <h3 className="mb-0"> Jam Kerja Pegawai</h3>
                                         </CardHeader>
@@ -103,7 +120,7 @@ class LaporanPegawai extends React.Component {
                                     </Card>
                                 </Col>
                                 <Col lg={6} sm={6}>
-                                    <Card>
+                                    <Card className="shadow">
                                         <CardHeader>
                                             <h3 className="mb-0">Status Kehadiran Pegawai</h3>
                                         </CardHeader>
@@ -115,7 +132,14 @@ class LaporanPegawai extends React.Component {
                             </Row>
                             <Row>
                                 <Col className="col-12">
-                                    <Card></Card>
+                                    <Card className="shadow mt-4">
+                                        <CardHeader className="border-0">
+                                            <h2 className="mb-0">Data Jam Kerja Pegawai</h2>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <Table data={pegawai} columns={columns}></Table>
+                                        </CardBody>
+                                    </Card>
                                 </Col>
                             </Row>
                         </div>
@@ -127,4 +151,4 @@ class LaporanPegawai extends React.Component {
     }
 }
 
-export default LaporanPegawai;
+export default FadeIn(LaporanPegawai, Header);
