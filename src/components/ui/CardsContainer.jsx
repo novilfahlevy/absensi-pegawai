@@ -23,32 +23,32 @@ class CardsContainer extends React.Component {
     }
   };
 
-  
+
   componentDidMount() {
-    if ( this.props.paginationLimit ) {
+    if (this.props.paginationLimit) {
       this.setState({ pagination: { ...this.state.pagination, limit: this.props.paginationLimit } });
     }
-    
-    this.setState({ 
-      pagination: { 
-        ...this.state.pagination, 
-        totalPage: Math.ceil(this.props.data.length / this.state.pagination.limit) || 1 
-      } 
+
+    this.setState({
+      pagination: {
+        ...this.state.pagination,
+        totalPage: Math.ceil(this.props.data.length / this.state.pagination.limit) || 1
+      }
     });
   }
 
   changeLimit = limit => {
-    this.setState({ 
-      pagination: { 
+    this.setState({
+      pagination: {
         ...this.state.pagination,
         limit,
         start: 0
-      } 
-    }, () => this.setState({ 
-      pagination: { 
-        ...this.state.pagination, 
-        totalPage: Math.ceil(this.props.data.length / this.state.pagination.limit) || 1 
-      } 
+      }
+    }, () => this.setState({
+      pagination: {
+        ...this.state.pagination,
+        totalPage: Math.ceil(this.props.data.length / this.state.pagination.limit) || 1
+      }
     }));
   }
 
@@ -62,10 +62,10 @@ class CardsContainer extends React.Component {
       }
     });
   }
-  
+
   nextPage = () => {
     const { start, limit } = this.state.pagination;
-  
+
     this.setState({
       pagination: {
         ...this.state.pagination,
@@ -102,7 +102,7 @@ class CardsContainer extends React.Component {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Col>
-          <Col sm="6">
+          <Col sm="6" className="d-flex justify-content-end">
             <Pagination>
               <PaginationItem disabled={(start / limit + 1) <= 1}>
                 <PaginationLink previous onClick={e => { e.preventDefault(); this.prevPage(); }} />
