@@ -50,7 +50,7 @@ class Login extends React.Component {
 
   render() {
     const loginSchema = Yup.object().shape({
-      email: Yup.string().required('Email harus diisi').email('Email tidak valid'),
+      keyword: Yup.string().required('Tolong masukan email atau username anda'),
       password: Yup.string().required('Password harus diisi')
     })
 
@@ -61,7 +61,7 @@ class Login extends React.Component {
             <CardBody className="px-lg-5 py-5 py-lg-5">
               {this.props.isLoginError && <Alert color="danger">{this.props.errorMessage}</Alert>}
               <Formik 
-                initialValues={{ email: '', password: '' }}
+                initialValues={{ keyword: '', password: '' }}
                 validationSchema={loginSchema}
                 role="form" 
                 onSubmit={this.handleSubmit}
@@ -73,12 +73,12 @@ class Login extends React.Component {
                         <InputGroup className="input-group-alternative">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="ni ni-email-83" />
+                              <i className="fas fa-user" />
                             </InputGroupText>
                           </InputGroupAddon>
-                          <Input placeholder="Email" name="email" id="email" type="text" onChange={handleChange} />
+                          <Input placeholder="Email atau username" name="keyword" id="keyword" type="text" onChange={handleChange} />
                         </InputGroup>
-                        { errors.email && touched.email ? <FormFeedback className="d-block mt-1">{errors.email}</FormFeedback> : null }
+                        { errors.keyword && touched.keyword ? <FormFeedback className="d-block mt-1">{errors.keyword}</FormFeedback> : null }
                       </FormGroup>
                       <FormGroup>
                         <InputGroup className="input-group-alternative">
