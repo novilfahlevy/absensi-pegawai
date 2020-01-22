@@ -30,7 +30,7 @@ import {
 } from "reactstrap";
 class LaporanPegawai extends React.Component {
     state = {
-        pegawai: [],
+        pegawai: [{}],
         bulan_sekarang: null,
         statusPegawai: null,
         total_jam_per_bulan: null
@@ -40,9 +40,10 @@ class LaporanPegawai extends React.Component {
             .then(res => {
                 const { data } = res.data;
                 this.setState({
+                    pegawai: data.total_jam_pegawai,
                     total_jam_per_bulan: data.total_jam_per_bulan,
                     statusPegawai: [data.status_pegawai.terlambat, data.status_pegawai.tepat_waktu, data.status_pegawai.overwork]
-                })
+                }, () => console.log(this.state.pegawai))
             })
             .catch(err => console.log(err))
     }
@@ -52,13 +53,25 @@ class LaporanPegawai extends React.Component {
             text: 'Nama',
             sort: true
         }, {
-            dataField: 'email',
-            text: 'Email'
+            dataField: 'minggu1',
+            text: 'Minggu 1  (Jam)',
+            align: 'center',
+            sort: true
         }, {
-            dataField: 'actions',
-            text: 'Opsi',
-            headerStyle: { width: '110px', textAlign: 'center' },
-            align: 'center'
+            dataField: 'minggu2',
+            text: 'Minggu 2 (Jam)',
+            align: 'center',
+            sort: true
+        }, {
+            dataField: 'minggu3',
+            text: 'Minggu 3 (Jam)',
+            align: 'center',
+            sort: true
+        }, {
+            dataField: 'minggu4',
+            text: 'Minggu 4 (Jam)',
+            align: 'center',
+            sort: true
         }];
         const { pegawai } = this.state
         const line_data = {

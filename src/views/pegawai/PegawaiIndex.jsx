@@ -95,6 +95,7 @@ class PegawaiIndex extends React.Component {
     getDataPegawai = () => {
         API().get('user')
             .then(res => {
+                console.log(res);
                 this.setState({ pegawai: res.data.user })
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
@@ -103,6 +104,7 @@ class PegawaiIndex extends React.Component {
                         };
                     })
                 })
+                console.log(this.state)
             })
             .catch(err => console.log(err))
     }

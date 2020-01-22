@@ -17,6 +17,7 @@
 */
 import React from "react";
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import moment from 'moment'
 // reactstrap components
 import {
     Button,
@@ -108,7 +109,7 @@ class Profile extends React.Component {
     getData = () => {
         API().get(`user/${this.props.user_id}`)
             .then(res => {
-                this.setState({ user: res.data.user });
+                this.setState({ user: res.data.user }, () => console.log(this.state.user.jam_kerja.performance));
             })
             .catch(err => console.log(err))
     }
@@ -172,32 +173,32 @@ class Profile extends React.Component {
                             </Card>
                             <Card className="mt-4 p-4">
                                 <div style={{ width: "60%", margin: "auto" }}>
-                                    <CircularProgressbarWithChildren style={{ width: "20px" }} value={24} maxValue={208}>
+                                    {user.jam_kerja ? <CircularProgressbarWithChildren style={{ width: "20px" }} value={user.jam_kerja.performance.total_jam_per_minggu} maxValue={8 * moment().daysInMonth()}>
                                         <div className="text-center">
-                                            <h1>24</h1>
+                                            <h1>{user.jam_kerja.performance.total_jam_per_minggu} / {8 * moment().daysInMonth()}</h1>
                                             <span>Jam</span>
                                         </div>
-                                    </CircularProgressbarWithChildren>
+                                    </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                 </div>
                                 <Row>
                                     <Col lg={6}>
                                         <div style={{ margin: "auto" }}>
-                                            <CircularProgressbarWithChildren value={24} maxValue={100} styles={{ path: { stroke: '#FFD600' } }}>
+                                            {user.jam_kerja ? <CircularProgressbarWithChildren value={user.jam_kerja.performance.total_lembur} maxValue={moment().daysInMonth()} styles={{ path: { stroke: '#FFD600' } }}>
                                                 <div className="text-center">
-                                                    <h1>10x</h1>
+                                                    <h1>{user.jam_kerja.performance.total_lembur}x</h1>
                                                     <span>Lembur</span>
                                                 </div>
-                                            </CircularProgressbarWithChildren>
+                                            </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                         </div>
                                     </Col>
                                     <Col lg={6}>
                                         <div style={{ margin: "auto" }}>
-                                            <CircularProgressbarWithChildren value={24} maxValue={100} styles={{ path: { stroke: '#F53A5F' } }}>
+                                            {user.jam_kerja ? <CircularProgressbarWithChildren value={user.jam_kerja.performance.terlambat} maxValue={moment().daysInMonth()} styles={{ path: { stroke: '#F53A5F' } }}>
                                                 <div className="text-center">
-                                                    <h1>7x</h1>
+                                                    <h1>{user.jam_kerja.performance.terlambat}x</h1>
                                                     <span>Terlambat</span>
                                                 </div>
-                                            </CircularProgressbarWithChildren>
+                                            </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                         </div>
                                     </Col>
                                 </Row>
