@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 
 import { 
   Container, 
@@ -19,7 +20,6 @@ class TambahAbsensi extends React.Component {
   render() {
     return (
       <>
-        <Header />
         <Container className="mt--7">
           <Row>
             <Col md="7">
@@ -102,4 +102,4 @@ class TambahAbsensi extends React.Component {
   }
 }
 
-export default TambahAbsensi;
+export default FadeIn(TambahAbsensi, Header);

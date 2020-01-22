@@ -52,7 +52,6 @@ const remoteTable = (props) => {
         }]
       })}
       filter={filterFactory()}
-      onTableChange={props => alert(props)}
       overlay={overlayFactory(
         {
           spinner: true,
