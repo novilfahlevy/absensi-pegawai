@@ -52,6 +52,46 @@ class PegawaiIndex extends React.Component {
             this.setState({ editModalIsOpen: !this.state.editModalIsOpen });
         });
     }
+    getPegawaiOptions(id) {
+        return (
+            <>
+                <UncontrolledDropdown>
+                    <DropdownToggle size="sm">
+                        <i className="fas fa-ellipsis-v"></i>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" onClick={() => this.toggleEditModal(id)}>
+                            <i className="fas fa-pencil-alt text-success"></i>
+                            Edit
+                        </DropdownItem>
+                        <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
+                            Swal.fire({
+                                title: 'Apakah anda yakin?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Hapus',
+                                cancelButtonText: 'Gak jadi!',
+                                reverseButton: true
+                            }).then((result) => {
+                                if (result.value) {
+                                    this.props.hapusPegawai(id)
+                                }
+                            })
+                        }}>
+                            <i className="fas fa-trash-alt text-danger"></i>
+                            Hapus
+                        </DropdownItem>
+                        <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${id}`)} style={{ cursor: 'pointer' }}>
+                            <i className="fas fa-list-alt text-primary"></i>
+                            Detail
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            </>
+        )
+    }
     getDataPegawai = () => {
         API().get('user')
             .then(res => {
@@ -59,43 +99,7 @@ class PegawaiIndex extends React.Component {
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions:
-                                <>
-                                    <UncontrolledDropdown style={{ zIndex: 999 }}>
-                                        <DropdownToggle size="sm">
-                                            <i className="fas fa-ellipsis-v"></i>
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <DropdownItem style={{ cursor: 'pointer' }} size="sm" onClick={() => this.toggleEditModal(p.id)}>
-                                                <i className="fas fa-pencil-alt text-success"></i>
-                                                Edit
-                                            </DropdownItem>
-                                            <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
-                                                Swal.fire({
-                                                    title: 'Apakah anda yakin?',
-                                                    icon: 'warning',
-                                                    showCancelButton: true,
-                                                    confirmButtonColor: '#3085d6',
-                                                    cancelButtonColor: '#d33',
-                                                    confirmButtonText: 'Hapus',
-                                                    cancelButtonText: 'Gak jadi!',
-                                                    reverseButton: true
-                                                }).then((result) => {
-                                                    if (result.value) {
-                                                        this.props.hapusPegawai(p.id)
-                                                    }
-                                                })
-                                            }}>
-                                                <i className="fas fa-trash-alt text-danger"></i>
-                                                Hapus
-                                            </DropdownItem>
-                                            <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
-                                                <i className="fas fa-list-alt text-primary"></i>
-                                                Detail
-                                            </DropdownItem>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
-                                </>
+                            ...p, actions: this.getPegawaiOptions(p.id)
                         };
                     })
                 })
@@ -137,43 +141,7 @@ class PegawaiIndex extends React.Component {
                         this.setState({
                             pegawai: this.state.pegawai.map(p => {
                                 return {
-                                    ...p, actions:
-                                        <>
-                                            <UncontrolledDropdown style={{ zIndex: 999 }}>
-                                                <DropdownToggle size="sm">
-                                                    <i className="fas fa-ellipsis-v"></i>
-                                                </DropdownToggle>
-                                                <DropdownMenu right>
-                                                    <DropdownItem style={{ cursor: 'pointer' }} size="sm" onClick={() => this.toggleEditModal(p.id)}>
-                                                        <i className="fas fa-pencil-alt text-success"></i>
-                                                        Edit
-                                                    </DropdownItem>
-                                                    <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
-                                                        Swal.fire({
-                                                            title: 'Apakah anda yakin?',
-                                                            icon: 'warning',
-                                                            showCancelButton: true,
-                                                            confirmButtonColor: '#3085d6',
-                                                            cancelButtonColor: '#d33',
-                                                            confirmButtonText: 'Hapus',
-                                                            cancelButtonText: 'Gak jadi!',
-                                                            reverseButton: true
-                                                        }).then((result) => {
-                                                            if (result.value) {
-                                                                this.props.hapusPegawai(p.id)
-                                                            }
-                                                        })
-                                                    }}>
-                                                        <i className="fas fa-trash-alt text-danger"></i>
-                                                        Hapus
-                                                    </DropdownItem>
-                                                    <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
-                                                        <i className="fas fa-list-alt text-primary"></i>
-                                                        Detail
-                                                    </DropdownItem>
-                                                </DropdownMenu>
-                                            </UncontrolledDropdown>
-                                        </>
+                                    ...p, actions: this.getPegawaiOptions(p.id)
                                 };
                             })
                         })

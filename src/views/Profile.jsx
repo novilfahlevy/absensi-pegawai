@@ -172,7 +172,7 @@ class Profile extends React.Component {
                             </Card>
                             <Card className="mt-4 p-4">
                                 <div style={{ width: "60%", margin: "auto" }}>
-                                    <CircularProgressbarWithChildren style={{ width: "20px" }} value={24} maxValue={100}>
+                                    <CircularProgressbarWithChildren style={{ width: "20px" }} value={24} maxValue={208}>
                                         <div className="text-center">
                                             <h1>24</h1>
                                             <span>Jam</span>

@@ -1,11 +1,11 @@
 import api from 'store/api.js';
 import Swal from 'sweetalert2';
 
-export const login = ({ email, password }, push) => {
+export const login = ({ keyword, password }, push) => {
   return dispatch => {
     dispatch({ type: 'LOGIN_LOADING' });
 
-    api().post('/auth/login', { email, password })
+    api().post('/auth/login', { keyword, password })
     .then(response => {
       if ( response.data.status === 200 ) {
         dispatch({ type: 'LOGIN_SUCCESS' });

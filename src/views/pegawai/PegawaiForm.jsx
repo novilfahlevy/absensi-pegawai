@@ -13,11 +13,12 @@ class PegawaiForm extends Component {
     render() {
         const AddPegawaiSchema = Yup.object().shape({
             name: Yup.string()
-                .min(2, 'Too short!')
-                .required('Required'),
+                .required('Masukan nama pegawai'),
+            username: Yup.string()
+                .required('Masukan username pegawai'),
             email: Yup.string()
-                .email('Invalid email')
-                .required('Required'),
+                .email('Email tidak valid')
+                .required('Masuk email pegawai'),
         })
         return (
             <>
@@ -26,6 +27,7 @@ class PegawaiForm extends Component {
                         initialValues={{
                             name: '',
                             email: '',
+                            username: '',
                             password: ''
                         }}
                         validationSchema={AddPegawaiSchema}
@@ -48,9 +50,18 @@ class PegawaiForm extends Component {
                                         <label className="form-control-label" htmlFor="input-username">
                                             Nama
                                         </label>
-                                        <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-username" type="text" />
+                                        <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-username" type="text" placeholder="Nama" />
                                         {errors.name && touched.name ? (
                                             <FormFeedback>{errors.name}</FormFeedback>
+                                        ) : null}
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <label className="form-control-label" htmlFor="input-email">
+                                            Username
+                                        </label>
+                                        <Input nvalid={errors.username && touched.username ? true : false} onChange={handleChange} value={values.username} name="username" type="username" className="form-control-alternative" id="input-username" placeholder="Username" />
+                                        {errors.username && touched.username ? (
+                                            <FormFeedback className="d-block">{errors.username}</FormFeedback>
                                         ) : null}
                                     </FormGroup>
                                     <FormGroup>
