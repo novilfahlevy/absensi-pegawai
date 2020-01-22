@@ -31,7 +31,7 @@ class DashboardHeader extends React.Component {
               {/* Card stats */}
               <FadeIn delay="100">
                 <Row>
-                  <Col lg="6" xl="4">
+                  <Col lg="6" xl="3">
                     <Card className="card-stats mb-4 mb-xl-0">
                       <CardBody>
                         <Row>
@@ -52,27 +52,7 @@ class DashboardHeader extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
-
-                  <Col lg="6" xl="4">
-                    <Card className="card-stats mb-4 mb-xl-0">
-                      <CardBody>
-                        <Row>
-                          <div className="col">
-                            <CardTitle tag="h5" className="text-uppercase text-muted mb-0">
-                              Pegawai Lembur Hari Ini
-                            </CardTitle>
-                            <span className="h1 font-weight-bold mb-0">2</span>
-                          </div>
-                          <Col className="col-auto">
-                            <div className="icon icon-shape bg-purple text-white rounded-circle shadow">
-                              <i className="fas fa-moon" />
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col lg="6" xl="4">
+                  <Col lg="6" xl="3">
                     <Card className="card-stats mb-4 mb-xl-0">
                       <CardBody>
                         <Row>
@@ -90,6 +70,49 @@ class DashboardHeader extends React.Component {
                           <Col className="col-auto">
                             <div className="icon icon-shape bg-info text-white rounded-circle shadow">
                               <i className="far fa-list-alt" />
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="6" xl="3">
+                    <Card className="card-stats mb-4 mb-xl-0">
+                      <CardBody>
+                        <Row>
+                          <div className="col">
+                            <CardTitle
+                              tag="h5"
+                              className="text-uppercase text-muted mb-0"
+                            >
+                              Total Belum Absen Hari Ini
+                            </CardTitle>
+                            <span className="h1 font-weight-bold mb-0">
+                              11
+                            </span>
+                          </div>
+                          <Col className="col-auto">
+                            <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
+                              <i className="far fa-list-alt" />
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="6" xl="3">
+                    <Card className="card-stats mb-4 mb-xl-0">
+                      <CardBody>
+                        <Row>
+                          <div className="col">
+                            <CardTitle tag="h5" className="text-uppercase text-muted mb-0">
+                              Pegawai Lembur Hari Ini
+                            </CardTitle>
+                            <span className="h1 font-weight-bold mb-0">2</span>
+                          </div>
+                          <Col className="col-auto">
+                            <div className="icon icon-shape bg-purple text-white rounded-circle shadow">
+                              <i className="fas fa-moon" />
                             </div>
                           </Col>
                         </Row>
