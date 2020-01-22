@@ -49,14 +49,14 @@ class Absensi extends React.Component {
           foto: (
             <Row>
               <Col className="col-6">
-                <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} /> 
               </Col>
               <Col className="col-6">
                 <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
               </Col>
             </Row>
           ),
-          waktu_absensi: `${absensi.absensi_masuk} ${absensi.absensi_keluar ? ' - ' + absensi.absensi_keluar : ''}`,
+          waktu_absensi: `${absensi.absensi_masuk}${absensi.absensi_keluar ? ' - ' + absensi.absensi_keluar : ''}`,
           opsi: (
             <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.user_id}`)}>
               <span className="fas fa-eye"></span>
@@ -126,7 +126,8 @@ class Absensi extends React.Component {
         align: 'center',
         classes: 'align-middle',
         headerAlign: 'center',
-        headerClasses: 'align-middle'
+        headerClasses: 'align-middle',
+        sort: true
       },
       {
         dataField: 'keterangan',
@@ -146,7 +147,7 @@ class Absensi extends React.Component {
       },
       {
         dataField: 'opsi',
-        text: 'Opsi',
+        text: 'Detail',
         align: 'center',
         classes: 'align-middle',
         headerAlign: 'center',
@@ -164,6 +165,7 @@ class Absensi extends React.Component {
                   <h2 className="m-0">Absensi Pegawai</h2>
                 </CardHeader>
                 <CardBody>
+                  <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
                   <Table 
                     columns={columns} 
                     data={this.state.absensi}
