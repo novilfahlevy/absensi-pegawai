@@ -68,7 +68,7 @@ var routes = [
     isActive: false
   },
   {
-    path: "/detail-absensi",
+    path: "/detail-absensi/:id",
     name: "Detail Absen Pegawai",
     icon: "",
     component: DetailAbsensi,

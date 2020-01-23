@@ -8,6 +8,8 @@ import "assets/scss/argon-dashboard-react.scss";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-circular-progressbar/dist/styles.css';
 // import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import 'react-image-lightbox/style.css';
 
 import AdminLayout from "layouts/Admin.jsx";
 import AuthLayout from "layouts/Auth.jsx";

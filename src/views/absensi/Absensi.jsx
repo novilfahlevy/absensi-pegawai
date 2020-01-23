@@ -1,6 +1,9 @@
 import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
+import Table from 'components/ui/Table.jsx';
+
+import api from 'store/api.js';
 
 import { 
   Container, 
@@ -13,45 +16,56 @@ import {
   UncontrolledDropdown, 
   DropdownItem, 
   DropdownMenu, 
-  DropdownToggle 
+  DropdownToggle
 } from 'reactstrap';
 
 import { withRouter } from 'react-router-dom';
+import Lightbox from 'react-image-lightbox';
+import Radium from 'radium';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 class Absensi extends React.Component {
   state = {
-    absensi: Array(6).fill(null).map((a, i) => ({
-      id: i+1,
-      tanggal: '2019-10-02',
-      nama_pegawai: 'Muhammad Novil Fahlevy'.slice(0, 24) + "...",
-      waktu_kerja: '08:30:00 - 16:15:00',
-      total_waktu: '08:15:00',
-      opsi: (
-        <UncontrolledDropdown>
-          <DropdownToggle size="sm">
-            <i className="fas fa-ellipsis-v"></i>
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem onClick={() => this.deleteAbsen(i+1)} style={{ cursor: 'pointer' }}>
-              <i className="fas fa-trash-alt text-danger"></i>
-              Delete
-            </DropdownItem>
-            <DropdownItem onClick={() => this.props.history.push('detail-absensi')} style={{ cursor: 'pointer' }}>
-              <i className="fas fa-eye text-primary"></i>
-              View
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      ),
-      status: Math.round(Math.random())
-    }))
+    absensi: [{}],
+    absenPhotoLightbox: null
   };
+
+  toggleabsenPhotoLightbox(image) {
+    this.setState({ absenPhotoLightbox: this.state.absenPhotoLightbox ? null : image });
+  }
+
+  componentDidMount() {
+    api().get('absensi')
+      .then(response => {
+        const absensi = response.data.absensi.map(absensi => ({
+          ...absensi,
+          nama: absensi.user.name,
+          foto: (
+            <Row>
+              <Col className="col-6">
+                <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} /> 
+              </Col>
+              <Col className="col-6">
+                <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
+              </Col>
+            </Row>
+          ),
+          waktu_absensi: `${absensi.absensi_masuk}${absensi.absensi_keluar ? ' - ' + absensi.absensi_keluar : ''}`,
+          opsi: (
+            <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.user_id}`)}>
+              <span className="fas fa-eye"></span>
+            </Button>
+          )
+        }));
+        this.setState({ absensi });
+      });
+  }
 
   deleteAbsen = id => {
     Swal.fire({
@@ -80,47 +94,67 @@ class Absensi extends React.Component {
   };
 
   render() {
-    const columns = [{
-      dataField: 'id',
-      text: '#',
-      headerStyle: () => ({
-        width: '20px',
-        textAlign: 'center'
-      }),
-    }, {
-      dataField: 'tanggal',
-      text: 'Tanggal',
-      headerAlign: 'center',
-      align: 'center'
-    }, {
-      dataField: 'nama_pegawai',
-      text: 'Nama Pegawai',
-      headerAlign: 'center',
-      align: 'left'
-    }, {
-      dataField: 'waktu_kerja',
-      text: 'Waktu Kerja',
-      headerAlign: 'center',
-      align: 'center'
-    },  {
-      dataField: 'total_waktu',
-      text: 'Total Waktu',
-      headerAlign: 'center',
-      align: 'center'
-    }, {
-      dataField: 'opsi',
-      text: 'Opsi',
-      align: 'center',
-      headerStyle: () => ({
-        width: '70px',
-        textAlign: 'center'
-      }),
-    }, {
-      dataField: 'status',
-      text: 'Status',
-      hidden: true
-    }];
-
+    const columns = [
+      {
+        dataField: 'id',
+        text: '#',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle',
+        headerStyle: { width: '20px' }
+      },
+      {
+        dataField: 'nama',
+        text: 'Nama Pegawai',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle'
+      },
+      {
+        dataField: 'tanggal',
+        text: 'Tanggal',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle'
+      },
+      {
+        dataField: 'waktu_absensi',
+        text: 'Waktu Absensi',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle',
+        sort: true
+      },
+      {
+        dataField: 'keterangan',
+        text: 'Keterangan',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle'
+      },
+      {
+        dataField: 'foto',
+        text: 'Foto',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle'
+      },
+      {
+        dataField: 'opsi',
+        text: 'Detail',
+        align: 'center',
+        classes: 'align-middle',
+        headerAlign: 'center',
+        headerClasses: 'align-middle'
+      }
+    ];
+    
     return (
       <>
         <Container className="mt--7">
@@ -131,10 +165,11 @@ class Absensi extends React.Component {
                   <h2 className="m-0">Absensi Pegawai</h2>
                 </CardHeader>
                 <CardBody>
-                  <BootstrapTable 
-                    keyField="id" 
+                  <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
+                  <Table 
                     columns={columns} 
                     data={this.state.absensi}
+                    // filter={FilterFactory()}
                     // pagination={paginationFactory()}
                   />
                 </CardBody>
@@ -142,6 +177,7 @@ class Absensi extends React.Component {
             </Col>
           </Row>
         </Container>
+        {this.state.absenPhotoLightbox && <Lightbox mainSrc={this.state.absenPhotoLightbox} onCloseRequest={() => this.setState({ absenPhotoLightbox: null })} />}
       </>
     );
   }
