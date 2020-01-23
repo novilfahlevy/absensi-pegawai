@@ -29,7 +29,7 @@ import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 class Absensi extends React.Component {
   state = {
-    absensi: [{}],
+    absensi: [],
     absenPhotoLightbox: null,
     searchKeyword: '',
   };
@@ -41,7 +41,7 @@ class Absensi extends React.Component {
   getAbsensi(route) {
     api().get(route)
       .then(response => {
-        const absensi = response.data.absensi.map(absensi => ({
+        const absensi = response.data.absensi.map((absensi, i) => ({
           ...absensi,
           nama: absensi.name,
           foto: (
@@ -63,10 +63,6 @@ class Absensi extends React.Component {
         }));
         this.setState({ absensi });
       });
-  }
-
-  componentDidMount() {
-    this.getAbsensi('absensi');
   }
 
   searchAbsensiChange = e => {
@@ -121,7 +117,8 @@ class Absensi extends React.Component {
         align: 'center',
         classes: 'align-middle',
         headerAlign: 'center',
-        headerClasses: 'align-middle'
+        headerClasses: 'align-middle',
+        sort: true
       },
       {
         dataField: 'tanggal',
@@ -166,6 +163,8 @@ class Absensi extends React.Component {
       }
     ];
 
+    this.getAbsensi('absensi');
+
     return (
       <>
         <Container className="mt--7">
@@ -188,8 +187,6 @@ class Absensi extends React.Component {
                   <Table
                     columns={columns}
                     data={this.state.absensi}
-                  // filter={FilterFactory()}
-                  // pagination={paginationFactory()}
                   />
                 </CardBody>
               </Card>
