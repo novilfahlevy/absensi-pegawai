@@ -34,6 +34,10 @@ class Absensi extends React.Component {
     searchKeyword: '',
   };
 
+  componentDidMount() {
+    this.getAbsensi('absensi');
+  }
+
   toggleabsenPhotoLightbox(image) {
     this.setState({ absenPhotoLightbox: this.state.absenPhotoLightbox ? null : image });
   }
@@ -61,7 +65,7 @@ class Absensi extends React.Component {
             </Button>
           )
         }));
-        this.setState({ absensi });
+        this.setState({ absensi }, () => this.setState({ absensi: [...this.state.absensi] }));
       });
   }
 
@@ -162,8 +166,6 @@ class Absensi extends React.Component {
         headerClasses: 'align-middle'
       }
     ];
-
-    this.getAbsensi('absensi');
 
     return (
       <>
