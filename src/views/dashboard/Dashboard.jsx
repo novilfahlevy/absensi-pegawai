@@ -175,9 +175,9 @@ class Dashboard extends React.Component {
                                 <CardBody>
                                     <Row className="justify-content-center">
                                             {
-                                                !this.state.loading.pegawai_absen_tercepat ? this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map(pegawai => (
-                                                    <Col xl={12} className="col-12">
-                                                        <AbsenHariIni {...this.props} pegawai={pegawai} />
+                                                !this.state.loading.pegawai_absen_tercepat ? this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map((pegawai, id) => (
+                                                    <Col key={id} xl={12} className="col-12">
+                                                        <AbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
                                                     </Col>
                                                 )) : (
                                                     <h4 className="text-muted">Belum ada pegawai yang absen.</h4>
@@ -201,21 +201,6 @@ class Dashboard extends React.Component {
                                             </h6>
                                             <h2 className="text-white mb-0">Belum Absen Hari Ini</h2>
                                         </div>
-                                        <div className="col">
-                                            <Nav className="justify-content-end mt-3 mt-xl-0" pills>
-                                                <NavItem>
-                                                    <NavLink
-                                                        className={classnames("py-2 px-3", {
-                                                            active: this.state.activeNav === 1
-                                                        })}
-                                                        href="#pablo"
-                                                        onClick={e => this.toggleNavs(e, 1)}
-                                                    >
-                                                        Lihat Semua
-                                                    </NavLink>
-                                                </NavItem>
-                                            </Nav>
-                                        </div>
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
@@ -223,7 +208,7 @@ class Dashboard extends React.Component {
                                     {
                                         !this.state.loading.pegawai_belum_absen ? this.state.pegawai.belum_absen.length ? this.state.pegawai.belum_absen.map(pegawai => (
                                             <Col xl={12} className="col-12">
-                                                <BelumAbsenHariIni {...this.props} pegawai={pegawai} />
+                                                <BelumAbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
                                             </Col>
                                         )) : (
                                             <h4 className="text-muted">Semua pegawai sudah absen.</h4>
