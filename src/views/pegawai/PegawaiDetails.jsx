@@ -14,7 +14,7 @@ import React, { Component } from 'react';
 import Header from "components/Headers/Header.jsx";
 import API from './../../store/api.js'
 import { Bar } from 'react-chartjs-2';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Loading from 'components/ui/Loading.jsx';
 class PegawaiDetails extends Component {
     state = {
@@ -103,9 +103,9 @@ class PegawaiDetails extends Component {
                                             <h3 className="mb-0">Detail Pegawai</h3>
                                         </Col>
                                         <Col xs="4" className="text-right">
-                                            <Link to='/admin/pegawai'>
-                                                <Button size="md" color="primary"><i className="fas fa-arrow-left"></i></Button>
-                                            </Link>
+                                            <Button size="md" color="primary" onClick={() => this.props.history.goBack()}>
+                                                <i className="fas fa-arrow-left"></i>
+                                            </Button>
                                         </Col>
                                     </Row>
                                 </CardHeader>
@@ -160,4 +160,4 @@ class PegawaiDetails extends Component {
     }
 }
 
-export default PegawaiDetails
+export default withRouter(PegawaiDetails)
