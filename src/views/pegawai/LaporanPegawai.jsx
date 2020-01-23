@@ -53,23 +53,27 @@ class LaporanPegawai extends React.Component {
             text: 'Nama',
             sort: true
         }, {
-            dataField: 'minggu1',
-            text: 'Minggu 1  (Jam)',
+            dataField: 'total_terlambat',
+            text: 'Total Terlambat',
+            align: 'center',
+            headerStyle: { backgroundColor: '#ce2d2d', color: '#fff' },
+            sort: true
+        }, {
+            dataField: 'total_tepat_waktu',
+            text: 'Total Tepat Waktu',
+            headerStyle: { backgroundColor: '#2DCE89', color: '#fff' },
             align: 'center',
             sort: true
         }, {
-            dataField: 'minggu2',
-            text: 'Minggu 2 (Jam)',
+            dataField: 'total_lembur',
+            text: 'Total Lembur',
+            headerStyle: { backgroundColor: '#6b2dce', color: '#fff' },
             align: 'center',
             sort: true
         }, {
-            dataField: 'minggu3',
-            text: 'Minggu 3 (Jam)',
-            align: 'center',
-            sort: true
-        }, {
-            dataField: 'minggu4',
-            text: 'Minggu 4 (Jam)',
+            dataField: 'total_jam_kerja',
+            text: 'Total Jam Kerja',
+            headerStyle: { backgroundColor: '#ceb32d', color: '#fff' },
             align: 'center',
             sort: true
         }];
@@ -118,10 +122,14 @@ class LaporanPegawai extends React.Component {
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
-                                        <Col xs="8">
+                                        <Col xs="6">
                                             <h2 className="mb-0">Laporan Pegawai</h2>
                                         </Col>
-                                        <Col className="text-right" xs="4">
+                                        <Col className="text-right" xs="6">
+                                            <Button className="mr-2" color="success" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
+                                                <i className="fas fa-list mr-2"></i>
+                                                Lihat Lainnya
+                                            </Button>
                                             <Button color="success" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
                                                 <i className="fas fa-file mr-2"></i>
                                                 Export Laporan
