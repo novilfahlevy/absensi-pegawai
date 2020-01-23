@@ -4,7 +4,6 @@ import Header from 'components/Headers/Header.jsx';
 import Table from 'components/ui/Table.jsx';
 
 import api from 'store/api.js';
-
 import {
   Container,
   Row,
@@ -13,15 +12,14 @@ import {
   CardBody,
   CardHeader,
   Button,
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle
+  Form,
+  InputGroup,
+  Input,
+  InputGroupAddon
 } from 'reactstrap';
 
 import { withRouter } from 'react-router-dom';
 import Lightbox from 'react-image-lightbox';
-
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
@@ -32,19 +30,20 @@ import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 class Absensi extends React.Component {
   state = {
     absensi: [{}],
-    absenPhotoLightbox: null
+    absenPhotoLightbox: null,
+    searchKeyword: '',
   };
 
   toggleabsenPhotoLightbox(image) {
     this.setState({ absenPhotoLightbox: this.state.absenPhotoLightbox ? null : image });
   }
 
-  componentDidMount() {
-    api().get('absensi')
+  getAbsensi(route) {
+    api().get(route)
       .then(response => {
         const absensi = response.data.absensi.map(absensi => ({
           ...absensi,
-          nama: absensi.user.name,
+          nama: absensi.name,
           foto: (
             <Row>
               <Col className="col-6">
@@ -64,6 +63,19 @@ class Absensi extends React.Component {
         }));
         this.setState({ absensi });
       });
+  }
+
+  componentDidMount() {
+    this.getAbsensi('absensi');
+  }
+
+  searchAbsensiChange = e => {
+    this.setState({ searchKeyword: e.target.value });
+  }
+
+  searchAbsensiSubmit = e => {
+    e.preventDefault();
+    this.getAbsensi(`absensi/${this.state.searchKeyword}`);
   }
 
   deleteAbsen = id => {
@@ -164,6 +176,14 @@ class Absensi extends React.Component {
                   <h2 className="m-0">Absensi Pegawai</h2>
                 </CardHeader>
                 <CardBody>
+                  <Form onSubmit={this.searchAbsensiSubmit}>
+                    <InputGroup className="mb-3">
+                      <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} />
+                      <InputGroupAddon addonType="append">
+                        <Button type="submit" color="primary">Cari</Button>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Form>
                   <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
                   <Table
                     columns={columns}
