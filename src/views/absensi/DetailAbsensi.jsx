@@ -44,7 +44,7 @@ class DetailAbsensi extends React.Component {
   }
 
   componentDidMount() {
-    api().get(`absensi/${this.props.match.params.id}`)
+    api().get(`absensi/${this.props.match.params.id}/detail`)
       .then(response => {
         const { tanggal, absensi_masuk, absensi_keluar, keterangan } = response.data.absensi;
         this.setState({
