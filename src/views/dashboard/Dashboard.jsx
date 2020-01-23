@@ -39,20 +39,25 @@ import {
 } from "reactstrap";
 
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import api from 'store/api.js';
+import Loading from 'components/ui/Loading.jsx';
 
 // core components
 import {
     chartOptions,
     parseOptions
 } from "variables/charts.jsx";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import DashboardHeader from "components/Headers/DashboardHeader.jsx";
 import "./../../assets/css/dashboard.css"
 import { connect } from "react-redux";
 class Dashboard extends React.Component {
     state = {
         activeNav: 1,
-        chartExample1Data: "data1"
+        chartExample1Data: "data1",
+        pegawai: {
+            absen_tercepat: []
+        }
     };
     toggleNavs = (e, index) => {
         e.preventDefault();
@@ -68,10 +73,23 @@ class Dashboard extends React.Component {
         setTimeout(() => wow(), 1000);
         // this.chartReference.update();
     };
+    // componentDidMount() {
+
+    // }
     componentWillMount() {
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
         }
+        api().get('dashboard')
+            .then(response => {
+                const { pegawai_sudah_absen } = response.data.data;
+                this.setState({
+                    pegawai: {
+                        ...this.state.pegawai,
+                        absen_tercepat: pegawai_sudah_absen
+                    }
+                });
+            });
     }
     render() {
         return (
@@ -96,8 +114,8 @@ class Dashboard extends React.Component {
                                                         className={classnames("py-2 px-3", {
                                                             active: this.state.activeNav === 1
                                                         })}
-                                                        href="#pablo"
-                                                        onClick={e => this.toggleNavs(e, 1)}
+                                                        href="/"
+                                                        onClick={e => { e.preventDefault(); this.props.history.push('/admin/absensi') }}
                                                     >
                                                         Lihat Semua
                                                     </NavLink>
@@ -109,40 +127,29 @@ class Dashboard extends React.Component {
                                 <CardBody>
                                     <Row>
                                         <Col xl={12} className="col-12">
-                                            <Card body className="my-2">
-                                                <Row>
-                                                    <Col lg={8} className="col-6">
-                                                        <CardTitle className="m-0">Alisa</CardTitle>
-                                                        <CardText>
-                                                            <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">16:30</span>
-                                                        </CardText>
-                                                    </Col>
-                                                    <Col lg={4} className="col-6 text-right">
-                                                        <Link className="text-white" to={``}>
-                                                            <Button color="white" className="w-70 h-70">
+                                            {this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map(pegawai => (
+                                                <Card body className="my-2">
+                                                    <Row>
+                                                        <Col lg={8} className="col-6">
+                                                            <CardTitle className="m-0">{pegawai.name}</CardTitle>
+                                                            <CardText>
+                                                                <span className="font-weight-bold">{pegawai.absensi_masuk}</span>{pegawai.absensi_keluar && (<span className="font-weight-bold"> - {pegawai.absensi_keluar}</span>)}
+                                                            </CardText>
+                                                        </Col>
+                                                        <Col lg={4} className="col-6 text-right">
+                                                            <Button color="white" className="w-70 h-70" onClick={() => this.props.history.push(`/admin/detail-absensi/${pegawai.id}`)}>
                                                                 <i className="fas fa-eye text-primary"></i>
                                                             </Button>
-                                                        </Link>
-                                                    </Col>
-                                                </Row>
-                                            </Card>
-                                            <Card body className="my-2">
+                                                        </Col>
+                                                    </Row>
+                                                </Card>
+                                            )) : (
                                                 <Row>
-                                                    <Col lg={8} className="col-6">
-                                                        <CardTitle className="m-0">Andy Rachmat</CardTitle>
-                                                        <CardText>
-                                                            <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">17:30</span>
-                                                        </CardText>
-                                                    </Col>
-                                                    <Col lg={4} className="col-6 text-right">
-                                                        <Link className="text-white" to={``}>
-                                                            <Button color="white" className="w-70 h-70">
-                                                                <i className="fas fa-eye text-primary"></i>
-                                                            </Button>
-                                                        </Link>
+                                                    <Col className="d-flex justify-content-center">
+                                                        <Loading />
                                                     </Col>
                                                 </Row>
-                                            </Card>
+                                            )}
                                         </Col>
                                     </Row>
                                 </CardBody>
@@ -236,4 +243,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default connect()(FadeIn(Dashboard, DashboardHeader));
+export default connect()(withRouter(FadeIn(Dashboard, DashboardHeader)));
