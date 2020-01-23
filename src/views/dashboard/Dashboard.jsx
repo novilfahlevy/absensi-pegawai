@@ -52,7 +52,7 @@ import DashboardHeader from "components/Headers/DashboardHeader.jsx";
 import "./../../assets/css/dashboard.css"
 import { connect } from "react-redux";
 
-const AbsenHariIni = ({ pegawai }) => (
+const AbsenHariIni = ({ pegawai, history }) => (
     <Card body className="my-2">
         <Row>
             <Col lg={8} className="col-6">
@@ -62,7 +62,7 @@ const AbsenHariIni = ({ pegawai }) => (
                 </CardText>
             </Col>
             <Col lg={4} className="col-6 text-right">
-                <Button color="white" className="w-70 h-70" onClick={() => this.props.history.push(`/admin/detail-absensi/${pegawai.id}`)}>
+                <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-absensi/${pegawai.id}`)}>
                     <i className="fas fa-eye text-primary"></i>
                 </Button>
             </Col>
@@ -70,7 +70,7 @@ const AbsenHariIni = ({ pegawai }) => (
     </Card>
 );
 
-const BelumAbsenHariIni = ({ pegawai }) => (
+const BelumAbsenHariIni = ({ pegawai, history }) => (
     <Col lg={12} className="col-12">
         <Card className="bg-gradient-default my-2" body>
             <Row className="align-items-center">
@@ -78,7 +78,7 @@ const BelumAbsenHariIni = ({ pegawai }) => (
                     <CardTitle className="m-0"><h4 className="text-white">{pegawai.name}</h4></CardTitle>
                 </Col>
                 <Col lg={4} className="col-6 d-flex justify-content-end">
-                    <Button color="white" className="w-70 h-70" onClick={() => this.props.history.push(`/admin/detail-pegawai/${pegawai.id}}`)}>
+                    <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-pegawai/${pegawai.id}}`)}>
                         <i className="fas fa-eye text-primary"></i>
                     </Button>
                 </Col>
@@ -177,7 +177,7 @@ class Dashboard extends React.Component {
                                             {
                                                 !this.state.loading.pegawai_absen_tercepat ? this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map(pegawai => (
                                                     <Col xl={12} className="col-12">
-                                                        <AbsenHariIni pegawai={pegawai} />
+                                                        <AbsenHariIni {...this.props} pegawai={pegawai} />
                                                     </Col>
                                                 )) : (
                                                     <h4 className="text-muted">Belum ada pegawai yang absen.</h4>
@@ -223,7 +223,7 @@ class Dashboard extends React.Component {
                                     {
                                         !this.state.loading.pegawai_belum_absen ? this.state.pegawai.belum_absen.length ? this.state.pegawai.belum_absen.map(pegawai => (
                                             <Col xl={12} className="col-12">
-                                                <BelumAbsenHariIni pegawai={pegawai} />
+                                                <BelumAbsenHariIni {...this.props} pegawai={pegawai} />
                                             </Col>
                                         )) : (
                                             <h4 className="text-muted">Semua pegawai sudah absen.</h4>
