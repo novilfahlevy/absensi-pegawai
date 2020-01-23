@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import 'moment/locale/id';
 import PieChart from './../../components/ui/PieChart.jsx';
 import { Bar, Line } from 'react-chartjs-2'
 import Header from "components/Headers/Header.jsx";
@@ -26,14 +28,41 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Form
+    Form,
+    FormGroup,
+    Label
 } from "reactstrap";
 class LaporanPegawai extends React.Component {
     state = {
         pegawai: [{}],
-        bulan_sekarang: null,
         statusPegawai: null,
-        total_jam_per_bulan: null
+        total_jam_per_bulan: null,
+        bulan: 1,
+        tahun: 0,
+        data_kedua: {
+            statusPegawai: null,
+            total_jam_per_bulan: null
+        }
+    }
+    handleChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleCariClick = () => {
+        console.log(this.state);
+        API().get(`absensi/laporan/cari/${this.state.bulan}/${this.state.tahun}`)
+            .then(res => {
+                console.log(res);
+                const { data } = res.data;
+                this.setState({
+                    data_kedua: {
+                        statusPegawai: [data.status_pegawai.terlambat, data.status_pegawai.tepat_waktu, data.status_pegawai.overwork],
+                        total_jam_per_bulan: data.total_jam_per_bulan
+                    }
+                })
+            })
+            .catch(err => console.log(err))
     }
     componentDidMount() {
         API().get('absensi/laporan')
@@ -42,8 +71,9 @@ class LaporanPegawai extends React.Component {
                 this.setState({
                     pegawai: data.total_jam_pegawai,
                     total_jam_per_bulan: data.total_jam_per_bulan,
+                    data_kedua: { total_jam_per_bulan: data.total_jam_per_bulan, statusPegawai: [data.status_pegawai.terlambat, data.status_pegawai.tepat_waktu, data.status_pegawai.overwork] },
                     statusPegawai: [data.status_pegawai.terlambat, data.status_pegawai.tepat_waktu, data.status_pegawai.overwork]
-                }, () => console.log(this.state.pegawai))
+                }, () => console.log(this.state))
             })
             .catch(err => console.log(err))
     }
@@ -78,6 +108,21 @@ class LaporanPegawai extends React.Component {
             sort: true
         }];
         const { pegawai } = this.state
+        const second_line_data = {
+            labels: ['Minggu 1', 'Minggu 2', 'Minggu 3',
+                'Minggu 4'],
+            datasets: [
+                {
+                    label: 'Total Jam',
+                    fill: true,
+                    lineTension: 0,
+                    backgroundColor: 'transparent',
+                    borderColor: '#118EEF',
+                    borderWidth: 2,
+                    data: this.state.data_kedua.total_jam_per_bulan
+                }
+            ]
+        }
         const line_data = {
             labels: ['Minggu 1', 'Minggu 2', 'Minggu 3',
                 'Minggu 4'],
@@ -93,20 +138,25 @@ class LaporanPegawai extends React.Component {
                 }
             ]
         }
+        const second_pie_data = {
+            labels: ['Terlambat', 'Tepat Waktu', 'Overwork'],
+            datasets: [
+                {
+                    label: 'Rainfall',
+                    backgroundColor: ['#F44336', '#43A047', '#FB8C00',],
+                    hoverBackgroundColor: ['#D50000', '#388E3C', '#F57C00',
+                    ],
+                    data: this.state.data_kedua.statusPegawai
+                }
+            ]
+        }
         const pie_data = {
             labels: ['Terlambat', 'Tepat Waktu', 'Overwork'],
             datasets: [
                 {
                     label: 'Rainfall',
-                    backgroundColor: [
-                        '#F44336',
-                        '#43A047',
-                        '#FB8C00',
-                    ],
-                    hoverBackgroundColor: [
-                        '#D50000',
-                        '#388E3C',
-                        '#F57C00',
+                    backgroundColor: ['#F44336', '#43A047', '#FB8C00',],
+                    hoverBackgroundColor: ['#D50000', '#388E3C', '#F57C00',
                     ],
                     data: this.state.statusPegawai
                 }
@@ -123,13 +173,9 @@ class LaporanPegawai extends React.Component {
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
                                         <Col xs="6">
-                                            <h2 className="mb-0">Laporan Pegawai</h2>
+                                            <h2 className="mb-0">Laporan Pegawai Bulan Ini ({moment().locale('id').format('MMMM')})</h2>
                                         </Col>
                                         <Col className="text-right" xs="6">
-                                            <Button className="mr-2" color="success" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
-                                                <i className="fas fa-list mr-2"></i>
-                                                Lihat Lainnya
-                                            </Button>
                                             <Button color="success" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
                                                 <i className="fas fa-file mr-2"></i>
                                                 Export Laporan
@@ -163,6 +209,69 @@ class LaporanPegawai extends React.Component {
                                         </CardHeader>
                                         <CardBody className="p-4">
                                             {this.state.statusPegawai == null ? <div className="d-flex justify-content-center"><Loading /></div> : <PieChart data={pie_data} title={"something"} />}
+                                        </CardBody>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="col-12">
+                                    <Card className="shadow mt-4">
+                                        <CardHeader className="border-0">
+                                            <h2 className="mb-0">Cari Data Per Bulan Lainnya</h2>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <Row>
+                                                <Col className="col-4">
+                                                    <Row>
+                                                        <Col className="col-6">
+                                                            <FormGroup>
+                                                                <Label for="exampleSelect">Pilih Bulan</Label>
+                                                                <Input type="select" name="bulan" id="exampleSelect" onChange={this.handleChange}>
+                                                                    <option value="1">Januari</option>
+                                                                    <option value="2">Februari</option>
+                                                                    <option value="3">Maret</option>
+                                                                    <option value="4">April</option>
+                                                                    <option value="5">Mei</option>
+                                                                    <option value="6">Juni</option>
+                                                                    <option value="7">Juli</option>
+                                                                    <option value="8">Agustus</option>
+                                                                    <option value="9">September</option>
+                                                                    <option value="10">Oktober</option>
+                                                                    <option value="11">November</option>
+                                                                    <option value="12">Desember</option>
+                                                                </Input>
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col className="col-6">
+                                                            <FormGroup>
+                                                                <Label for="exampleSelect">Masukkan Tahun</Label>
+                                                                <Input type="number" name="tahun" id="exampleSelect" onChange={this.handleChange} />
+                                                            </FormGroup>
+                                                        </Col>
+                                                        <Col className="col-12 mb-2">
+                                                            <Button onClick={this.handleCariClick} disabled={this.state.data_kedua.bulan === 0 && this.state.data_kedua.tahun === 0 ? true : false} color="primary" className="w-100" size="md">
+                                                                <i className="fas fa-search mr-2"></i>
+                                                                Cari
+                                                                </Button>
+                                                        </Col>
+                                                        <Col className="col-12">
+                                                            <Button disabled={this.state.data_kedua.bulan === 0 && this.state.data_kedua.tahun === 0 ? true : false} color="success" className="w-100" size="md">
+                                                                <i className="fas fa-file mr-2"></i>
+                                                                Export Laporan
+                                                                </Button>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                                <Col className="col-4">{this.state.data_kedua.total_jam_per_bulan == null ? <div className="d-flex justify-content-center"><Loading /></div> : <Line
+                                                    data={second_line_data}
+                                                    options={{
+                                                        legend: {
+                                                            display: false,
+                                                        }
+                                                    }}
+                                                />}</Col>
+                                                <Col className="col-4"> {this.state.data_kedua.statusPegawai == null ? <div className="d-flex justify-content-center"><Loading /></div> : <PieChart data={second_pie_data} title={"something"} />}</Col>
+                                            </Row>
                                         </CardBody>
                                     </Card>
                                 </Col>

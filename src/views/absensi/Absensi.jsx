@@ -5,23 +5,22 @@ import Table from 'components/ui/Table.jsx';
 
 import api from 'store/api.js';
 
-import { 
-  Container, 
-  Row, 
-  Col, 
-  Card, 
-  CardBody, 
-  CardHeader, 
-  Button, 
-  UncontrolledDropdown, 
-  DropdownItem, 
-  DropdownMenu, 
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardHeader,
+  Button,
+  UncontrolledDropdown,
+  DropdownItem,
+  DropdownMenu,
   DropdownToggle
 } from 'reactstrap';
 
 import { withRouter } from 'react-router-dom';
 import Lightbox from 'react-image-lightbox';
-import Radium from 'radium';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -49,7 +48,7 @@ class Absensi extends React.Component {
           foto: (
             <Row>
               <Col className="col-6">
-                <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} /> 
+                <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
               </Col>
               <Col className="col-6">
                 <img key={absensi.id} src={`http://127.0.0.1:8000/storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`http://127.0.0.1:8000/storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
@@ -79,17 +78,17 @@ class Absensi extends React.Component {
       cancelButtonText: 'Gak jadi!',
       reverseButton: true
     }).then((result) => {
-        if (result.value) {
-          this.setState({
-            absensi: this.state.absensi.filter(absen => absen.id !== id)
-          }, () => {
-            Swal.fire(
-              'Dihapus!',
-              'Absensi sudah dihapus.',
-              'success'
-            )
-          });
-        }
+      if (result.value) {
+        this.setState({
+          absensi: this.state.absensi.filter(absen => absen.id !== id)
+        }, () => {
+          Swal.fire(
+            'Dihapus!',
+            'Absensi sudah dihapus.',
+            'success'
+          )
+        });
+      }
     })
   };
 
@@ -154,7 +153,7 @@ class Absensi extends React.Component {
         headerClasses: 'align-middle'
       }
     ];
-    
+
     return (
       <>
         <Container className="mt--7">
@@ -166,14 +165,14 @@ class Absensi extends React.Component {
                 </CardHeader>
                 <CardBody>
                   <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
-                  <Table 
-                    columns={columns} 
+                  <Table
+                    columns={columns}
                     data={this.state.absensi}
-                    // filter={FilterFactory()}
-                    // pagination={paginationFactory()}
+                  // filter={FilterFactory()}
+                  // pagination={paginationFactory()}
                   />
                 </CardBody>
-              </Card> 
+              </Card>
             </Col>
           </Row>
         </Container>
