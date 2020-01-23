@@ -21,7 +21,6 @@ import {
 
 import { withRouter } from 'react-router-dom';
 import Lightbox from 'react-image-lightbox';
-import Radium from 'radium';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 // import paginationFactory from 'react-bootstrap-table2-paginator';

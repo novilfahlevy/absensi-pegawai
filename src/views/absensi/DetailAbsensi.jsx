@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import { withRouter } from 'react-router-dom';
 
 import { 
   Container, 
@@ -16,13 +17,55 @@ import {
   ListGroupItem
 } from 'reactstrap';
 
-class TambahAbsensi extends React.Component {
+import api from 'store/api.js';
+
+class DetailAbsensi extends React.Component {
+  state = {
+    absen: {
+      tanggal: null,
+      jam_masuk: null,
+      jam_pulang: null,
+      keterangan: null,
+      lokasi: {
+        masuk: null,
+        pulang: null
+      },
+      foto: {
+        masuk: null,
+        pulang: null
+      }
+    },
+    lembur: {
+      tanggal: null,
+      jam_mulai: null,
+      jam_selesai: null,
+      keterangan: null
+    }
+  }
+
+  componentDidMount() {
+    api().get(`absensi/${this.props.match.params.id}`)
+      .then(response => {
+        const { tanggal, absensi_masuk, absensi_keluar, keterangan } = response.data.absensi;
+        this.setState({
+          absen: {
+            tanggal,
+            jam_masuk: absensi_masuk,
+            jam_pulang: absensi_keluar,
+            keterangan
+          }
+        });
+      });
+  }
+
   render() {
+    const { tanggal, jam_masuk, jam_pulang, keterangan } = this.state.absen;
+
     return (
       <>
         <Container className="mt--7">
           <Row>
-            <Col md="7">
+            <Col>
               <Card className="mb-3">
                 <CardHeader>
                   <Row className="align-items-center">
@@ -42,39 +85,20 @@ class TambahAbsensi extends React.Component {
                       <ListGroup>
                         <ListGroupItem>
                           <h3>Tanggal</h3>
-                          <p className="m-0">2019-12-2</p>
+                          <p className="m-0">{tanggal}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Masuk</h3>
-                          <p className="m-0">7:50</p>
+                          <p className="m-0">{jam_masuk}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Pulang</h3>
-                          <p className="m-0">16:20</p>
+                          <p className="m-0">{jam_pulang}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Keterangan Absen</h3>
                           <p className="m-0">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
-                          </p>
-                        </ListGroupItem>
-                      </ListGroup>
-                    </Col>
-                    <Col className="col-12">
-                      <CardTitle><h2 className="mt-4 m-0">Keterangan Lembur</h2></CardTitle>
-                      <ListGroup>
-                        <ListGroupItem>
-                          <h3>Tanggal</h3>
-                          <p className="m-0">2019-12-2</p>
-                        </ListGroupItem>
-                        <ListGroupItem>
-                          <h3>Waktu Selesai</h3>
-                          <p className="m-0">16:20</p>
-                        </ListGroupItem>
-                        <ListGroupItem>
-                          <h3>Keterangan</h3>
-                          <p className="m-0">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia soluta voluptatum illo quidem quisquam explicabo consequuntur rerum voluptas quia reprehenderit.
+                            {keterangan}
                           </p>
                         </ListGroupItem>
                       </ListGroup>
@@ -83,15 +107,40 @@ class TambahAbsensi extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            <Col md="5">
+          </Row>
+          <Row>
+            <Col lg="6">
               <Card>
+                <CardHeader>Absen Masuk</CardHeader>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" />
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" width="100%" height="300" />
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
+                </CardBody>
+              </Card>
+            </Col>
+            <Col lg="6">
+              <Card>
+                <CardHeader>Absen Pulang</CardHeader>
+                <CardBody>
+                  <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" />
+                </CardBody>
+                <CardBody>
+                  <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
+                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Card className="mt-3">
+                <CardBody>
+                  <Button color="primary">Lihat Keterangan Lembur</Button>
                 </CardBody>
               </Card>
             </Col>
@@ -102,4 +151,4 @@ class TambahAbsensi extends React.Component {
   }
 }
 
-export default FadeIn(TambahAbsensi, Header);
+export default withRouter(FadeIn(DetailAbsensi, Header));
