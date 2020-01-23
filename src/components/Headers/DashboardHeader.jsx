@@ -20,9 +20,33 @@ import React from "react";
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import FadeIn from 'react-fade-in';
+import api from 'store/api.js';
 
 class DashboardHeader extends React.Component {
+  state = {
+    jumlah: {
+      pegawai: 0,
+      absen: 0,
+      belum_absen: 0
+    }
+  }
+
+  componentDidMount() {
+    api().get('dashboard')
+      .then(response => {
+        const { total_pegawai, total_pegawai_absen, total_pegawai_belum_absen } = response.data.data;
+        this.setState({
+          jumlah: {
+            pegawai: total_pegawai,
+            absen: total_pegawai_absen,
+            belum_absen: total_pegawai_belum_absen
+          }
+        })
+      })
+  }
+
   render() {
+    const { pegawai, absen, belum_absen } = this.state.jumlah;
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
@@ -31,7 +55,7 @@ class DashboardHeader extends React.Component {
               {/* Card stats */}
               <FadeIn delay="100">
                 <Row>
-                  <Col lg="6" xl="4">
+                  <Col lg="6" xl="3">
                     <Card className="card-stats mb-4 mb-xl-0">
                       <CardBody>
                         <Row>
@@ -40,7 +64,7 @@ class DashboardHeader extends React.Component {
                               Total Pegawai
                             </CardTitle>
                             <span className="h1 font-weight-bold mb-0">
-                              21
+                              {pegawai}
                             </span>
                           </div>
                           <Col className="col-auto">
@@ -52,8 +76,55 @@ class DashboardHeader extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
-
-                  <Col lg="6" xl="4">
+                  <Col lg="6" xl="3">
+                    <Card className="card-stats mb-4 mb-xl-0">
+                      <CardBody>
+                        <Row>
+                          <div className="col">
+                            <CardTitle
+                              tag="h5"
+                              className="text-uppercase text-muted mb-0"
+                            >
+                              Total Absen Hari Ini
+                            </CardTitle>
+                            <span className="h1 font-weight-bold mb-0">
+                              {absen}
+                            </span>
+                          </div>
+                          <Col className="col-auto">
+                            <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                              <i className="far fa-list-alt" />
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="6" xl="3">
+                    <Card className="card-stats mb-4 mb-xl-0">
+                      <CardBody>
+                        <Row>
+                          <div className="col">
+                            <CardTitle
+                              tag="h5"
+                              className="text-uppercase text-muted mb-0"
+                            >
+                              Total Belum Absen Hari Ini
+                            </CardTitle>
+                            <span className="h1 font-weight-bold mb-0">
+                              {belum_absen}
+                            </span>
+                          </div>
+                          <Col className="col-auto">
+                            <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
+                              <i className="far fa-list-alt" />
+                            </div>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg="6" xl="3">
                     <Card className="card-stats mb-4 mb-xl-0">
                       <CardBody>
                         <Row>
@@ -66,30 +137,6 @@ class DashboardHeader extends React.Component {
                           <Col className="col-auto">
                             <div className="icon icon-shape bg-purple text-white rounded-circle shadow">
                               <i className="fas fa-moon" />
-                            </div>
-                          </Col>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                  <Col lg="6" xl="4">
-                    <Card className="card-stats mb-4 mb-xl-0">
-                      <CardBody>
-                        <Row>
-                          <div className="col">
-                            <CardTitle
-                              tag="h5"
-                              className="text-uppercase text-muted mb-0"
-                            >
-                              Total Absen Hari Ini
-                            </CardTitle>
-                            <span className="h1 font-weight-bold mb-0">
-                              19
-                            </span>
-                          </div>
-                          <Col className="col-auto">
-                            <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                              <i className="far fa-list-alt" />
                             </div>
                           </Col>
                         </Row>

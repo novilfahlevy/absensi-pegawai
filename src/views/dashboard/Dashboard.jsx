@@ -39,20 +39,66 @@ import {
 } from "reactstrap";
 
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import api from 'store/api.js';
+import Loading from 'components/ui/Loading.jsx';
 
 // core components
 import {
     chartOptions,
     parseOptions
 } from "variables/charts.jsx";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import DashboardHeader from "components/Headers/DashboardHeader.jsx";
 import "./../../assets/css/dashboard.css"
 import { connect } from "react-redux";
+
+const AbsenHariIni = ({ pegawai, history }) => (
+    <Card body className="my-2">
+        <Row>
+            <Col lg={8} className="col-6">
+                <CardTitle className="m-0">{pegawai.name}</CardTitle>
+                <CardText>
+                    <span className="font-weight-bold">{pegawai.absensi_masuk}</span>{pegawai.absensi_keluar && (<span className="font-weight-bold"> - {pegawai.absensi_keluar}</span>)}
+                </CardText>
+            </Col>
+            <Col lg={4} className="col-6 text-right">
+                <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-absensi/${pegawai.id}`)}>
+                    <i className="fas fa-eye text-primary"></i>
+                </Button>
+            </Col>
+        </Row>
+    </Card>
+);
+
+const BelumAbsenHariIni = ({ pegawai, history }) => (
+    <Col lg={12} className="col-12">
+        <Card className="bg-gradient-default my-2" body>
+            <Row className="align-items-center">
+                <Col lg={8} className="col-6">
+                    <CardTitle className="m-0"><h4 className="text-white">{pegawai.name}</h4></CardTitle>
+                </Col>
+                <Col lg={4} className="col-6 d-flex justify-content-end">
+                    <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-pegawai/${pegawai.id}}`)}>
+                        <i className="fas fa-eye text-primary"></i>
+                    </Button>
+                </Col>
+            </Row>
+        </Card>
+    </Col>
+);
+
 class Dashboard extends React.Component {
     state = {
         activeNav: 1,
-        chartExample1Data: "data1"
+        chartExample1Data: "data1",
+        pegawai: {
+            absen_tercepat: [],
+            belum_absen: []
+        },
+        loading: {
+            pegawai_absen_tercepat: true,
+            pegawai_belum_absen: true
+        }
     };
     toggleNavs = (e, index) => {
         e.preventDefault();
@@ -68,10 +114,30 @@ class Dashboard extends React.Component {
         setTimeout(() => wow(), 1000);
         // this.chartReference.update();
     };
+    // componentDidMount() {
+
+    // }
     componentWillMount() {
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
         }
+        api().get('dashboard')
+            .then(response => {
+                const { pegawai_sudah_absen, pegawai_belum_absen } = response.data.data;
+                this.setState({
+                    pegawai: {
+                        ...this.state.pegawai,
+                        absen_tercepat: pegawai_sudah_absen,
+                        belum_absen: pegawai_belum_absen
+                    }
+                }, () => this.setState({
+                    loading: {
+                        ...this.state.loading,
+                        pegawai_absen_tercepat: false,
+                        pegawai_belum_absen: false
+                    }
+                }));
+            });
     }
     render() {
         return (
@@ -96,8 +162,8 @@ class Dashboard extends React.Component {
                                                         className={classnames("py-2 px-3", {
                                                             active: this.state.activeNav === 1
                                                         })}
-                                                        href="#pablo"
-                                                        onClick={e => this.toggleNavs(e, 1)}
+                                                        href="/"
+                                                        onClick={e => { e.preventDefault(); this.props.history.push('/admin/absensi') }}
                                                     >
                                                         Lihat Semua
                                                     </NavLink>
@@ -107,43 +173,20 @@ class Dashboard extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <Row>
-                                        <Col xl={12} className="col-12">
-                                            <Card body className="my-2">
-                                                <Row>
-                                                    <Col lg={8} className="col-6">
-                                                        <CardTitle className="m-0">Alisa</CardTitle>
-                                                        <CardText>
-                                                            <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">16:30</span>
-                                                        </CardText>
+                                    <Row className="justify-content-center">
+                                            {
+                                                !this.state.loading.pegawai_absen_tercepat ? this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map(pegawai => (
+                                                    <Col xl={12} className="col-12">
+                                                        <AbsenHariIni {...this.props} pegawai={pegawai} />
                                                     </Col>
-                                                    <Col lg={4} className="col-6 text-right">
-                                                        <Link className="text-white" to={``}>
-                                                            <Button color="white" className="w-70 h-70">
-                                                                <i className="fas fa-eye text-primary"></i>
-                                                            </Button>
-                                                        </Link>
+                                                )) : (
+                                                    <h4 className="text-muted">Belum ada pegawai yang absen.</h4>
+                                                ) : (
+                                                    <Col className="d-flex justify-content-center">
+                                                        <Loading />
                                                     </Col>
-                                                </Row>
-                                            </Card>
-                                            <Card body className="my-2">
-                                                <Row>
-                                                    <Col lg={8} className="col-6">
-                                                        <CardTitle className="m-0">Andy Rachmat</CardTitle>
-                                                        <CardText>
-                                                            <span className="font-weight-bold">8:30</span> - <span className="font-weight-bold">17:30</span>
-                                                        </CardText>
-                                                    </Col>
-                                                    <Col lg={4} className="col-6 text-right">
-                                                        <Link className="text-white" to={``}>
-                                                            <Button color="white" className="w-70 h-70">
-                                                                <i className="fas fa-eye text-primary"></i>
-                                                            </Button>
-                                                        </Link>
-                                                    </Col>
-                                                </Row>
-                                            </Card>
-                                        </Col>
+                                                )
+                                            }
                                     </Row>
                                 </CardBody>
                             </Card>
@@ -156,7 +199,7 @@ class Dashboard extends React.Component {
                                             <h6 className="text-uppercase text-light ls-1 mb-1">
                                                 Overview
                                             </h6>
-                                            <h2 className="text-white mb-0">Permintaan Lembur</h2>
+                                            <h2 className="text-white mb-0">Belum Absen Hari Ini</h2>
                                         </div>
                                         <div className="col">
                                             <Nav className="justify-content-end mt-3 mt-xl-0" pills>
@@ -176,53 +219,20 @@ class Dashboard extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <Row>
-                                        <Col lg={12} className="col-12">
-                                            <Card className="bg-gradient-default text-white my-2" body>
-                                                <Row>
-                                                    <Col lg={8} className="col-6">
-                                                        <CardTitle className="m-0">Bayu Setiawan</CardTitle>
-                                                        <CardText>
-                                                            Sampai Jam <span className="font-weight-bold">17:30</span>
-                                                        </CardText>
-                                                    </Col>
-                                                    <Col lg={4} className="col-6 d-flex justify-content-end align-items-center">
-                                                        <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
-                                                            <Button className="w-70 h-70 bg-success text-white">
-                                                                <i className="fas fa-check text-white"></i>
-                                                            </Button>
-                                                        </Link>
-                                                        <Link className="text-white" to={``}>
-                                                            <Button className="w-70 h-70 bg-danger text-white">
-                                                                <i className="fas fa-times text-white"></i>
-                                                            </Button>
-                                                        </Link>
-                                                    </Col>
-                                                </Row>
-                                            </Card>
-                                            <Card className="bg-gradient-default text-white my-2" body>
-                                                <Row>
-                                                    <Col lg={8} className="col-6">
-                                                        <CardTitle className="m-0">Fadhil Dhanendra</CardTitle>
-                                                        <CardText>
-                                                            Sampai Jam <span className="font-weight-bold">20:00</span>
-                                                        </CardText>
-                                                    </Col>
-                                                    <Col lg={4} className="col-6 d-flex justify-content-end align-items-center">
-                                                        <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
-                                                            <Button className="w-70 h-70 bg-success text-white">
-                                                                <i className="fas fa-check text-white"></i>
-                                                            </Button>
-                                                        </Link>
-                                                        <Link className="text-white" to={``}>
-                                                            <Button className="w-70 h-70 bg-danger text-white">
-                                                                <i className="fas fa-times text-white"></i>
-                                                            </Button>
-                                                        </Link>
-                                                    </Col>
-                                                </Row>
-                                            </Card>
-                                        </Col>
+                                    <Row className="justify-content-center">
+                                    {
+                                        !this.state.loading.pegawai_belum_absen ? this.state.pegawai.belum_absen.length ? this.state.pegawai.belum_absen.map(pegawai => (
+                                            <Col xl={12} className="col-12">
+                                                <BelumAbsenHariIni {...this.props} pegawai={pegawai} />
+                                            </Col>
+                                        )) : (
+                                            <h4 className="text-muted">Semua pegawai sudah absen.</h4>
+                                        ) : (
+                                            <Col className="d-flex justify-content-center">
+                                                <Loading />
+                                            </Col>
+                                        )
+                                    }
                                     </Row>
                                 </CardBody>
                             </Card>
@@ -236,4 +246,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default connect()(FadeIn(Dashboard, DashboardHeader));
+export default connect()(withRouter(FadeIn(Dashboard, DashboardHeader)));
