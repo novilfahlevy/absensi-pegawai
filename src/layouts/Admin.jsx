@@ -27,6 +27,7 @@ import routes from "routes.js";
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { storeUserData } from 'store/actions/authActions.js';
+import user from 'user.js';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -44,17 +45,8 @@ class Admin extends React.Component {
   }
   getRoutes = routes => {
     return routes.map((prop, key) => {
-      if ('layout' in prop && prop.layout === '/admin') {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
-      else if ('subMenu' in prop) {
-        return prop.subMenu.map((prop, key) => {
+      if ( prop.roles.map(role => role.toLowerCase()).includes(user('role').toLowerCase()) ) {
+        if ('layout' in prop && prop.layout === '/admin') {
           return (
             <Route
               path={prop.layout + prop.path}
@@ -62,7 +54,18 @@ class Admin extends React.Component {
               key={key}
             />
           );
-        });
+        }
+        else if ('subMenu' in prop) {
+          return prop.subMenu.map((prop, key) => {
+            return (
+              <Route
+                path={prop.layout + prop.path}
+                component={prop.component}
+                key={key}
+              />
+            );
+          });
+      }
       }
       else return null;
     });

@@ -34,7 +34,8 @@ var routes = [
     icon: "fas fa-tachometer-alt text-primary",
     component: props => <Dashboard {...props} />,
     layout: "/admin",
-    isActive: true
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/pegawai",
@@ -42,7 +43,8 @@ var routes = [
     icon: "fas fa-user-tie text-danger",
     component: props => <PegawaiIndex {...props} />,
     layout: "/admin",
-    isActive: true
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/absensi",
@@ -50,7 +52,8 @@ var routes = [
     icon: "fas fa-list-alt text-red",
     component: Absensi,
     layout: "/admin",
-    isActive: true
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/detail-pegawai/:id",
@@ -58,14 +61,16 @@ var routes = [
     icon: "fas fa-user-tie",
     component: PegawaiDetails,
     layout: "/admin",
-    isActive: false
+    isActive: false,
+    roles: ['admin']
   }, {
     path: "/laporan-pegawai",
     name: "Laporan Pegawai",
     icon: "",
     component: LaporanPegawai,
     layout: "/admin",
-    isActive: false
+    isActive: false,
+    roles: ['admin']
   },
   {
     path: "/detail-absensi/:id",
@@ -73,7 +78,8 @@ var routes = [
     icon: "",
     component: DetailAbsensi,
     layout: "/admin",
-    isActive: false
+    isActive: false,
+    roles: ['admin']
   },
   {
     path: "/lembur",
@@ -81,7 +87,8 @@ var routes = [
     icon: "fas fa-moon text-purple",
     component: Lembur,
     layout: "/admin",
-    isActive: true
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/jam-kerja",
@@ -89,7 +96,8 @@ var routes = [
     icon: "fas fa-clock text-yellow",
     component: JamKerja,
     layout: "/admin",
-    isActive: true
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/user-profile",
@@ -97,7 +105,8 @@ var routes = [
     icon: "fas fa-user text-blue  ",
     component: Profile,
     layout: "/admin",
-    isActive: true
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/login",
@@ -105,7 +114,8 @@ var routes = [
     icon: "ni ni-key-25 text-info",
     component: props => <Login {...props} />,
     layout: "/auth",
-    isActive: false
+    isActive: false,
+    roles: ['admin']
   },
   {
     path: "/register",
@@ -113,7 +123,8 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: Register,
     layout: "/auth",
-    isActive: false
+    isActive: false,
+    roles: ['admin']
   }
 ];
 export default routes;
