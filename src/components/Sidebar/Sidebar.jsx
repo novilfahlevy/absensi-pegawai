@@ -23,6 +23,7 @@ import { PropTypes } from "prop-types";
 import SidebarDropdownItem from 'components/Sidebar/SidebarDropdownItem.jsx';
 import { connect } from 'react-redux';
 import { logout } from 'store/actions/authActions.js';
+import user from 'user.js';
 
 // reactstrap components
 import {
@@ -84,23 +85,25 @@ class Sidebar extends React.Component {
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
-      if ('subMenu' in prop) {
-        return <SidebarDropdownItem key={key} {...prop} />;
-      }
-      if (prop.isActive) {
-        return (
-          <NavItem key={key}>
-            <NavLink
-              to={prop.layout + prop.path}
-              tag={NavLinkRRD}
-              onClick={this.closeCollapse}
-              activeClassName="active"
-            >
-              <i className={prop.icon} />
-              {prop.name}
-            </NavLink>
-          </NavItem>
-        );
+      if ( prop.roles.map(role => role.toLowerCase()).includes(user('role').toLowerCase()) ) {
+        if ('subMenu' in prop) {
+          return <SidebarDropdownItem key={key} {...prop} />;
+        }
+        if (prop.isActive) {
+          return (
+            <NavItem key={key}>
+              <NavLink
+                to={prop.layout + prop.path}
+                tag={NavLinkRRD}
+                onClick={this.closeCollapse}
+                activeClassName="active"
+              >
+                <i className={prop.icon} />
+                {prop.name}
+              </NavLink>
+            </NavItem>
+          );
+        }
       }
     });
   };

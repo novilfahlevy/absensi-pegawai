@@ -29,10 +29,14 @@ import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 
 class Absensi extends React.Component {
   state = {
-    absensi: [{}],
+    absensi: [],
     absenPhotoLightbox: null,
     searchKeyword: '',
   };
+
+  componentDidMount() {
+    this.getAbsensi('absensi');
+  }
 
   toggleabsenPhotoLightbox(image) {
     this.setState({ absenPhotoLightbox: this.state.absenPhotoLightbox ? null : image });
@@ -41,7 +45,7 @@ class Absensi extends React.Component {
   getAbsensi(route) {
     api().get(route)
       .then(response => {
-        const absensi = response.data.absensi.map(absensi => ({
+        const absensi = response.data.absensi.map((absensi, i) => ({
           ...absensi,
           nama: absensi.name,
           foto: (
@@ -61,12 +65,8 @@ class Absensi extends React.Component {
             </Button>
           )
         }));
-        this.setState({ absensi });
+        this.setState({ absensi }, () => this.setState({ absensi: [...this.state.absensi] }));
       });
-  }
-
-  componentDidMount() {
-    this.getAbsensi('absensi');
   }
 
   searchAbsensiChange = e => {
@@ -121,7 +121,8 @@ class Absensi extends React.Component {
         align: 'center',
         classes: 'align-middle',
         headerAlign: 'center',
-        headerClasses: 'align-middle'
+        headerClasses: 'align-middle',
+        sort: true
       },
       {
         dataField: 'tanggal',
@@ -188,8 +189,6 @@ class Absensi extends React.Component {
                   <Table
                     columns={columns}
                     data={this.state.absensi}
-                  // filter={FilterFactory()}
-                  // pagination={paginationFactory()}
                   />
                 </CardBody>
               </Card>
