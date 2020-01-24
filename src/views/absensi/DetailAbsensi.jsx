@@ -102,6 +102,7 @@ class DetailAbsensi extends React.Component {
                           </p>
                         </ListGroupItem>
                       </ListGroup>
+                      <Button className="mt-3" color="primary">Lihat Keterangan Lembur</Button>
                     </Col>
                   </Row>
                 </CardBody>
@@ -132,15 +133,6 @@ class DetailAbsensi extends React.Component {
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card className="mt-3">
-                <CardBody>
-                  <Button color="primary">Lihat Keterangan Lembur</Button>
                 </CardBody>
               </Card>
             </Col>
