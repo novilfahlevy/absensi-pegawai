@@ -27,6 +27,8 @@ import JamKerja from 'views/jam-kerja/JamKerja.jsx';
 import PegawaiIndex from 'views/pegawai/PegawaiIndex.jsx';
 import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
 import LaporanPegawai from 'views/pegawai/LaporanPegawai.jsx';
+import ProjectManager from 'views/pm/ProjectManager.jsx';
+
 var routes = [
   {
     path: "/index",
@@ -100,13 +102,22 @@ var routes = [
     roles: ['admin']
   },
   {
+    path: "/project-manager",
+    name: "Project Manager",
+    icon: "fas fa-user-tie text-green",
+    component: ProjectManager,
+    layout: "/admin",
+    isActive: true,
+    roles: ['project manager']
+  },
+  {
     path: "/user-profile",
     name: "User Profile",
-    icon: "fas fa-user text-blue  ",
+    icon: "fas fa-user text-blue",
     component: Profile,
     layout: "/admin",
     isActive: true,
-    roles: ['admin']
+    roles: ['admin', 'project manager']
   },
   {
     path: "/login",
