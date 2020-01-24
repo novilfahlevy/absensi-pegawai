@@ -85,15 +85,6 @@ var routes = [
     roles: ['admin']
   },
   {
-    path: "/lembur",
-    name: "Lembur",
-    icon: "fas fa-moon text-purple",
-    component: Lembur,
-    layout: "/admin",
-    isActive: true,
-    roles: ['admin']
-  },
-  {
     path: "/jam-kerja",
     name: "Jam Kerja",
     icon: "fas fa-clock text-yellow",
@@ -107,6 +98,15 @@ var routes = [
     name: "Project Manager",
     icon: "fas fa-user-tie text-green",
     component: ProjectManager,
+    layout: "/admin",
+    isActive: true,
+    roles: ['project manager']
+  },
+  {
+    path: "/lembur",
+    name: "Lembur",
+    icon: "fas fa-moon text-purple",
+    component: Lembur,
     layout: "/admin",
     isActive: true,
     roles: ['project manager']

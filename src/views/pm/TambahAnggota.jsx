@@ -124,7 +124,7 @@ class TambahAnggota extends React.Component {
         name: 'Rizky Maulidan', 
         email: 'asdasd@gmail.com', 
         jobdesc: 'Back-end Developer',
-        '-': this.isMemberSelected(2) ? 'Selected' : '-',
+        '-': this.isMemberSelected(2) ? 'Terpilih' : '-',
         tambah: (
           <Button color={this.isMemberSelected(2) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(2)}>
             <span className={`fas fa-${this.isMemberSelected(2) ? 'minus' : 'plus'}`}></span>
