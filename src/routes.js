@@ -28,6 +28,7 @@ import PegawaiIndex from 'views/pegawai/PegawaiIndex.jsx';
 import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
 import LaporanPegawai from 'views/pegawai/LaporanPegawai.jsx';
 import ProjectManager from 'views/pm/ProjectManager.jsx';
+import TambahAnggota from 'views/pm/TambahAnggota.jsx';
 
 var routes = [
   {
@@ -108,6 +109,15 @@ var routes = [
     component: ProjectManager,
     layout: "/admin",
     isActive: true,
+    roles: ['project manager']
+  },
+  {
+    path: "/tambah-anggota",
+    name: "Tambah Anggota",
+    // icon: "fas fa-user-tie text-green",
+    component: TambahAnggota,
+    layout: "/admin",
+    isActive: false,
     roles: ['project manager']
   },
   {

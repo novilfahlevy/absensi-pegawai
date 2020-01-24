@@ -3,7 +3,6 @@ import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import Swal from 'sweetalert2';
 import { selectFilter } from 'react-bootstrap-table2-filter';
-import { withRouter } from 'react-router-dom';
 
 import {
   Container,
@@ -25,38 +24,27 @@ import {
 
 import Table from 'components/ui/Table.jsx';
 
-class ProjectManager extends React.Component {
-  getOptions() {
-    return (
-      <>
-        <UncontrolledDropdown>
-          <DropdownToggle size="sm">
-            <i className="fas fa-ellipsis-v"></i>
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem style={{ cursor: 'pointer' }} onClick={()=> {
-              Swal.fire({
-                title: 'Apakah anda yakin?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Hapus',
-                cancelButtonText: 'Gak jadi!',
-                reverseButton: true
-              });
-            }}>
-              <i className="fas fa-trash-alt text-danger"></i>
-              Hapus
-            </DropdownItem>
-            <DropdownItem onClick={()=> this.props.history.push(`/admin/detail-pegawai/1`)} style={{ cursor: 'pointer' }}>
-              <i className="fas fa-list-alt text-primary"></i>
-              Detail
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </>
-    );
+class TambahAnggota extends React.Component {
+  state = {
+    selectedMembers: []
+  };
+
+  toggleSelectMember = user_id => {
+    if ( !this.isMemberSelected(user_id) ) {
+      this.setState({ selectedMembers: [...this.state.selectedMembers, user_id] });
+      return;
+    }
+    this.setState({ 
+      selectedMembers: this.state.selectedMembers.filter(id => id !== user_id)
+    });
+  }
+
+  isMemberSelected = user_id => {
+    return this.state.selectedMembers.find(id => id === user_id);
+  }
+
+  addMember() {
+    // console.log(this.state.selectedMembers);
   }
 
   render() {
@@ -96,8 +84,8 @@ class ProjectManager extends React.Component {
         })
       }, 
       {
-        dataField: 'actions',
-        text: 'Opsi',
+        dataField: 'tambah',
+        text: 'Tambah',
         headerClasses: 'align-middle',
         headerAlign: 'center',
         headerStyle: { width: '110px' },
@@ -107,16 +95,26 @@ class ProjectManager extends React.Component {
 
     const pegawai = [
       { 
+        id: 1,
         name: 'Novil Fahlevy', 
         email: 'novilfreon@gmail.com', 
         jobdesc: 'Fullstack Web Developer',
-        actions: this.getOptions()
+        tambah: (
+          <Button color={this.isMemberSelected(1) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(1)}>
+            <span className={`fas fa-${this.isMemberSelected(1) ? 'minus' : 'plus'}`}></span>
+          </Button>
+        )
       },
       { 
+        id: 2,
         name: 'Rizky Maulidan', 
         email: 'asdasd@gmail.com', 
         jobdesc: 'Back-end Developer',
-        actions: this.getOptions()
+        tambah: (
+          <Button color={this.isMemberSelected(2) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(2)}>
+            <span className={`fas fa-${this.isMemberSelected(2) ? 'minus' : 'plus'}`}></span>
+          </Button>
+        )
       },
     ]
 
@@ -129,11 +127,11 @@ class ProjectManager extends React.Component {
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <Col xs="6">
-                    <h2 className="mb-0">Daftar Anggota Project Manager</h2>
+                    <h2 className="mb-0">Tambah Anggota Project</h2>
                     </Col>
                     <Col className="text-right" xs="6">
-                    <Button color="primary" onClick={() => this.props.history.push('/admin/tambah-anggota')} size="md">
-                      Tambah Anggota
+                    <Button color="primary" onClick={() => this.props.history.goBack()}>
+                      <i className="fas fa-arrow-left"></i>
                     </Button>
                     </Col>
                   </Row>
@@ -142,12 +140,13 @@ class ProjectManager extends React.Component {
                   <Form onSubmit={this.handleCariSubmit}>
                     <InputGroup className="mb-3">
                       <Input onChange={this.handleCariChange} type="search" name="search" id="search"
-                        placeholder="Cari anggota" />
+                        placeholder="Cari pegawai" />
                       <InputGroupAddon addonType="append">
                         <Button type="submit" color="primary">Cari</Button>
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>
+                  <Button color="primary" className="mb-3" onClick={() => this.addMember()}>Tambah {this.state.selectedMembers.length} Anggota</Button>
                   <Table data={pegawai} columns={columns}></Table>
                 </CardBody>
               </Card>
@@ -159,4 +158,4 @@ class ProjectManager extends React.Component {
   }
 }
 
-export default withRouter(FadeIn(ProjectManager, Header));
+export default FadeIn(TambahAnggota, Header);
