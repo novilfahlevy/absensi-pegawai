@@ -1,5 +1,7 @@
 import api from 'store/api.js';
 import Swal from 'sweetalert2';
+import routes from 'routes.js';
+import user from 'user.js';
 
 export const login = ({ keyword, password }, push) => {
   return dispatch => {
@@ -8,10 +10,17 @@ export const login = ({ keyword, password }, push) => {
     api().post('/auth/login', { keyword, password })
     .then(response => {
       if ( response.data.status === 200 ) {
-        dispatch({ type: 'LOGIN_SUCCESS' });
         localStorage.setItem('auth', btoa(JSON.stringify({ ...response.data.message })));
-        // localStorage.setItem('token', response.data.message.token);
-        push('/admin/index');
+        let pageNotFound = true;
+        routes.map(prop => {
+          if ( pageNotFound ) {
+            if ( prop.roles.map(role => role.toLowerCase()).includes(user('role').toLowerCase()) ) {
+              dispatch({ type: 'LOGIN_SUCCESS' });
+              push(`/admin${prop.path}`);
+              pageNotFound = false;
+            }
+          }
+        });
       }
       else {
         dispatch({ type: 'LOGIN_FAILED', errorMessage: response.data.message });
