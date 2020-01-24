@@ -76,18 +76,23 @@ class Lembur extends React.Component {
                                                 <Col lg={12} sm={12} className="col-6 col-sm-12">
                                                     <Row>
                                                         <Col className="col-4">
-                                                            <img
-                                                                alt="..."
-                                                                height="200"
-                                                                style={{ borderRadius: "10px" }}
-                                                                src={`http://127.0.0.1:8000/storage/lembur/${data.foto || 'default.jpg'}`}
-                                                            />
+                                                            <Row>
+                                                                <Col className="col-12">
+                                                                    <img
+                                                                        alt="..."
+                                                                        height="200"
+                                                                        style={{ borderRadius: "10px" }}
+                                                                        src={`http://127.0.0.1:8000/storage/lembur/${data.foto || 'default.jpg'}`}
+                                                                    />
+                                                                </Col>
+                                                            </Row>
                                                         </Col>
                                                         <Col className="col-8">
                                                             <CardTitle className="mb-2">
                                                                 <Row>
                                                                     <Col lg={8}>
                                                                         <h2>{data.name}</h2>
+                                                                        <h2><Badge color={data.status === 'diterima' ? 'success' : 'danger'}>{data.status === 'diterima' ? 'DITERIMA' : 'DITOLAK'}</Badge></h2>
                                                                     </Col>
                                                                     <Col lg={4} className="text-right">
                                                                         <span className="font-weight-bold d-block">{moment(data.tanggal).locale('id').fromNow()}</span>
@@ -103,7 +108,10 @@ class Lembur extends React.Component {
                                                     </Row>
                                                 </Col>
                                                 <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
-                                                    <h2><Badge color={data.status === 'diterima' ? 'success' : 'danger'}>{data.status === 'diterima' ? 'DITERIMA' : 'DITOLAK'}</Badge></h2>
+                                                    <Button color="primary" size="md">
+                                                        <i className="fas fa-eye mr-2"></i>
+                                                        Lihat Detail
+                                                                </Button>
                                                 </Col>
                                             </Row>
                                         </Card>

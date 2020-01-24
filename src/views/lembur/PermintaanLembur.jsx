@@ -19,7 +19,7 @@ import {
 import moment from 'moment';
 import 'moment/locale/id';
 import { withRouter, Link } from 'react-router-dom';
-
+import Loading from 'components/ui/Loading.jsx'
 class PermintaanLembur extends React.Component {
     render() {
         let styles = {
@@ -35,7 +35,7 @@ class PermintaanLembur extends React.Component {
                         <h2 className="m-0">Permintaan Lembur</h2>
                     </ModalHeader>
                     <ModalBody>
-                        {this.props.data.map(lembur => {
+                        {this.props.data ? this.props.data.map(lembur => {
                             return (
                                 <Card body style={styles.card} className="mb-2">
                                     <Row>
@@ -83,7 +83,7 @@ class PermintaanLembur extends React.Component {
                                     </Row>
                                 </Card>
                             )
-                        })}
+                        }) : <div className="d-flex justify-content-center"><Loading /></div>}
                     </ModalBody>
                 </Modal>
             </>
