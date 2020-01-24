@@ -78,19 +78,32 @@ class TambahAnggota extends React.Component {
         text: 'Job',
         filter: selectFilter({
           placeholder: 'Pilih semua',
-          formatter: cell => jobDescFilterOptions[cell],
           options: jobDescFilterOptions,
           className: 'mt-2 form-control-sm'
         })
       }, 
       {
+        dataField: '-',
+        text: 'status',
+        headerClasses: 'align-middle',
+        headerAlign: 'center',
+        align: 'center',
+        filter: selectFilter({
+          placeholder: 'Pilih semua',
+          options: {
+            'Terpilih': 'Terpilih',
+            '-': 'Belum Terpilih'
+          },
+          className: 'mt-2 form-control-sm'
+        })
+      },
+      {
         dataField: 'tambah',
         text: 'Tambah',
         headerClasses: 'align-middle',
         headerAlign: 'center',
-        headerStyle: { width: '110px' },
         align: 'center'
-      }
+      },
     ];
 
     const pegawai = [
@@ -99,6 +112,7 @@ class TambahAnggota extends React.Component {
         name: 'Novil Fahlevy', 
         email: 'novilfreon@gmail.com', 
         jobdesc: 'Fullstack Web Developer',
+        '-': this.isMemberSelected(1) ? 'Terpilih' : '-',
         tambah: (
           <Button color={this.isMemberSelected(1) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(1)}>
             <span className={`fas fa-${this.isMemberSelected(1) ? 'minus' : 'plus'}`}></span>
@@ -110,6 +124,7 @@ class TambahAnggota extends React.Component {
         name: 'Rizky Maulidan', 
         email: 'asdasd@gmail.com', 
         jobdesc: 'Back-end Developer',
+        '-': this.isMemberSelected(2) ? 'Selected' : '-',
         tambah: (
           <Button color={this.isMemberSelected(2) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(2)}>
             <span className={`fas fa-${this.isMemberSelected(2) ? 'minus' : 'plus'}`}></span>

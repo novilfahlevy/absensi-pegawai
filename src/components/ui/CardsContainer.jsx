@@ -32,7 +32,7 @@ class CardsContainer extends React.Component {
     this.setState({
       pagination: {
         ...this.state.pagination,
-        totalPage: Math.ceil(this.props.data.length / this.state.pagination.limit) || 1
+        totalPage: Math.ceil(this.props.data || this.props.data.length / this.state.pagination.limit) || 1
       }
     });
   }
@@ -85,7 +85,7 @@ class CardsContainer extends React.Component {
     return (
       <Container>
         <Row>
-          {this.props.data.slice(start, start + limit).map(data => (
+          {this.props.data && this.props.data.slice(start, start + limit).map(data => (
             <Col className="col-12">{this.props.card(data)}</Col>
           ))}
         </Row>

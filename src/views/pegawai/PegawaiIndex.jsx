@@ -65,20 +65,7 @@ class PegawaiIndex extends React.Component {
                             Edit
                         </DropdownItem>
                         <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
-                            Swal.fire({
-                                title: 'Apakah anda yakin?',
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                cancelButtonColor: '#d33',
-                                confirmButtonText: 'Hapus',
-                                cancelButtonText: 'Gak jadi!',
-                                reverseButton: true
-                            }).then((result) => {
-                                if (result.value) {
-                                    this.props.hapusPegawai(id)
-                                }
-                            })
+                            this.deletePegawai(id);
                         }}>
                             <i className="fas fa-trash-alt text-danger"></i>
                             Hapus
@@ -108,7 +95,7 @@ class PegawaiIndex extends React.Component {
             })
             .catch(err => console.log(err))
     }
-    deletePegawai() {
+    deletePegawai = id => {
         Swal.fire({
             title: 'Apa anda yakin?',
             text: "Data yang sudah dihapus tidak bisa dipulihkan kembali!",
@@ -121,11 +108,22 @@ class PegawaiIndex extends React.Component {
             reverseButton: true
         }).then((result) => {
             if (result.value) {
-                Swal.fire(
-                    'Dihapus!',
-                    'Data sudah dihapus.',
-                    'success'
-                )
+                API().post(`user/destroy/${id}`)
+                    .then(res => {
+                        Swal.fire(
+                            'Dihapus!',
+                            'Data sudah dihapus.',
+                            'success'
+                        )
+                        this.getDataPegawai();
+                    })
+                    .catch(err => {
+                        Swal.fire(
+                            'Gagal',
+                            'Gagal menghapus data.',
+                            'error'
+                        )
+                    })
             }
         })
     }
