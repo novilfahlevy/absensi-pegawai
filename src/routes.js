@@ -95,7 +95,7 @@ var routes = [
   },
   {
     path: "/project-manager",
-    name: "Project Manager",
+    name: "Anggota",
     icon: "fas fa-user-tie text-green",
     component: ProjectManager,
     layout: "/admin",
