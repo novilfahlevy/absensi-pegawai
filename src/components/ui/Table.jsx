@@ -1,20 +1,9 @@
 import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
-import overlayFactory from 'react-bootstrap-table2-overlay';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory from 'react-bootstrap-table2-filter';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import './../../assets/css/components/ui/table.css'
-import { connect } from 'react-redux';
-import {
-  Button,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Badge
-} from 'reactstrap';
-import Loading from 'components/ui/Loading.jsx';
 
 const remoteTable = (props) => {
   const NoDataIndication = () => (
@@ -52,24 +41,6 @@ const remoteTable = (props) => {
         }]
       })}
       filter={filterFactory()}
-      overlay={overlayFactory(
-        {
-          spinner: true,
-          styles: {
-            overlay: (base) => (
-              { ...base, background: 'rgba(255, 255, 255, 0.3)' }
-            ),
-            spinner: (base) => (
-              {
-                ...base,
-                width: '60px',
-                '& svg circle': {
-                  stroke: '#5E72E4'
-                }
-              }
-            )
-          }
-        })}
     />
   )
 }
