@@ -23,16 +23,15 @@ class CardsContainer extends React.Component {
     }
   };
 
-
   componentDidMount() {
-    if (this.props.paginationLimit) {
+    if ( this.props.paginationLimit ) {
       this.setState({ pagination: { ...this.state.pagination, limit: this.props.paginationLimit } });
     }
 
     this.setState({
       pagination: {
         ...this.state.pagination,
-        totalPage: Math.ceil(this.props.data || this.props.data.length / this.state.pagination.limit) || 1
+        totalPage: Math.ceil(this.props.data.length / this.state.pagination.limit) || 1
       }
     });
   }

@@ -43,11 +43,10 @@ class Lembur extends React.Component {
     getData = () => {
         API().get('lembur')
             .then(res => {
-                console.log(res);
                 this.setState({
                     lembur: res.data.data.others,
                     requestedLembur: res.data.data.waiting
-                })
+                });
             })
             .catch(err => console.log(err))
     }
