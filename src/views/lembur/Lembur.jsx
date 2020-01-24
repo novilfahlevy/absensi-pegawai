@@ -40,7 +40,7 @@ class Lembur extends React.Component {
     toggleModal = () => {
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
     }
-    componentDidMount() {
+    getData = () => {
         API().get('lembur')
             .then(res => {
                 this.setState({
@@ -49,6 +49,9 @@ class Lembur extends React.Component {
                 })
             })
             .catch(err => console.log(err))
+    }
+    componentDidMount() {
+        this.getData();
     }
     render() {
         return (
@@ -108,10 +111,10 @@ class Lembur extends React.Component {
                                                     </Row>
                                                 </Col>
                                                 <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
-                                                    <Button color="primary" size="md">
+                                                    <Button color="primary" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
                                                         <i className="fas fa-eye mr-2"></i>
                                                         Lihat Detail
-                                                                </Button>
+                                                    </Button>
                                                 </Col>
                                             </Row>
                                         </Card>
@@ -120,7 +123,7 @@ class Lembur extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    <PermintaanLembur data={this.state.requestedLembur} modal={this.state.modalIsOpen} toggle={this.toggleModal} />
+                    <PermintaanLembur getData={this.getData} data={this.state.requestedLembur} modal={this.state.modalIsOpen} toggle={this.toggleModal} />
                 </Container>
 
             </>

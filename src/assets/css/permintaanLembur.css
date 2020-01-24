@@ -1,0 +1,14 @@
+.permintaan-lembur-card.card-dissolve {
+    animation: dissolve .3s linear ease-in;
+}
+
+@keyframes dissolve {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        display: none;
+    }
+}

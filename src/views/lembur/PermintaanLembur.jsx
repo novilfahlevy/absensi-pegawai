@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
-
+import API from 'store/api.js';
 import {
     Container,
     Row,
@@ -20,12 +20,22 @@ import moment from 'moment';
 import 'moment/locale/id';
 import { withRouter, Link } from 'react-router-dom';
 import Loading from 'components/ui/Loading.jsx'
+import 'assets/css/permintaanLembur.css';
 class PermintaanLembur extends React.Component {
+    handleClick = (id, status) => {
+        API().post(`lembur/${id}`, { status })
+            .then(res => {
+                document.querySelector(`.card-${id}`).classList.add('card-dissolve');
+                this.props.getData();
+            })
+            .catch(err => console.log(err))
+        console.log(id, status)
+    }
     render() {
         let styles = {
             card: {
                 border: "none",
-                boxShadow: "-6px -6px 20px rgba(255, 255, 255, 1), 6px 6px 20px rgba(0, 0, 0, .1)",
+                boxShadow: "-6px -6px 20px rgba(255, 255, 255, 1), 6px 6px 20px rgba(0, 0, 0, .3)",
             }
         }
         return (
@@ -37,7 +47,7 @@ class PermintaanLembur extends React.Component {
                     <ModalBody>
                         {this.props.data ? this.props.data.map(lembur => {
                             return (
-                                <Card body style={styles.card} className="mb-2">
+                                <Card body style={styles.card} className={`permintaan-lembur-card mb-2 card-${lembur.id}`}>
                                     <Row>
                                         <Col lg={12} sm={12} className="col-6 col-sm-12">
                                             <Row>
@@ -50,7 +60,7 @@ class PermintaanLembur extends React.Component {
                                                     />
                                                 </Col>
                                                 <Col className="col-8">
-                                                    <CardTitle className="mb-2">
+                                                    <CardTitle className="mb-1">
                                                         <Row>
                                                             <Col lg={6}>
                                                                 <h2>{lembur.name}</h2>
@@ -69,16 +79,12 @@ class PermintaanLembur extends React.Component {
                                             </Row>
                                         </Col>
                                         <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
-                                            <Link className="text-white" to={``} style={{ marginRight: "1rem" }}>
-                                                <Button className="w-70 h-70 bg-success text-white">
-                                                    <i className="fas fa-check text-white"></i>
-                                                </Button>
-                                            </Link>
-                                            <Link className="text-white" to={``}>
-                                                <Button className="w-70 h-70 bg-danger text-white">
-                                                    <i className="fas fa-times text-white"></i>
-                                                </Button>
-                                            </Link>
+                                            <Button style={{ marginRight: "1rem" }} onClick={() => this.handleClick(lembur.id, 'diterima')} className="w-70 h-70 bg-success text-white">
+                                                <i className="fas fa-check text-white"></i>
+                                            </Button>
+                                            <Button onClick={() => this.handleClick(lembur.id, 'ditolak')} className="w-70 h-70 bg-danger text-white">
+                                                <i className="fas fa-times text-white"></i>
+                                            </Button>
                                         </Col>
                                     </Row>
                                 </Card>
