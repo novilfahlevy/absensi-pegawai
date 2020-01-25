@@ -5,7 +5,7 @@ import { changeProfile } from './../store/actions/profileActions.js';
 import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput, FormFeedback } from 'reactstrap';
 class ProfileForm extends Component {
     state = {
-        file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
+        file: '${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg',
         real_file: null,
         file_name: '',
         error: null,
@@ -18,7 +18,7 @@ class ProfileForm extends Component {
             this.props.changeProfile({ user_id: this.props.user_id, profile: this.state.real_file }, () => {
                 this.setState({ 
                     isLoading: false, 
-                    file: 'http://127.0.0.1:8000/storage/profiles/default.jpg',
+                    file: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
                     real_file: null,
                     file_name: ''
                 }, this.props.toggle);

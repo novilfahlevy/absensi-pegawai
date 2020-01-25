@@ -2,7 +2,6 @@ import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import Swal from 'sweetalert2';
-import { selectFilter } from 'react-bootstrap-table2-filter';
 import { withRouter } from 'react-router-dom';
 
 import {
@@ -12,111 +11,50 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardImg,
+  CardTitle,
+  CardText,
   Form,
   Input,
   InputGroup,
   InputGroupAddon,
-  Button,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  Button
 } from 'reactstrap';
 
-import Table from 'components/ui/Table.jsx';
+import CardsContainer from 'components/ui/CardsContainer.jsx';
 
 class ProjectManager extends React.Component {
-  getOptions() {
-    return (
-      <>
-        <UncontrolledDropdown>
-          <DropdownToggle size="sm">
-            <i className="fas fa-ellipsis-v"></i>
-          </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem style={{ cursor: 'pointer' }} onClick={()=> {
-              Swal.fire({
-                title: 'Apakah anda yakin?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Hapus',
-                cancelButtonText: 'Gak jadi!',
-                reverseButton: true
-              });
-            }}>
-              <i className="fas fa-trash-alt text-danger"></i>
-              Hapus
-            </DropdownItem>
-            <DropdownItem onClick={()=> this.props.history.push(`/admin/detail-pegawai/1`)} style={{ cursor: 'pointer' }}>
-              <i className="fas fa-list-alt text-primary"></i>
-              Detail
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      </>
-    );
-  }
-
   render() {
-    const jobDescFilterOptions = {
-      'Web Developer': 'Web Developer',
-      'Front-end Developer': 'Front-end Developer',
-      'Back-end Developer': 'Back-end Developer',
-      'Fullstack Web Developer': 'Fullstack Web Developer',
-      'Android Developer': 'Android Developer',
-      'Designer': 'Designer'
-    };
-
-    const columns = [
-      {
-        dataField: 'name',
-        text: 'Nama',
-        headerClasses: 'align-middle',
-        headerAlign: 'center',
-        sort: true
-      }, 
-      {
-        dataField: 'email',
-        headerClasses: 'align-middle',
-        headerAlign: 'center',
-        text: 'Email'
-      }, 
-      {
-        dataField: 'jobdesc',
-        headerClasses: 'align-middle',
-        headerAlign: 'center',
-        text: 'Job',
-        filter: selectFilter({
-          placeholder: 'Pilih semua',
-          formatter: cell => jobDescFilterOptions[cell],
-          options: jobDescFilterOptions,
-          className: 'mt-2 form-control-sm'
-        })
-      }, 
-      {
-        dataField: 'actions',
-        text: 'Opsi',
-        headerClasses: 'align-middle',
-        headerAlign: 'center',
-        headerStyle: { width: '110px' },
-        align: 'center'
-      }
-    ];
-
     const pegawai = [
       { 
         name: 'Novil Fahlevy', 
-        email: 'novilfreon@gmail.com', 
-        jobdesc: 'Fullstack Web Developer',
-        actions: this.getOptions()
+        profile: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
+        jobdesc: 'Fullstack Web Developer'
       },
       { 
         name: 'Rizky Maulidan', 
-        email: 'asdasd@gmail.com', 
-        jobdesc: 'Back-end Developer',
-        actions: this.getOptions()
+        profile: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
+        jobdesc: 'Back-end Developer'
+      },
+      { 
+        name: 'Rizky Maulidan', 
+        profile: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
+        jobdesc: 'Back-end Developer'
+      },
+      { 
+        name: 'Rizky Maulidan', 
+        profile: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
+        jobdesc: 'Back-end Developer'
+      },
+      { 
+        name: 'Rizky Maulidan', 
+        profile: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
+        jobdesc: 'Back-end Developer'
+      },
+      { 
+        name: 'Rizky Maulidan', 
+        profile: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
+        jobdesc: 'Back-end Developer'
       },
     ]
 
@@ -148,7 +86,43 @@ class ProjectManager extends React.Component {
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>
-                  <Table data={pegawai} columns={columns}></Table>
+                  <CardsContainer
+                    data={pegawai}
+                    card={pegawai => {
+                      return (
+                        <Card>
+                          <Row>
+                            <Col className="pr-0">
+                              <CardImg src={pegawai.profile} width="80" height="100%" />
+                            </Col>
+                            <Col className="pl-0">
+                              <CardBody>
+                                <CardTitle className="mb-2"><h3>{pegawai.name}</h3></CardTitle>
+                                <CardText className="text-sm">{pegawai.jobdesc}</CardText>
+                                <Button color="primary">
+                                  <span className="fas fa-eye"></span>
+                                </Button>
+                                <Button color="danger">
+                                  <span className="fas fa-trash-alt"></span>
+                                </Button>
+                              </CardBody>
+                            </Col>
+                          </Row>
+                        </Card>
+                      );
+                    }}
+                    limitOptions={[4, 8, 10]}
+                    filter={{
+                      'jobdesc': {
+                        options: {
+                          'Fullstack Web Developer': 'Fullstack Web Developer',
+                          'Back-end Developer': 'Back-end Developer'
+                        },
+                        placeholder: 'Pilih Jobdesc'
+                      }
+                    }}
+                    lg="6"
+                  />
                 </CardBody>
               </Card>
             </div>
