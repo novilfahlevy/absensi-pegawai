@@ -16,18 +16,88 @@ import {
   InputGroup,
   InputGroupAddon,
   Button,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  FormGroup,
+  Label,
+  CustomInput
 } from 'reactstrap';
 
 import Table from 'components/ui/Table.jsx';
 
 class TambahAnggota extends React.Component {
   state = {
-    selectedMembers: []
+    selectedMembers: [1],
+    realData: [
+      { 
+        id: 1,
+        name: 'Novil Fahlevy', 
+        email: 'novilfreon@gmail.com', 
+        jobdesc: 'Fullstack Web Developer',
+        detail: (
+          <Button color="primary" size="sm">
+            <span className="fas fa-eye"></span>
+          </Button>
+        ),
+        tambah: (
+          <Button color='danger' size="sm">
+            <span className='fas fa-minus'></span>
+          </Button>
+        )
+      },
+      { 
+        id: 2,
+        name: 'Rizky Maulidan', 
+        email: 'asdasd@gmail.com', 
+        jobdesc: 'Back-end Developer',
+        detail: (
+          <Button color="primary" size="sm">
+            <span className="fas fa-eye"></span>
+          </Button>
+        ),
+        tambah: (
+          <Button color='success' size="sm">
+            <span className='fas fa-plus'></span>
+          </Button>
+        )
+      }
+    ],
+    pegawai: [],
+    filter: {},
+    filterModalIsOpen: false
   };
+
+  filter = {
+    jobdesc: jobdesc => {
+      if ( jobdesc === 'all' ) {
+        this.clearFilterInThisField();
+        return;
+      }
+      this.setState({
+        pegawai: this.state.pegawai.filter(pegawai => pegawai.jobdesc === jobdesc)
+      });
+    },
+    status: status => {
+      if ( status === 'all' ) {
+        this.clearFilterInThisField();
+        return;
+      }
+      this.setState({
+        pegawai: this.state.pegawai.filter(pegawai => {
+          const isPegawaiSelected = this.state.selectedMembers.includes(pegawai.id);
+          return status === 'Terpilih' ? isPegawaiSelected : !isPegawaiSelected;
+        })
+      })
+    },
+  }
+
+  componentDidMount() {
+    this.setState({ pegawai: this.state.realData }, () => {
+      this.setState({ pegawai: this.state.pegawai });
+    });
+  }
 
   toggleSelectMember = user_id => {
     if ( !this.isMemberSelected(user_id) ) {
@@ -47,16 +117,30 @@ class TambahAnggota extends React.Component {
     // console.log(this.state.selectedMembers);
   }
 
-  render() {
-    const jobDescFilterOptions = {
-      'Web Developer': 'Web Developer',
-      'Front-end Developer': 'Front-end Developer',
-      'Back-end Developer': 'Back-end Developer',
-      'Fullstack Web Developer': 'Fullstack Web Developer',
-      'Android Developer': 'Android Developer',
-      'Designer': 'Designer'
-    };
+  toggleFilterModal() {
+    this.setState({ filterModalIsOpen: !this.state.filterModalIsOpen });
+  }
 
+  clearFilterInThisField() {
+    this.setState({ pegawai: this.state.pegawai.filter(() => true) });
+  }
+
+  addFilter = (data, value) => {
+    this.setState({ filter: { ...this.state.filter, [data]: value } }); 
+  }
+
+  submitFilter = () => {
+    this.setState({ pegawai: this.state.realData }, () => {
+      Object.keys(this.state.filter).forEach(data => {
+        setTimeout(() => this.filter[data](this.state.filter[data]), 0);
+      });
+      setTimeout(() => this.setState({ filter: {} }, () => {
+        this.toggleFilterModal();
+      }), 100);
+    });
+  }
+
+  render() {
     const columns = [
       {
         dataField: 'name',
@@ -75,27 +159,14 @@ class TambahAnggota extends React.Component {
         dataField: 'jobdesc',
         headerClasses: 'align-middle',
         headerAlign: 'center',
-        text: 'Job',
-        filter: selectFilter({
-          placeholder: 'Pilih semua',
-          options: jobDescFilterOptions,
-          className: 'mt-2 form-control-sm'
-        })
+        text: 'Job'
       }, 
       {
-        dataField: '-',
-        text: 'status',
+        dataField: 'detail',
+        text: 'Detail',
         headerClasses: 'align-middle',
         headerAlign: 'center',
-        align: 'center',
-        filter: selectFilter({
-          placeholder: 'Pilih semua',
-          options: {
-            'Terpilih': 'Terpilih',
-            '-': 'Belum Terpilih'
-          },
-          className: 'mt-2 form-control-sm'
-        })
+        align: 'center'
       },
       {
         dataField: 'tambah',
@@ -105,33 +176,6 @@ class TambahAnggota extends React.Component {
         align: 'center'
       },
     ];
-
-    const pegawai = [
-      { 
-        id: 1,
-        name: 'Novil Fahlevy', 
-        email: 'novilfreon@gmail.com', 
-        jobdesc: 'Fullstack Web Developer',
-        '-': this.isMemberSelected(1) ? 'Terpilih' : '-',
-        tambah: (
-          <Button color={this.isMemberSelected(1) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(1)}>
-            <span className={`fas fa-${this.isMemberSelected(1) ? 'minus' : 'plus'}`}></span>
-          </Button>
-        )
-      },
-      { 
-        id: 2,
-        name: 'Rizky Maulidan', 
-        email: 'asdasd@gmail.com', 
-        jobdesc: 'Back-end Developer',
-        '-': this.isMemberSelected(2) ? 'Terpilih' : '-',
-        tambah: (
-          <Button color={this.isMemberSelected(2) ? 'danger' : 'success'} size="sm" onClick={() => this.toggleSelectMember(2)}>
-            <span className={`fas fa-${this.isMemberSelected(2) ? 'minus' : 'plus'}`}></span>
-          </Button>
-        )
-      },
-    ]
 
     return (
       <> 
@@ -161,13 +205,64 @@ class TambahAnggota extends React.Component {
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>
-                  <Button color="primary" className="mb-3" onClick={() => this.addMember()}>Tambah {this.state.selectedMembers.length} Anggota</Button>
-                  <Table data={pegawai} columns={columns}></Table>
+                  <Row>
+                    <Col>
+                      <Button color="primary" className="mb-3" onClick={() => this.addMember()}>Tambah {this.state.selectedMembers.length} Anggota</Button>
+                    </Col>
+                    <Col>
+                      <div className="w-100 d-flex justify-content-end">
+                        <Button color="primary" onClick={() => this.toggleFilterModal()}>
+                          <span className="fas fa-filter mr-1"></span>
+                          Filter
+                        </Button>
+                        <Button color="danger">Hapus Pencarian</Button>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Table data={this.state.pegawai} columns={columns}></Table>
                 </CardBody>
               </Card>
             </div>
           </Row>
         </Container>
+        <Modal isOpen={this.state.filterModalIsOpen}>
+          <ModalHeader><span className="text-lg">Filter Pegawai</span></ModalHeader>
+          <ModalBody>
+            <Row>
+              <Col>
+                <FormGroup>
+                  <Label for="jobdesc">Job</Label>
+                  <CustomInput type="select" id="jobdesc" name="jobdesc" onChange={e => {
+                    this.addFilter(e.target.id, e.target.value);
+                  }}>
+                    <option value="all">Pilih Semua</option>
+                    <option value="Fullstack Web Developer">Fullstack Web Developer</option>
+                    <option value="Back-end Developer">Back-end Developer</option>
+                  </CustomInput>
+                </FormGroup>
+              </Col>
+              <Col>
+                <FormGroup>
+                  <Label for="status">Status</Label>
+                  <CustomInput type="select" id="status" name="status" onChange={e => {
+                    this.addFilter(e.target.id, e.target.value);
+                  }}>
+                    <option value="all">Pilih Semua</option>
+                    <option value="Terpilih">Terpilih</option>
+                    <option value="Belum Terpilih">Belum Terpilih</option>
+                  </CustomInput>
+                </FormGroup>
+              </Col>
+            </Row>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={() => this.toggleFilterModal()}>Cancel</Button>
+            <Button color="primary" onClick={this.submitFilter}>
+              <span className="fas fa-filter mr-2"></span>
+              Filter
+            </Button>
+          </ModalFooter>
+        </Modal>
       </>
     );
   }

@@ -18,7 +18,14 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-  Button
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  FormGroup,
+  Label,
+  CustomInput
 } from 'reactstrap';
 
 import CardsContainer from 'components/ui/CardsContainer.jsx';
@@ -111,16 +118,16 @@ class ProjectManager extends React.Component {
                         </Card>
                       );
                     }}
-                    limitOptions={[4, 8, 10]}
                     filter={{
                       'jobdesc': {
                         options: {
                           'Fullstack Web Developer': 'Fullstack Web Developer',
                           'Back-end Developer': 'Back-end Developer'
                         },
-                        placeholder: 'Pilih Jobdesc'
+                        placeholder: "Filter Jobdesc"
                       }
                     }}
+                    limitOptions={[4, 8, 10]}
                     lg="6"
                   />
                 </CardBody>
