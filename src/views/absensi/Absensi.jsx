@@ -95,7 +95,7 @@ class Absensi extends React.Component {
           absensi: this.state.absensi.filter(absen => absen.id !== id)
         }, () => {
           Swal.fire(
-            'Dihapus!',
+            'Dihapus!',           
             'Absensi sudah dihapus.',
             'success'
           )

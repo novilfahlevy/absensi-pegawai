@@ -52,8 +52,8 @@ import DashboardHeader from "components/Headers/DashboardHeader.jsx";
 import "./../../assets/css/dashboard.css"
 import { connect } from "react-redux";
 
-const AbsenHariIni = ({ pegawai, history }) => (
-    <Card body className="my-2">
+const AbsenHariIni = ({ pegawai, history, className }) => (
+    <Card body className={`my-2 ${className}`}>
         <Row>
             <Col lg={8} className="col-6">
                 <CardTitle className="m-0">{pegawai.name}</CardTitle>
@@ -145,53 +145,7 @@ class Dashboard extends React.Component {
                 {/* Page content */}
                 <Container className="mt--7" fluid>
                     <Row>
-                        <Col xl="6">
-                            <Card className="shadow absensi-card">
-                                <CardHeader className="bg-transparent">
-                                    <Row className="align-items-center">
-                                        <div className="col">
-                                            <h6 className="text-uppercase text-light ls-1 mb-1">
-                                                Overview
-                                            </h6>
-                                            <h2 className=" mb-0">Absensi Hari Ini</h2>
-                                        </div>
-                                        <div className="col">
-                                            <Nav className="justify-content-end mt-3 mt-xl-0" pills>
-                                                <NavItem>
-                                                    <NavLink
-                                                        className={classnames("py-2 px-3", {
-                                                            active: this.state.activeNav === 1
-                                                        })}
-                                                        href="/"
-                                                        onClick={e => { e.preventDefault(); this.props.history.push('/admin/absensi') }}
-                                                    >
-                                                        Lihat Semua
-                                                    </NavLink>
-                                                </NavItem>
-                                            </Nav>
-                                        </div>
-                                    </Row>
-                                </CardHeader>
-                                <CardBody>
-                                    <Row className="justify-content-center">
-                                            {
-                                                !this.state.loading.pegawai_absen_tercepat ? this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map((pegawai, id) => (
-                                                    <Col key={id} xl={12} className="col-12">
-                                                        <AbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
-                                                    </Col>
-                                                )) : (
-                                                    <h4 className="text-muted">-</h4>
-                                                ) : (
-                                                    <Col className="d-flex justify-content-center">
-                                                        <Loading />
-                                                    </Col>
-                                                )
-                                            }
-                                    </Row>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col className="mb-5 mb-xl-0" xl="6">
+                    <Col className="mb-5 mb-xl-0" xl="6">
                             <Card className="bg-gradient-default shadow lembur-card">
                                 <CardHeader className="bg-transparent">
                                     <Row className="align-items-center">
@@ -222,7 +176,52 @@ class Dashboard extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-
+                        <Col xl="6">
+                            <Card className="shadow absensi-card">
+                                <CardHeader className="bg-transparent">
+                                    <Row className="align-items-center">
+                                        <div className="col">
+                                            <h6 className="text-uppercase text-light ls-1 mb-1">
+                                                Overview
+                                            </h6>
+                                            <h2 className=" mb-0">Absensi Hari Ini</h2>
+                                        </div>
+                                        <div className="col">
+                                            <Nav className="justify-content-end mt-3 mt-xl-0" pills>
+                                                <NavItem>
+                                                    <NavLink
+                                                        className={classnames("py-2 px-3", {
+                                                            active: this.state.activeNav === 1
+                                                        })}
+                                                        href="/"
+                                                        onClick={e => { e.preventDefault(); this.props.history.push('/admin/absensi') }}
+                                                    >
+                                                        Lihat Semua
+                                                    </NavLink>
+                                                </NavItem>
+                                            </Nav>
+                                        </div>
+                                    </Row>
+                                </CardHeader>
+                                <CardBody>
+                                    <Row className="justify-content-center">
+                                            {
+                                                !this.state.loading.pegawai_absen_tercepat ? this.state.pegawai.absen_tercepat.length ? this.state.pegawai.absen_tercepat.map((pegawai, i) => (
+                                                    <Col key={i} xl={12} className="col-12">
+                                                        <AbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} className={i % 2 !== 0 && 'bg-purple text-white'} />
+                                                    </Col>
+                                                )) : (
+                                                    <h4 className="text-muted">-</h4>
+                                                ) : (
+                                                    <Col className="d-flex justify-content-center">
+                                                        <Loading />
+                                                    </Col>
+                                                )
+                                            }
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                        </Col>
                     </Row>
 
                 </Container>
