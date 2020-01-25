@@ -28,6 +28,7 @@ import routes from "routes.js";
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
+
 class Auth extends React.Component {
   componentDidMount() {
     document.body.classList.add("bg-default");
@@ -60,7 +61,8 @@ class Auth extends React.Component {
               <div className="header-body text-center mb-7">
                 <Row className="justify-content-center">
                   <Col lg="5" md="6">
-                    <h1 className="text-white">Selamat Datang!</h1>
+                    <h2 className="text-white">Selamat Datang di</h2>
+                    <h2 className="text-white">Aplikasi Absensi Pegawai!</h2>
                   </Col>
                 </Row>
               </div>

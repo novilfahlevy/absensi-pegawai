@@ -2,3 +2,12 @@
     background: #5E72E4 !important;
     border: none !important;
 }
+
+div.react-bootstrap-table-pagination-list {
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+
+div.row.react-bootstrap-table-pagination {
+    margin-top: 20px;
+}

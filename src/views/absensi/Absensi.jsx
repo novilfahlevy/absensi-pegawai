@@ -104,6 +104,11 @@ class Absensi extends React.Component {
     })
   };
 
+  clearSearch() {
+    this.getAbsensi('absensi');
+    this.setState({ searchKeyword: '' });
+  }
+
   render() {
     const columns = [
       {
@@ -177,14 +182,25 @@ class Absensi extends React.Component {
                   <h2 className="m-0">Absensi Pegawai</h2>
                 </CardHeader>
                 <CardBody>
-                  <Form onSubmit={this.searchAbsensiSubmit}>
-                    <InputGroup className="mb-3">
-                      <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} />
-                      <InputGroupAddon addonType="append">
-                        <Button type="submit" color="primary">Cari</Button>
-                      </InputGroupAddon>
-                    </InputGroup>
-                  </Form>
+                  <Row>
+                    <Col lg="9">
+                      <Form onSubmit={this.searchAbsensiSubmit}>
+                        <InputGroup className="mb-3">
+                          <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} value={this.state.searchKeyword} />
+                          <InputGroupAddon addonType="append">
+                            <Button type="submit" color="primary">Cari</Button>
+                          </InputGroupAddon>
+                        </InputGroup>
+                      </Form>     
+                    </Col>
+                    <Col lg="3">
+                      <div className="d-flex justify-content-end w-100">
+                        <Button color="danger" onClick={() => this.clearSearch()}>
+                          Hapus Pencarian
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
                   <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
                   <Table
                     columns={columns}

@@ -180,7 +180,7 @@ class Dashboard extends React.Component {
                                                         <AbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
                                                     </Col>
                                                 )) : (
-                                                    <h4 className="text-muted">Belum ada pegawai yang absen.</h4>
+                                                    <h4 className="text-muted">-</h4>
                                                 ) : (
                                                     <Col className="d-flex justify-content-center">
                                                         <Loading />
@@ -211,7 +211,7 @@ class Dashboard extends React.Component {
                                                 <BelumAbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
                                             </Col>
                                         )) : (
-                                            <h4 className="text-muted">Semua pegawai sudah absen.</h4>
+                                            <h4 className="text-muted">-</h4>
                                         ) : (
                                             <Col className="d-flex justify-content-center">
                                                 <Loading />

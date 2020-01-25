@@ -28,9 +28,9 @@ class Login extends React.Component {
         <footer className="py-5">
           <Container>
             <Row className="align-items-center justify-content-xl-between">
-              <Col xl="6">
+              <Col className="col-12 d-flex justify-content-center">
                 <div className="copyright text-center text-xl-left text-muted">
-                  © 2018{" "}
+                  © {new Date().getFullYear()}{" "}
                   <p className="font-weight-bold ml-1 d-inline-block text-primary">
                     TIM MAGANG PKL THORTECH
                   </p>

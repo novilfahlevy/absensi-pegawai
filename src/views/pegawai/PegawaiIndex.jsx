@@ -155,6 +155,10 @@ class PegawaiIndex extends React.Component {
     componentDidMount() {
         this.getDataPegawai();
     }
+    clearSearch = () => {
+        this.getDataPegawai();
+        this.setState({ cariPegawaiKeyword: '' });
+    }
     render() {
         const columns = [{
             dataField: 'name',
@@ -194,14 +198,25 @@ class PegawaiIndex extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <Form onSubmit={this.handleCariSubmit}>
-                                        <InputGroup className="mb-3">
-                                            <Input onChange={this.handleCariChange} type="search" name="search" id="search" placeholder="Cari pegawai" />
-                                            <InputGroupAddon addonType="append">
-                                                <Button type="submit" color="primary">Cari</Button>
-                                            </InputGroupAddon>
-                                        </InputGroup>
-                                    </Form>
+                                    <Row>
+                                        <Col lg="9">
+                                            <Form onSubmit={this.handleCariSubmit}>
+                                                <InputGroup className="mb-3">
+                                                    <Input onChange={this.handleCariChange} type="search" name="search" id="search" placeholder="Cari pegawai" value={this.state.cariPegawaiKeyword} />
+                                                    <InputGroupAddon addonType="append">
+                                                        <Button type="submit" color="primary">Cari</Button>
+                                                    </InputGroupAddon>
+                                                </InputGroup>
+                                            </Form>
+                                        </Col>
+                                        <Col lg="3">
+                                            <div className="d-flex justify-content-end w-100">
+                                                <Button color="danger" onClick={this.clearSearch}>
+                                                    Hapus Pencarian
+                                                </Button>
+                                            </div>
+                                        </Col>
+                                    </Row>
                                     <Table data={pegawai} columns={columns}></Table>
                                 </CardBody>
                             </Card>

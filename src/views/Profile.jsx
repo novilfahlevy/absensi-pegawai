@@ -175,8 +175,8 @@ class Profile extends React.Component {
                                 <div style={{ width: "60%", margin: "auto" }}>
                                     {user.jam_kerja ? <CircularProgressbarWithChildren style={{ width: "20px" }} value={user.jam_kerja.performance.total_jam_per_minggu} maxValue={8 * moment().daysInMonth()}>
                                         <div className="text-center">
-                                            <h1>{user.jam_kerja.performance.total_jam_per_minggu} / {8 * moment().daysInMonth()}</h1>
-                                            <span>Jam</span>
+                                            <h3>{user.jam_kerja.performance.total_jam_per_minggu} / {8 * moment().daysInMonth()}</h3>
+                                            <span className="text-sm">Jam</span>
                                         </div>
                                     </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                 </div>
@@ -185,8 +185,8 @@ class Profile extends React.Component {
                                         <div style={{ margin: "auto" }}>
                                             {user.jam_kerja ? <CircularProgressbarWithChildren value={user.jam_kerja.performance.total_lembur} maxValue={moment().daysInMonth()} styles={{ path: { stroke: '#FFD600' } }}>
                                                 <div className="text-center">
-                                                    <h1>{user.jam_kerja.performance.total_lembur}x</h1>
-                                                    <span>Lembur</span>
+                                                    <h3>{user.jam_kerja.performance.total_lembur}x</h3>
+                                                    <span className="text-sm">Lembur</span>
                                                 </div>
                                             </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                         </div>
@@ -195,8 +195,8 @@ class Profile extends React.Component {
                                         <div style={{ margin: "auto" }}>
                                             {user.jam_kerja ? <CircularProgressbarWithChildren value={user.jam_kerja.performance.terlambat} maxValue={moment().daysInMonth()} styles={{ path: { stroke: '#F53A5F' } }}>
                                                 <div className="text-center">
-                                                    <h1>{user.jam_kerja.performance.terlambat}x</h1>
-                                                    <span>Terlambat</span>
+                                                    <h3>{user.jam_kerja.performance.terlambat}x</h3>
+                                                    <span className="text-sm">Terlambat</span>
                                                 </div>
                                             </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                         </div>

@@ -24,10 +24,16 @@ class EditPegawaiForm extends Component {
     render() {
         const EditPegawaiSchema = Yup.object().shape({
             name: Yup.string()
-              .required('Nama tidak boleh kosong.'),
+                .required('Masukan nama pegawai'),
+            username: Yup.string()
+                .required('Masukan username pegawai'),
+            alamat: Yup.string()
+                .required('Masukan alamat pegawai'),
+            nomor_handphone: Yup.string()
+                .required('Masukan nomor telpon pegawai'),
             email: Yup.string()
-              .email('Email tidak valid.')
-              .required('Email harus diisi.')
+                .email('Email tidak valid')
+                .required('Masuk email pegawai'),
         })
 
         return (
@@ -41,7 +47,10 @@ class EditPegawaiForm extends Component {
                                 <Formik
                                 initialValues={{
                                     name: this.state.pegawai.name,
-                                    email: this.state.pegawai.email
+                                    email: this.state.pegawai.email,
+                                    username: this.state.pegawai.username,
+                                    alamat: this.state.pegawai.alamat,
+                                    nomor_handphone: this.state.pegawai.nomor_handphone
                                 }}
                                 validationSchema={EditPegawaiSchema}
                                 onSubmit={data => {
@@ -71,6 +80,33 @@ class EditPegawaiForm extends Component {
                                                 <Input nvalid={errors.email && touched.email ? true : false} onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
                                                 {errors.email && touched.email ? (
                                                     <FormFeedback className="d-block">{errors.email}</FormFeedback>
+                                                ) : null}
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <label className="form-control-label" htmlFor="input-email">
+                                                    Username
+                                                </label>
+                                                <Input invalid={errors.username && touched.username ? true : false} onChange={handleChange} value={values.username} name="username" type="username" className="form-control-alternative" id="input-username" placeholder="Username" />
+                                                {errors.username && touched.username ? (
+                                                    <FormFeedback className="d-block">{errors.username}</FormFeedback>
+                                                ) : null}
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <label className="form-control-label" htmlFor="input-email">
+                                                    No. Telpon
+                                                </label>
+                                                <Input invalid={errors.nomor_handphone && touched.nomor_handphone ? true : false} onChange={handleChange} value={values.nomor_handphone} name="nomor_handphone" type="text" className="form-control-alternative" id="input-nomor_handphone" placeholder="No. Telpon" />
+                                                {errors.nomor_handphone && touched.nomor_handphone ? (
+                                                    <FormFeedback className="d-block">{errors.nomor_handphone}</FormFeedback>
+                                                ) : null}
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <label className="form-control-label" htmlFor="input-email">
+                                                    Alamat
+                                                </label>
+                                                <Input invalid={errors.alamat && touched.alamat ? true : false} onChange={handleChange} value={values.alamat} name="alamat" type="textarea" className="form-control-alternative" id="input-alamat" placeholder="Alamat" />
+                                                {errors.alamat && touched.alamat ? (
+                                                    <FormFeedback className="d-block">{errors.alamat}</FormFeedback>
                                                 ) : null}
                                             </FormGroup>
                                         <ModalFooter>
