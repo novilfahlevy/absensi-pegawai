@@ -26,6 +26,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import moment from 'moment';
 
 class Absensi extends React.Component {
   state = {
@@ -48,6 +49,7 @@ class Absensi extends React.Component {
         const absensi = response.data.absensi.map((absensi, i) => ({
           ...absensi,
           nama: absensi.name,
+          tanggal: moment(absensi.tanggal).format('D MMMM YYYY'),
           foto: (
             <Row>
               <Col className="col-6">
@@ -58,7 +60,7 @@ class Absensi extends React.Component {
               </Col>
             </Row>
           ),
-          waktu_absensi: `${absensi.absensi_masuk}${absensi.absensi_keluar ? ' - ' + absensi.absensi_keluar : ''}`,
+          waktu_absensi: `${moment(`${absensi.tanggal} ${absensi.absensi_masuk}`).format('HH:mm')}${absensi.absensi_keluar ? ' - ' + moment(`${absensi.tanggal} ${absensi.absensi_keluar}`).format('HH:mm') : ''}`,
           opsi: (
             <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.user_id}`)}>
               <span className="fas fa-eye"></span>
