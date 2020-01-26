@@ -149,14 +149,6 @@ class Absensi extends React.Component {
         sort: true
       },
       {
-        dataField: 'keterangan',
-        text: 'Keterangan',
-        align: 'center',
-        classes: 'align-middle',
-        headerAlign: 'center',
-        headerClasses: 'align-middle'
-      },
-      {
         dataField: 'foto',
         text: 'Foto',
         align: 'center',
@@ -184,25 +176,22 @@ class Absensi extends React.Component {
                   <h2 className="m-0">Absensi Pegawai</h2>
                 </CardHeader>
                 <CardBody>
-                  <Row>
-                    <Col lg="9">
-                      <Form onSubmit={this.searchAbsensiSubmit}>
-                        <InputGroup className="mb-3">
-                          <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} value={this.state.searchKeyword} />
-                          <InputGroupAddon addonType="append">
-                            <Button type="submit" color="primary">Cari</Button>
-                          </InputGroupAddon>
-                        </InputGroup>
-                      </Form>     
+                  <Form onSubmit={this.searchAbsensiSubmit}>
+                    <InputGroup className="mb-3">
+                      <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} value={this.state.searchKeyword} />
+                      <InputGroupAddon addonType="append">
+                        <Button type="submit" color="primary">Cari</Button>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Form>
+                  <Row className="mb-3">
+                    <Col>
+                      <Button color="success" size="sm" onClick={() => this.clearSearch()}>
+                        <span className="fas fa-undo mr-1"></span>
+                        Muat Ulang Data
+                      </Button>
                     </Col>
-                    <Col lg="3">
-                      <div className="d-flex justify-content-end w-100">
-                        <Button color="danger" onClick={() => this.clearSearch()}>
-                          Hapus Pencarian
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
+                  </Row>    
                   <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
                   <Table
                     columns={columns}
