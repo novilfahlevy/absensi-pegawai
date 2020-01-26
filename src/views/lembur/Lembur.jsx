@@ -43,11 +43,10 @@ class Lembur extends React.Component {
     getData = () => {
         API().get('lembur')
             .then(res => {
-                console.log(res);
                 this.setState({
                     lembur: res.data.data.others,
                     requestedLembur: res.data.data.waiting
-                })
+                });
             })
             .catch(err => console.log(err))
     }
@@ -86,7 +85,7 @@ class Lembur extends React.Component {
                                                                         alt="..."
                                                                         height="200"
                                                                         style={{ borderRadius: "10px" }}
-                                                                        src={`http://127.0.0.1:8000/storage/lembur/${data.foto || 'default.jpg'}`}
+                                                                        src={`${process.env.REACT_APP_BASE_URL}storage/lembur/${data.foto || 'default.jpg'}`}
                                                                     />
                                                                 </Col>
                                                             </Row>

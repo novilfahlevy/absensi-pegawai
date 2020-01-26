@@ -57,7 +57,7 @@ class PegawaiDetails extends Component {
                                         alt="..."
                                         height="200"
                                         className="rounded-circle"
-                                        src={`http://127.0.0.1:8000/storage/profiles/${pegawai.profile || 'default.jpg'}`}
+                                        src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${pegawai.profile || 'default.jpg'}`}
                                     />
                                 </CardBody>
                             </Card>

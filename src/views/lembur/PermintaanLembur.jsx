@@ -56,7 +56,7 @@ class PermintaanLembur extends React.Component {
                                                         alt="..."
                                                         height="200"
                                                         style={{ borderRadius: "10px" }}
-                                                        src={`http://127.0.0.1:8000/storage/lembur/${lembur.foto || 'default.jpg'}`}
+                                                        src={`${process.env.REACT_APP_BASE_URL}storage/lembur/${lembur.foto || 'default.jpg'}`}
                                                     />
                                                 </Col>
                                                 <Col className="col-8">
