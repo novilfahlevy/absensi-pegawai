@@ -26,6 +26,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
+import moment from 'moment';
 
 class Absensi extends React.Component {
   state = {
@@ -48,19 +49,20 @@ class Absensi extends React.Component {
         const absensi = response.data.absensi.map((absensi, i) => ({
           ...absensi,
           nama: absensi.name,
+          tanggal: moment(absensi.tanggal).format('D MMMM YYYY'),
           foto: (
             <Row>
               <Col className="col-6">
-                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} />
               </Col>
               <Col className="col-6">
-                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} />
               </Col>
             </Row>
           ),
-          waktu_absensi: `${absensi.absensi_masuk}${absensi.absensi_keluar ? ' - ' + absensi.absensi_keluar : ''}`,
+          waktu_absensi: `${moment(`${absensi.tanggal} ${absensi.absensi_masuk}`).format('HH:mm')}${absensi.absensi_keluar ? ' - ' + moment(`${absensi.tanggal} ${absensi.absensi_keluar}`).format('HH:mm') : ''}`,
           opsi: (
-            <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.user_id}`)}>
+            <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.id}`)}>
               <span className="fas fa-eye"></span>
             </Button>
           )
@@ -95,7 +97,7 @@ class Absensi extends React.Component {
           absensi: this.state.absensi.filter(absen => absen.id !== id)
         }, () => {
           Swal.fire(
-            'Dihapus!',
+            'Dihapus!',           
             'Absensi sudah dihapus.',
             'success'
           )
@@ -103,6 +105,11 @@ class Absensi extends React.Component {
       }
     })
   };
+
+  clearSearch() {
+    this.getAbsensi('absensi');
+    this.setState({ searchKeyword: '' });
+  }
 
   render() {
     const columns = [
@@ -142,14 +149,6 @@ class Absensi extends React.Component {
         sort: true
       },
       {
-        dataField: 'keterangan',
-        text: 'Keterangan',
-        align: 'center',
-        classes: 'align-middle',
-        headerAlign: 'center',
-        headerClasses: 'align-middle'
-      },
-      {
         dataField: 'foto',
         text: 'Foto',
         align: 'center',
@@ -179,12 +178,20 @@ class Absensi extends React.Component {
                 <CardBody>
                   <Form onSubmit={this.searchAbsensiSubmit}>
                     <InputGroup className="mb-3">
-                      <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} />
+                      <Input type="search" name="search" id="search" placeholder="Cari nama pegawai" onChange={this.searchAbsensiChange} value={this.state.searchKeyword} />
                       <InputGroupAddon addonType="append">
                         <Button type="submit" color="primary">Cari</Button>
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>
+                  <Row className="mb-3">
+                    <Col>
+                      <Button color="success" size="sm" onClick={() => this.clearSearch()}>
+                        <span className="fas fa-undo mr-1"></span>
+                        Muat Ulang Data
+                      </Button>
+                    </Col>
+                  </Row>    
                   <p className="text-muted text-sm">* Klik foto absen jika ingin melihat secara jelas.</p>
                   <Table
                     columns={columns}

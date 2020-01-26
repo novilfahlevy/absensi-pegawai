@@ -5,11 +5,7 @@ import React from "react";
 import {
     Card,
     CardHeader,
-    CardFooter,
     CardBody,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
     Col,
     Container,
     Button,
@@ -21,7 +17,14 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Form
+    Form,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    FormGroup,
+    Label,
+    CustomInput,
+    ModalFooter
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.jsx";
@@ -33,7 +36,7 @@ import { hapusPegawai } from 'store/actions/pegawaiActions.js';
 import Swal from 'sweetalert2';
 import { withRouter } from 'react-router-dom';
 import Table from 'components/ui/Table.jsx';
-import { selectFilter } from 'react-bootstrap-table2-filter';
+import LoadingButton from 'components/ui/LoadingButton.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { connect } from 'react-redux';
 class PegawaiIndex extends React.Component {
@@ -42,7 +45,11 @@ class PegawaiIndex extends React.Component {
         modalIsOpen: false,
         editModalIsOpen: false,
         pegawaiEdited: null,
-        cariPegawaiKeyword: ''
+        cariPegawaiKeyword: '',
+        filterModalIsOpen: false,
+        filterJob: 'all',
+        filterRole: 'all',
+        filterLoading: false
     }
     toggleModal = () => {
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
@@ -50,6 +57,40 @@ class PegawaiIndex extends React.Component {
     toggleEditModal = id => {
         this.setState({ pegawaiEdited: id }, () => {
             this.setState({ editModalIsOpen: !this.state.editModalIsOpen });
+        });
+    }
+    toggleFilterModal = () => {
+        this.setState({ filterModalIsOpen: !this.state.filterModalIsOpen }, () => {
+            if ( !this.state.filterModalIsOpen ) {
+                this.setState({
+                    filterJob: 'all',
+                    filterRole: 'all'
+                });
+            }
+        });
+    }
+    changeFilter = e => {
+        let filter = e.target.id;
+        filter = `filter${filter[0].toUpperCase() + filter.slice(1)}`;
+        this.setState({ [filter]: e.target.value });
+    }
+    submitFilter = e => {
+        e.preventDefault();
+        this.setState({ filterLoading: true });
+        API().get(`user/filter/${this.state.filterJob}/${this.state.filterRole}`)
+        .then(res => {
+            this.setState({ pegawai: res.data.data }, () => {
+                this.setState({
+                    pegawai: this.state.pegawai.map(p => {
+                        return {
+                            ...p, actions: this.getPegawaiOptions(p.id)
+                        };
+                    })
+                }, () => { 
+                    this.setState({ filterLoading: false });
+                    this.toggleFilterModal();
+                })
+            });
         });
     }
     getPegawaiOptions(id) {
@@ -79,10 +120,9 @@ class PegawaiIndex extends React.Component {
             </>
         )
     }
-    getDataPegawai = () => {
+    getDataPegawai = (url = 'user') => {
         API().get('user')
             .then(res => {
-                console.log(res);
                 this.setState({ pegawai: res.data.user })
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
@@ -91,9 +131,7 @@ class PegawaiIndex extends React.Component {
                         };
                     })
                 })
-                console.log(this.state)
-            })
-            .catch(err => console.log(err))
+            });
     }
     deletePegawai = id => {
         Swal.fire({
@@ -155,6 +193,10 @@ class PegawaiIndex extends React.Component {
     componentDidMount() {
         this.getDataPegawai();
     }
+    clearSearch = () => {
+        this.getDataPegawai();
+        this.setState({ cariPegawaiKeyword: '' });
+    }
     render() {
         const columns = [{
             dataField: 'name',
@@ -163,6 +205,12 @@ class PegawaiIndex extends React.Component {
         }, {
             dataField: 'email',
             text: 'Email'
+        }, {
+            dataField: 'job',
+            text: 'Job'
+        }, {
+            dataField: 'role',
+            text: 'Role'
         }, {
             dataField: 'actions',
             text: 'Opsi',
@@ -196,12 +244,24 @@ class PegawaiIndex extends React.Component {
                                 <CardBody>
                                     <Form onSubmit={this.handleCariSubmit}>
                                         <InputGroup className="mb-3">
-                                            <Input onChange={this.handleCariChange} type="search" name="search" id="search" placeholder="Cari pegawai" />
+                                            <Input onChange={this.handleCariChange} type="search" name="search" id="search" placeholder="Cari pegawai" value={this.state.cariPegawaiKeyword} />
                                             <InputGroupAddon addonType="append">
                                                 <Button type="submit" color="primary">Cari</Button>
                                             </InputGroupAddon>
                                         </InputGroup>
                                     </Form>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Button color="primary" size="sm" onClick={this.toggleFilterModal}>
+                                                <span className="fas fa-filter mr-1"></span>
+                                                Filter
+                                            </Button>
+                                            <Button color="success" size="sm" onClick={this.clearSearch}>
+                                                <span className="fas fa-undo mr-1"></span>
+                                                Muat Ulang Data
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                     <Table data={pegawai} columns={columns}></Table>
                                 </CardBody>
                             </Card>
@@ -212,12 +272,54 @@ class PegawaiIndex extends React.Component {
                         <EditPegawaiForm modal={this.state.editModalIsOpen} toggle={this.toggleEditModal} pegawaiId={this.state.pegawaiEdited} />
                     )}
                 </Container>
+                <Modal isOpen={this.state.filterModalIsOpen}>
+                    <Form onSubmit={this.submitFilter}>
+                        <ModalHeader><span className="text-lg">Filter Pegawai</span></ModalHeader>
+                        <ModalBody>
+                            <p className="text-md">Berdasarkan :</p>
+                                <Row>
+                                    <Col className="col-12">
+                                        <FormGroup>
+                                            <Label for="job">Job</Label>
+                                            <CustomInput type="select" id="job" name="job" onChange={this.changeFilter}>
+                                                <option value="all">Pilih Semua</option>
+                                                {this.props.jobs.length && this.props.jobs.map(job => {
+                                                    return <option value={job.name}>{job.name}</option>
+                                                })}
+                                            </CustomInput>
+                                        </FormGroup>
+                                    </Col>
+                                    <Col className="col-12">
+                                        <FormGroup>
+                                            <Label for="role">Role</Label>
+                                            <CustomInput type="select" id="role" name="role" onChange={this.changeFilter}>
+                                                <option value="all">Pilih Semua</option>
+                                                {this.props.roles.length && this.props.roles.map(role => {
+                                                    return <option value={role.name}>{role.name}</option>
+                                                })}
+                                            </CustomInput>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="danger" onClick={this.toggleFilterModal}>Cancel</Button>
+                            <LoadingButton type="submit" color="primary" condition={this.state.filterLoading}>
+                                <span className="fas fa-filter mr-2"></span>
+                                Filter
+                            </LoadingButton>
+                        </ModalFooter>
+                    </Form>
+                </Modal>
             </>
         );
     }
 }
 export default connect(
-    null,
+    state => ({
+        jobs: state.filter.jobs,
+        roles: state.filter.roles
+    }),
     dispatch => ({
         hapusPegawai: id => dispatch(hapusPegawai(id))
     })

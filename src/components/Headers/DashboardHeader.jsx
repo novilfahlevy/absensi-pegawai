@@ -55,8 +55,8 @@ class DashboardHeader extends React.Component {
               {/* Card stats */}
               <FadeIn delay="100">
                 <Row>
-                  <Col lg="6" xl="3">
-                    <Card className="card-stats mb-4 mb-xl-0">
+                  <Col md="12" lg="6">
+                    <Card className="card-stats mb-4">
                       <CardBody>
                         <Row>
                           <div className="col">
@@ -76,8 +76,8 @@ class DashboardHeader extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
-                  <Col lg="6" xl="3">
-                    <Card className="card-stats mb-4 mb-xl-0">
+                  <Col md="12" lg="6">
+                    <Card className="card-stats mb-4">
                       <CardBody>
                         <Row>
                           <div className="col">
@@ -100,8 +100,8 @@ class DashboardHeader extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
-                  <Col lg="6" xl="3">
-                    <Card className="card-stats mb-4 mb-xl-0">
+                  <Col md="12" lg="6">
+                    <Card className="card-stats mb-4">
                       <CardBody>
                         <Row>
                           <div className="col">
@@ -124,8 +124,8 @@ class DashboardHeader extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
-                  <Col lg="6" xl="3">
-                    <Card className="card-stats mb-4 mb-xl-0">
+                  <Col md="12" lg="6">
+                    <Card className="card-stats mb-4">
                       <CardBody>
                         <Row>
                           <div className="col">
