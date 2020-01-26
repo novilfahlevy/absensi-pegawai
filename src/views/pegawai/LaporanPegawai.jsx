@@ -251,8 +251,7 @@ class LaporanPegawai extends React.Component {
                                                                     <option value={moment().subtract(2, 'year').year()}>{moment().subtract(2, 'year').year()}</option>
                                                                     <option value={moment().subtract(3, 'year').year()}>{moment().subtract(3, 'year').year()}</option>
                                                                 </Input>
-                                                                {/* <Label for="exampleSelect">Masukkan Tahun</Label>
-                                                                <Input type="number" name="tahun" id="exampleSelect" onChange={this.handleChange} /> */}
+
                                                             </FormGroup>
                                                         </Col>
                                                         <Col className="col-12 mb-2">

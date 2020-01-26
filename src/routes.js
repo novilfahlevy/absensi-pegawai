@@ -30,6 +30,7 @@ import LaporanPegawai from 'views/pegawai/LaporanPegawai.jsx';
 import ProjectManager from 'views/pm/ProjectManager.jsx';
 import TambahAnggota from 'views/pm/TambahAnggota.jsx';
 import DetailLembur from 'views/lembur/DetailLembur.jsx';
+import RiwayatLembur from 'views/lembur/RiwayatLembur.jsx';
 var routes = [
   {
     path: "/index",
@@ -98,6 +99,15 @@ var routes = [
     name: "Detail Lembur",
     icon: "fas fa-moon text-purple",
     component: DetailLembur,
+    layout: "/admin",
+    isActive: false,
+    roles: ['admin', 'project manager']
+  },
+  {
+    path: "/riwayat-lembur",
+    name: "Riwayat Lembur",
+    icon: "fas fa-moon text-purple",
+    component: RiwayatLembur,
     layout: "/admin",
     isActive: false,
     roles: ['admin', 'project manager']

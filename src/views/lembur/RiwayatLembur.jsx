@@ -12,10 +12,9 @@ import {
     CardTitle,
     CardText,
     Button,
-    UncontrolledDropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
+    FormGroup,
+    Label,
+    Input,
     Badge
 } from 'reactstrap';
 
@@ -29,29 +28,40 @@ import 'moment/locale/id';
 import CardsContainer from 'components/ui/CardsContainer.jsx';
 import API from 'store/api.js';
 import Loading from 'components/ui/Loading.jsx';
-import 'assets/css/permintaanLembur.css';
-import user from 'user.js';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
-class Lembur extends React.Component {
+class RiwayatLembur extends React.Component {
     state = {
-        lembur: null
+        lembur: null,
+        filterBulan: 1,
+        filterTahun: moment().year()
     }
-    handleClick = (id, status) => {
-        API().post(`lembur/${id}`, { status })
+    handleChange = e => {
+        console.log(e.target);
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    handleReset = () => {
+        this.setState({
+            filterBulan: 1,
+            filterTahun: moment().year()
+        }, this.getData())
+    }
+    handleClick = () => {
+        API().get(`lembur/filter/${this.state.filterBulan}/${this.state.filterTahun}`)
             .then(res => {
-                document.querySelector(`.card-${id}`).style.display = "none";
-                this.props.getData();
+                this.setState({
+                    lembur: res.data.data.sort((a, b) => (a.tanggal > b.tanggal) ? 1 : -1)
+                })
             })
             .catch(err => console.log(err))
-        console.log(id, status)
     }
     getData = () => {
-        API().get(`lembur/${user('role')}/${user('id')}`)
+        API().get('lembur')
             .then(res => {
-                console.log(res);
                 this.setState({
-                    lembur: res.data.data.waiting.sort((a, b) => (a.tanggal > b.tanggal) ? -1 : 1)
+                    lembur: res.data.data.others.sort((a, b) => (a.tanggal > b.tanggal) ? 1 : -1)
                 });
             })
             .catch(err => console.log(err))
@@ -60,6 +70,7 @@ class Lembur extends React.Component {
         this.getData();
     }
     render() {
+        const { filterTahun, filterBulan } = this.state;
         let styles = {
             card: {
                 border: "none",
@@ -75,17 +86,58 @@ class Lembur extends React.Component {
                                 <CardHeader>
                                     <Row className="align-items-center">
                                         <Col xs="8">
-                                            <h2 className="mb-0">Lembur</h2>
+                                            <h2 className="mb-0">Riwayat Lembur</h2>
                                         </Col>
-                                        <Col className="text-right" xs="4">
-                                            <Button color="primary" size="md" onClick={() => this.props.history.push(`/admin/riwayat-lembur`)}>
-                                                <i className="fas fa-list-ul mr-2"></i>
-                                                Riwayat Lembur
+                                        <Col xs="4" className="text-right">
+                                            <Button size="md" color="primary" onClick={() => this.props.history.goBack()}>
+                                                <i className="fas fa-arrow-left"></i>
                                             </Button>
                                         </Col>
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
+                                    <Row>
+                                        <Col className="col-5">
+                                            <FormGroup>
+                                                <Label for="exampleSelect">Pilih Bulan</Label>
+                                                <Input onChange={this.handleChange} value={filterBulan} type="select" name="filterBulan" id="exampleSelect" >
+                                                    <option value="1">Januari</option>
+                                                    <option value="2">Februari</option>
+                                                    <option value="3">Maret</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">Mei</option>
+                                                    <option value="6">Juni</option>
+                                                    <option value="7">Juli</option>
+                                                    <option value="8">Agustus</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">Desember</option>
+                                                </Input>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col className="col-4">
+                                            <FormGroup>
+                                                <Label for="exampleSelect">Pilih Tahun</Label>
+                                                <Input onChange={this.handleChange} value={filterTahun} type="select" name="filterTahun" id="exampleSelect" >
+                                                    <option value={moment().year()}>{moment().year()}</option>
+                                                    <option value={moment().subtract(1, 'year').year()}>{moment().subtract(1, 'year').year()}</option>
+                                                    <option value={moment().subtract(2, 'year').year()}>{moment().subtract(2, 'year').year()}</option>
+                                                    <option value={moment().subtract(3, 'year').year()}>{moment().subtract(3, 'year').year()}</option>
+                                                </Input>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col className="col-3 d-flex justify-items-center ">
+                                            <Button onClick={this.handleClick} size="md" className="mr-2 h-50 my-auto" color="success">
+                                                <i className="fas fa-filter mr-2"></i>
+                                                Filter
+                                            </Button>
+                                            <Button onClick={this.handleReset} size="md" className="h-50 my-auto" color="danger" >
+                                                <i className="fas fa-times mr-2"></i>
+                                                Reset
+                                            </Button>
+                                        </Col>
+                                    </Row>
                                     {this.state.lembur === null ? <div className="d-flex justify-content-center"><Loading /></div> : <CardsContainer data={this.state.lembur} card={lembur => (
                                         <Card body style={styles.card} className={`permintaan-lembur-card mb-2 card-${lembur.id}`}>
                                             <Row>
@@ -104,6 +156,7 @@ class Lembur extends React.Component {
                                                                 <Row>
                                                                     <Col lg={6}>
                                                                         <h2>{lembur.name}</h2>
+                                                                        <h2><Badge color={lembur.status !== 'diterima' ? 'danger' : 'success'}>{lembur.status !== 'diterima' ? 'DITOLAK' : 'DITERIMA'}</Badge></h2>
                                                                     </Col>
                                                                     <Col lg={6} className="text-right">
                                                                         <span className="font-weight-bold d-block">{moment(lembur.tanggal).locale('id').format('DD MMMM, Y')}</span>
@@ -112,7 +165,6 @@ class Lembur extends React.Component {
                                                                 </Row>
                                                             </CardTitle>
                                                             <CardText>
-                                                                <span className="font-weight-bold d-block mb-2">Konsumsi :  <span className="font-weight-normal">Rp. {lembur.konsumsi}</span></span>
                                                                 <span className="font-weight-bold d-block mt-lg-4">Keterangan : </span>
                                                                 <p className="m-0">{lembur.keterangan}</p>
                                                             </CardText>
@@ -120,11 +172,9 @@ class Lembur extends React.Component {
                                                     </Row>
                                                 </Col>
                                                 <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
-                                                    <Button style={{ marginRight: "1rem" }} onClick={() => this.handleClick(lembur.id, 'diterima')} className="w-70 h-70 bg-success text-white">
-                                                        <i className="fas fa-check text-white"></i>
-                                                    </Button>
-                                                    <Button onClick={() => this.handleClick(lembur.id, 'ditolak')} className="w-70 h-70 bg-danger text-white">
-                                                        <i className="fas fa-times text-white"></i>
+                                                    <Button onClick={() => this.props.history.push(`/admin/detail-lembur/${lembur.id}`)} color="primary">
+                                                        <i className="fas fa-eye text-white mr-2"></i>
+                                                        Lihat Detail
                                                     </Button>
                                                 </Col>
                                             </Row>
@@ -139,4 +189,5 @@ class Lembur extends React.Component {
         );
     }
 }
-export default withRouter(FadeIn(Lembur, Header));
+
+export default withRouter(FadeIn(RiwayatLembur, Header));

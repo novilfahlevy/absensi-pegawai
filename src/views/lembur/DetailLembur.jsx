@@ -27,7 +27,7 @@ class DetailLembur extends React.Component {
 
     componentDidMount() {
         API().get(`lembur/${this.props.match.params.id}/detail`)
-            .then(res => this.setState({ data: res.data.data.detail_lembur }, console.log(this.state))).catch(err => console.log(err))
+            .then(res => { this.setState({ data: res.data.data.detail_lembur }); console.log(this.state) }).catch(err => console.log(err))
     }
     render() {
         const { data } = this.state;
