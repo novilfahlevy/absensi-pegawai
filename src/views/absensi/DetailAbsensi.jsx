@@ -60,7 +60,7 @@ class DetailAbsensi extends React.Component {
   }
 
   render() {
-    const { tanggal, jam_masuk, jam_pulang, keterangan } = this.state.absen;
+    const { tanggal, jam_masuk, jam_pulang, keterangan, foto_absensi_masuk, foto_absensi_keluar } = this.state.absen;
 
     return (
       <>
@@ -120,7 +120,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
+                  <img src={foto_absensi_masuk} />
                 </CardBody>
               </Card>
             </Col>
@@ -133,7 +133,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
+                  <img src={foto_absensi_keluar} />
                 </CardBody>
               </Card>
             </Col>
