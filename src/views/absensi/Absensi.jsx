@@ -53,10 +53,10 @@ class Absensi extends React.Component {
           foto: (
             <Row>
               <Col className="col-6">
-                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} />
               </Col>
               <Col className="col-6">
-                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} />
               </Col>
             </Row>
           ),
