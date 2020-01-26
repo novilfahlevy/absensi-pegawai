@@ -38,7 +38,7 @@ class LaporanPegawai extends React.Component {
         statusPegawai: null,
         total_jam_per_bulan: null,
         bulan: 1,
-        tahun: 0,
+        tahun: moment().year(),
         data_kedua: {
             statusPegawai: null,
             total_jam_per_bulan: null
@@ -244,8 +244,15 @@ class LaporanPegawai extends React.Component {
                                                         </Col>
                                                         <Col className="col-6">
                                                             <FormGroup>
-                                                                <Label for="exampleSelect">Masukkan Tahun</Label>
-                                                                <Input type="number" name="tahun" id="exampleSelect" onChange={this.handleChange} />
+                                                                <Label for="exampleSelect">Pilih Tahun</Label>
+                                                                <Input type="select" name="tahun" id="exampleSelect" onChange={this.handleChange}>
+                                                                    <option value={moment().year()}>{moment().year()}</option>
+                                                                    <option value={moment().subtract(1, 'year').year()}>{moment().subtract(1, 'year').year()}</option>
+                                                                    <option value={moment().subtract(2, 'year').year()}>{moment().subtract(2, 'year').year()}</option>
+                                                                    <option value={moment().subtract(3, 'year').year()}>{moment().subtract(3, 'year').year()}</option>
+                                                                </Input>
+                                                                {/* <Label for="exampleSelect">Masukkan Tahun</Label>
+                                                                <Input type="number" name="tahun" id="exampleSelect" onChange={this.handleChange} /> */}
                                                             </FormGroup>
                                                         </Col>
                                                         <Col className="col-12 mb-2">

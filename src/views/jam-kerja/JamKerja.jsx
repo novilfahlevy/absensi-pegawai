@@ -115,16 +115,23 @@ class JamKerja extends React.Component {
                                 <CardBody>
                                     <Row>
                                         <Col lg={6} className="col-12">
-                                            <CardTitle>
-                                                <h2>Waktu Kerja</h2>
-                                                <h4>Jam Kerja Sekarang : {this.state.jam_kerja} Jam</h4>
-                                            </CardTitle>
-                                            <Carousel activeIndex={activeIndex} next={this.next} interval={false} previous={this.previous}>
-                                                {slides}
-                                                <CarouselControl style={{ backgroundImage: `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"` }} direction="prev" directionText="Previous" onClickHandler={this.previous} />
-                                                <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
-                                            </Carousel>
-                                            <h1 className="text-center display-4 font-weight-bold">Jam</h1>
+                                            <Row>
+                                                <Col className="col-12">
+                                                    <CardTitle>
+                                                        <h2>Waktu Kerja</h2>
+                                                        <h4>Jam Kerja Sekarang : {this.state.jam_kerja} Jam</h4>
+                                                    </CardTitle>
+                                                    <Carousel activeIndex={activeIndex} next={this.next} interval={false} previous={this.previous}>
+                                                        {slides}
+                                                        <CarouselControl style={{ backgroundImage: `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"` }} direction="prev" directionText="Previous" onClickHandler={this.previous} />
+                                                        <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
+                                                    </Carousel>
+                                                    <h1 className="text-center display-4 font-weight-bold">Jam</h1>
+                                                </Col>
+                                                <Col lg={12} className="col-12 d-flex justify-content-center mt-4">
+                                                    <Button color="success" type="button" onClick={this.handleSubmit}>Simpan Perubahan</Button>
+                                                </Col>
+                                            </Row>
                                         </Col>
                                         <Col lg={6} className="col-12">
                                             <CardTitle><h2>Hari Kerja</h2></CardTitle>
@@ -136,9 +143,7 @@ class JamKerja extends React.Component {
                                                 )
                                             })}
                                         </Col>
-                                        <Col lg={12} className="col-12">
-                                            <Button color="primary" type="button" onClick={this.handleSubmit}>Atur Jam Ke</Button>
-                                        </Col>
+
                                     </Row>
                                 </CardBody>
                             </Card>

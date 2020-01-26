@@ -112,7 +112,7 @@ class Lembur extends React.Component {
                                                     </Row>
                                                 </Col>
                                                 <Col lg={12} sm={12} className="col-6 col-sm-12 d-flex justify-content-sm-start justify-content-lg-end align-items-center">
-                                                    <Button color="primary" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
+                                                    <Button color="primary" onClick={() => this.props.history.push(`/admin/detail-lembur/${data.id}`)} size="md">
                                                         <i className="fas fa-eye mr-2"></i>
                                                         Lihat Detail
                                                     </Button>

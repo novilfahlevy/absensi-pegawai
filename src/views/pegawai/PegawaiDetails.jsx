@@ -65,29 +65,29 @@ class PegawaiDetails extends Component {
                                 <h2>Data Bulan Ini</h2>
                                 <div style={{ width: "60%", margin: "auto" }}>
                                     {jam_kerja.performance ? <CircularProgressbarWithChildren style={{ width: "20px" }} value={jam_kerja.performance.total_jam_per_minggu} maxValue={8 * moment().daysInMonth()}>
-                                        <div className="text-center">
-                                            <h1>{jam_kerja.performance.total_jam_per_minggu} / {8 * moment().daysInMonth()}</h1>
-                                            <span>Jam</span>
+                                        <div className="text-center mt-3">
+                                            <h2>{jam_kerja.performance.total_jam_per_minggu} / {8 * moment().daysInMonth()}</h2>
+                                            <p className="font-weight-bold">Jam</p>
                                         </div>
                                     </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                 </div>
                                 <Row>
-                                    <Col lg={6}>
-                                        <div style={{ margin: "auto" }}>
+                                    <Col lg={12} className="mt-3">
+                                        <div style={{ width: "60%", margin: "auto" }}>
                                             {jam_kerja.performance ? <CircularProgressbarWithChildren value={jam_kerja.performance.total_lembur} maxValue={moment().daysInMonth()} styles={{ path: { stroke: '#FFD600' } }}>
-                                                <div className="text-center">
+                                                <div className="text-center mt-3">
                                                     <h1>{jam_kerja.performance.total_lembur}x</h1>
-                                                    <span>Lembur</span>
+                                                    <p className="mt-0">Lembur</p>
                                                 </div>
                                             </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                         </div>
                                     </Col>
-                                    <Col lg={6}>
-                                        <div style={{ margin: "auto" }}>
+                                    <Col lg={12} className="mt-3">
+                                        <div style={{ width: "60%", margin: "auto" }}>
                                             {jam_kerja.performance ? <CircularProgressbarWithChildren value={jam_kerja.performance.terlambat} maxValue={moment().daysInMonth()} styles={{ path: { stroke: '#F53A5F' } }}>
-                                                <div className="text-center">
+                                                <div className="text-center mt-3">
                                                     <h1>{jam_kerja.performance.terlambat}x</h1>
-                                                    <span>Terlambat</span>
+                                                    <p className="mt--1">Terlambat</p>
                                                 </div>
                                             </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}
                                         </div>

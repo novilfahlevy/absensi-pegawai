@@ -23,7 +23,9 @@ class CardsContainer extends React.Component {
     }
   };
 
-
+  componentWillReceiveProps() {
+    this.componentDidMount();
+  }
   componentDidMount() {
     if (this.props.paginationLimit) {
       this.setState({ pagination: { ...this.state.pagination, limit: this.props.paginationLimit } });

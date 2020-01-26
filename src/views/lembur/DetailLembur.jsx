@@ -14,53 +14,23 @@ import {
     CardHeader,
     Button,
     ListGroup,
-    ListGroupItem
+    ListGroupItem, Badge, CardText
 } from 'reactstrap';
-
-import api from 'store/api.js';
-
+import Loading from 'components/ui/Loading.jsx';
+import API from 'store/api.js';
+import moment from 'moment';
+import 'moment/locale/id'
 class DetailLembur extends React.Component {
     state = {
-        absen: {
-            tanggal: null,
-            jam_masuk: null,
-            jam_pulang: null,
-            keterangan: null,
-            lokasi: {
-                masuk: null,
-                pulang: null
-            },
-            foto: {
-                masuk: null,
-                pulang: null
-            }
-        },
-        lembur: {
-            tanggal: null,
-            jam_mulai: null,
-            jam_selesai: null,
-            keterangan: null
-        }
+        data: null
     }
 
     componentDidMount() {
-        api().get(`absensi/${this.props.match.params.id}/detail`)
-            .then(response => {
-                const { tanggal, absensi_masuk, absensi_keluar, keterangan } = response.data.absensi;
-                this.setState({
-                    absen: {
-                        tanggal,
-                        jam_masuk: absensi_masuk,
-                        jam_pulang: absensi_keluar,
-                        keterangan
-                    }
-                });
-            });
+        API().get(`lembur/${this.props.match.params.id}/detail`)
+            .then(res => this.setState({ data: res.data.data.detail_lembur }, console.log(this.state))).catch(err => console.log(err))
     }
-
     render() {
-        const { tanggal, jam_masuk, jam_pulang, keterangan } = this.state.absen;
-
+        const { data } = this.state;
         return (
             <>
                 <Container className="mt--7">
@@ -69,10 +39,14 @@ class DetailLembur extends React.Component {
                             <Card className="mb-3">
                                 <CardHeader>
                                     <Row className="align-items-center">
-                                        <Col xs="8">
-                                            <h2 className="m-0">Detail Absensi</h2>
+                                        <Col xs="6">
+                                            <h2 className="m-0">Detail Lembur</h2>
                                         </Col>
-                                        <Col className="text-right" xs="4">
+                                        <Col className="text-right" xs="6">
+                                            <Button color="success" disabled={data == null ? true : false} className="mr-2" onClick={() => this.props.history.goBack()}>
+                                                <i className="fas fa-search mr-2"></i>
+                                                Cek Absensi
+                                            </Button>
                                             <Button color="primary" onClick={() => this.props.history.goBack()}>
                                                 <i className="fas fa-arrow-left"></i>
                                             </Button>
@@ -80,67 +54,51 @@ class DetailLembur extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    <Row>
-                                        <Col className="col-12">
-                                            <ListGroup>
-                                                <ListGroupItem>
-                                                    <h3>Tanggal</h3>
-                                                    <p className="m-0">{tanggal}</p>
-                                                </ListGroupItem>
-                                                <ListGroupItem>
-                                                    <h3>Jam Masuk</h3>
-                                                    <p className="m-0">{jam_masuk}</p>
-                                                </ListGroupItem>
-                                                <ListGroupItem>
-                                                    <h3>Jam Pulang</h3>
-                                                    <p className="m-0">{jam_pulang}</p>
-                                                </ListGroupItem>
-                                                <ListGroupItem>
-                                                    <h3>Keterangan Absen</h3>
-                                                    <p className="m-0">
-                                                        {keterangan}
-                                                    </p>
-                                                </ListGroupItem>
-                                            </ListGroup>
+                                    {data == null ? <div className="d-flex justify-content-center"><Loading /></div> : <Row>
+                                        <Col className="col-4">
+                                            <img
+                                                alt="..."
+                                                style={{ borderRadius: "10px", height: "20rem", width: "20rem", backgroundSize: "cover" }}
+                                                src={`http://127.0.0.1:8000/storage/lembur/lembur.jpg`}
+                                            />
                                         </Col>
-                                    </Row>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg="6">
-                            <Card>
-                                <CardHeader>Absen Masuk</CardHeader>
-                                <CardBody>
-                                    <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" />
-                                </CardBody>
-                                <CardBody>
-                                    <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col lg="6">
-                            <Card>
-                                <CardHeader>Absen Pulang</CardHeader>
-                                <CardBody>
-                                    <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" />
-                                </CardBody>
-                                <CardBody>
-                                    <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTtz3bf4yWpyod9EajS3TYr7VknQgyFw1fZhiYL3ZF5AFcvpXAC" className="rounded img-thumbnail" />
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Card className="mt-3">
-                                <CardBody>
-                                    <Button color="primary">Lihat Keterangan Lembur</Button>
+                                        <Col className="col-8">
+                                            <Row>
+                                                <Col className="col-6">
+                                                    <h2><Badge className="d-inline-block" color={data.status === 'diterima' ? 'success' : 'danger'}>{data.status === 'diterima' ? 'DITERIMA' : 'DITOLAK'}</Badge></h2>
+                                                </Col>
+                                                <Col className="col-6 d-flex justify-content-end">
+                                                    <span className="font-weight-bold d-block">{moment(data.tanggal).locale('id').fromNow()}</span>
+                                                </Col>
+                                            </Row>
+                                            <CardText>
+                                                <span className="font-weight-bold d-block mt-2">Keterangan : </span>
+                                                <p className="m-0">{data.keterangan}</p>
+                                                <div className="mt-2">
+                                                    <span className="font-weight-bold">Konsumsi : </span><span>Rp {data.konsumsi}</span>
+                                                </div>
+                                            </CardText>
+
+                                            <Card body>
+                                                <Row noGutters>
+                                                    <Col className="col-3 d-flex justify-content-center">
+                                                        <img
+                                                            alt="..."
+                                                            height="100"
+                                                            width="100"
+                                                            className="rounded-circle"
+                                                            style={{ backgroundSize: "cover" }}
+                                                            src={`http://127.0.0.1:8000/storage/lembur/lembur.jpg`}
+                                                        />
+                                                    </Col>
+                                                    <Col className="col-6 d-flex justify-content-start">
+                                                        <h1>{data.user.name}</h1>
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+
+                                        </Col>
+                                    </Row>}
                                 </CardBody>
                             </Card>
                         </Col>

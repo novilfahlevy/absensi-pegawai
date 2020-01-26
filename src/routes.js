@@ -29,7 +29,7 @@ import PegawaiDetails from 'views/pegawai/PegawaiDetails.jsx';
 import LaporanPegawai from 'views/pegawai/LaporanPegawai.jsx';
 import ProjectManager from 'views/pm/ProjectManager.jsx';
 import TambahAnggota from 'views/pm/TambahAnggota.jsx';
-
+import DetailLembur from 'views/lembur/DetailLembur.jsx';
 var routes = [
   {
     path: "/index",
@@ -92,6 +92,15 @@ var routes = [
     layout: "/admin",
     isActive: true,
     roles: ['admin']
+  },
+  {
+    path: "/detail-lembur/:id",
+    name: "Detail Lembur",
+    icon: "fas fa-moon text-purple",
+    component: DetailLembur,
+    layout: "/admin",
+    isActive: false,
+    roles: ['admin', 'project manager']
   },
   {
     path: "/jam-kerja",
