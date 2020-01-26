@@ -65,7 +65,7 @@ var routes = [
     component: PegawaiDetails,
     layout: "/admin",
     isActive: false,
-    roles: ['admin']
+    roles: ['admin', 'project manager']
   }, {
     path: "/laporan-pegawai",
     name: "Laporan Pegawai",
