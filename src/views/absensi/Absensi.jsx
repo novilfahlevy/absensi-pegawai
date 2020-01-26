@@ -62,7 +62,7 @@ class Absensi extends React.Component {
           ),
           waktu_absensi: `${moment(`${absensi.tanggal} ${absensi.absensi_masuk}`).format('HH:mm')}${absensi.absensi_keluar ? ' - ' + moment(`${absensi.tanggal} ${absensi.absensi_keluar}`).format('HH:mm') : ''}`,
           opsi: (
-            <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.user_id}`)}>
+            <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absensi.id}`)}>
               <span className="fas fa-eye"></span>
             </Button>
           )

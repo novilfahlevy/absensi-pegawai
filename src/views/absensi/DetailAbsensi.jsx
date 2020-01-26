@@ -18,6 +18,7 @@ import {
 } from 'reactstrap';
 
 import api from 'store/api.js';
+import moment from 'moment';
 
 class DetailAbsensi extends React.Component {
   state = {
@@ -85,15 +86,15 @@ class DetailAbsensi extends React.Component {
                       <ListGroup>
                         <ListGroupItem>
                           <h3>Tanggal</h3>
-                          <p className="m-0">{tanggal}</p>
+                          <p className="m-0">{moment(tanggal).format('D MMMM YYYY')}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Masuk</h3>
-                          <p className="m-0">{jam_masuk}</p>
+                          <p className="m-0">{moment(`${tanggal} ${jam_masuk}`).format('HH:mm')}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Pulang</h3>
-                          <p className="m-0">{jam_pulang}</p>
+                          <p className="m-0">{moment(`${tanggal} ${jam_pulang}`).format('HH:mm')}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Keterangan Absen</h3>
