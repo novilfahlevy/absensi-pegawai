@@ -28,6 +28,8 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { storeUserData } from 'store/actions/authActions.js';
 import user from 'user.js';
+import { storeJobs, storeRoles } from 'store/actions/filterActions.js';
+import api from 'store/api.js';
 
 class Admin extends React.Component {
   constructor(props) {
@@ -36,6 +38,9 @@ class Admin extends React.Component {
     if ( localStorage.getItem('auth') ) {
       this.props.storeUserData(localStorage.getItem('auth'));
     }
+    
+    api().get('/job').then(res => this.props.storeJobs(res.data.data));
+    api().get('/role').then(res => this.props.storeRoles(res.data.data));
   }
 
   componentDidUpdate(e) {
@@ -43,6 +48,7 @@ class Admin extends React.Component {
     document.scrollingElement.scrollTop = 0;
     this.refs.mainContent.scrollTop = 0;
   }
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if ( prop.roles.map(role => role.toLowerCase()).includes(user('role').toLowerCase()) ) {
@@ -117,6 +123,8 @@ class Admin extends React.Component {
 export default connect(
   null,
   dispatch => ({
-    storeUserData: data => dispatch(storeUserData(data))
+    storeUserData: data => dispatch(storeUserData(data)),
+    storeJobs: jobs => dispatch(storeJobs(jobs)),
+    storeRoles: roles => dispatch(storeRoles(roles))
   })
 )(withRouter(Admin));
