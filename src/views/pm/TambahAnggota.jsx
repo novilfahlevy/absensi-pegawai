@@ -30,68 +30,23 @@ import Table from 'components/ui/Table.jsx';
 class TambahAnggota extends React.Component {
   state = {
     selectedMembers: [1],
-    realData: [
-      { 
-        id: 1,
-        name: 'Novil Fahlevy', 
-        email: 'novilfreon@gmail.com', 
-        jobdesc: 'Fullstack Web Developer',
-        detail: (
-          <Button color="primary" size="sm">
-            <span className="fas fa-eye"></span>
-          </Button>
-        ),
-        tambah: (
-          <Button color='danger' size="sm">
-            <span className='fas fa-minus'></span>
-          </Button>
-        )
-      },
-      { 
-        id: 2,
-        name: 'Rizky Maulidan', 
-        email: 'asdasd@gmail.com', 
-        jobdesc: 'Back-end Developer',
-        detail: (
-          <Button color="primary" size="sm">
-            <span className="fas fa-eye"></span>
-          </Button>
-        ),
-        tambah: (
-          <Button color='success' size="sm">
-            <span className='fas fa-plus'></span>
-          </Button>
-        )
-      }
-    ],
-    pegawai: [],
-    filter: {},
     filterModalIsOpen: false
   };
 
-  filter = {
-    jobdesc: jobdesc => {
-      if ( jobdesc === 'all' ) {
-        this.clearFilterInThisField();
-        return;
-      }
-      this.setState({
-        pegawai: this.state.pegawai.filter(pegawai => pegawai.jobdesc === jobdesc)
-      });
-    },
-    status: status => {
-      if ( status === 'all' ) {
-        this.clearFilterInThisField();
-        return;
-      }
-      this.setState({
-        pegawai: this.state.pegawai.filter(pegawai => {
-          const isPegawaiSelected = this.state.selectedMembers.includes(pegawai.id);
-          return status === 'Terpilih' ? isPegawaiSelected : !isPegawaiSelected;
-        })
-      })
-    },
-  }
+  // id: 1,
+  // name: 'Novil Fahlevy', 
+  // email: 'novilfreon@gmail.com', 
+  // jobdesc: 'Fullstack Web Developer',
+  // detail: (
+  //   <Button color="primary" size="sm">
+  //     <span className="fas fa-eye"></span>
+  //   </Button>
+  // ),
+  // tambah: (
+  //   <Button color='danger' size="sm">
+  //     <span className='fas fa-minus'></span>
+  //   </Button>
+  // )
 
   componentDidMount() {
     this.setState({ pegawai: this.state.realData }, () => {
@@ -121,25 +76,6 @@ class TambahAnggota extends React.Component {
     this.setState({ filterModalIsOpen: !this.state.filterModalIsOpen });
   }
 
-  clearFilterInThisField() {
-    this.setState({ pegawai: this.state.pegawai.filter(() => true) });
-  }
-
-  addFilter = (data, value) => {
-    this.setState({ filter: { ...this.state.filter, [data]: value } }); 
-  }
-
-  submitFilter = () => {
-    this.setState({ pegawai: this.state.realData }, () => {
-      Object.keys(this.state.filter).forEach(data => {
-        setTimeout(() => this.filter[data](this.state.filter[data]), 0);
-      });
-      setTimeout(() => this.setState({ filter: {} }, () => {
-        this.toggleFilterModal();
-      }), 100);
-    });
-  }
-
   render() {
     const columns = [
       {
@@ -156,7 +92,7 @@ class TambahAnggota extends React.Component {
         text: 'Email'
       }, 
       {
-        dataField: 'jobdesc',
+        dataField: 'job',
         headerClasses: 'align-middle',
         headerAlign: 'center',
         text: 'Job'
@@ -207,15 +143,18 @@ class TambahAnggota extends React.Component {
                   </Form>
                   <Row>
                     <Col>
-                      <Button color="primary" className="mb-3" onClick={() => this.addMember()}>Tambah {this.state.selectedMembers.length} Anggota</Button>
-                    </Col>
-                    <Col>
-                      <div className="w-100 d-flex justify-content-end">
-                        <Button color="primary" onClick={() => this.toggleFilterModal()}>
-                          <span className="fas fa-filter mr-1"></span>
-                          Filter
-                        </Button>
-                        <Button color="danger">Hapus Pencarian</Button>
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <Button color="primary" size="sm" onClick={() => this.toggleFilterModal()}>
+                            <span className="fas fa-filter mr-1"></span>
+                            Filter
+                          </Button>
+                          <Button color="success" size="sm">
+                            <span className="fas fa-undo mr-1"></span>
+                            Muat Ulang Data
+                          </Button>
+                        </div>
+                        <Button color="primary" size="sm" className="mb-3" onClick={() => this.addMember()}>Tambah {this.state.selectedMembers.length} Anggota</Button>
                       </div>
                     </Col>
                   </Row>
@@ -232,24 +171,10 @@ class TambahAnggota extends React.Component {
               <Col>
                 <FormGroup>
                   <Label for="jobdesc">Job</Label>
-                  <CustomInput type="select" id="jobdesc" name="jobdesc" onChange={e => {
-                    this.addFilter(e.target.id, e.target.value);
-                  }}>
+                  <CustomInput type="select" id="jobdesc" name="jobdesc">
                     <option value="all">Pilih Semua</option>
                     <option value="Fullstack Web Developer">Fullstack Web Developer</option>
                     <option value="Back-end Developer">Back-end Developer</option>
-                  </CustomInput>
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <Label for="status">Status</Label>
-                  <CustomInput type="select" id="status" name="status" onChange={e => {
-                    this.addFilter(e.target.id, e.target.value);
-                  }}>
-                    <option value="all">Pilih Semua</option>
-                    <option value="Terpilih">Terpilih</option>
-                    <option value="Belum Terpilih">Belum Terpilih</option>
                   </CustomInput>
                 </FormGroup>
               </Col>
