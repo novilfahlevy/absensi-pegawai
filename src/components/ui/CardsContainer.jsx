@@ -16,6 +16,12 @@ import {
   Input
 } from 'reactstrap';
 
+const NoDataIndication = props => (
+  <div className="m-3" style={{ color: '#b2b2b2' }}>
+    <p className="text-center">Tidak ada data...</p>
+  </div>
+)
+
 class CardsContainer extends React.Component {
   state = {
     pagination: {
@@ -136,17 +142,25 @@ class CardsContainer extends React.Component {
           </Row>
         )}
         <Row className="mb-2 mt-2">
-          {data.slice(start, start + limit).map(data => (
-            <Col
-              className="col-12 mb-3"
-              sm={this.props.sm}
-              md={this.props.md}
-              lg={this.props.lg}
-              xl={this.props.xl}
-            >
-              {this.props.card(data)}
+          {data.length ? (
+            <>
+              {data.slice(start, start + limit).map(data => (
+                <Col
+                  className="col-12 mb-3"
+                  sm={this.props.sm}
+                  md={this.props.md}
+                  lg={this.props.lg}
+                  xl={this.props.xl}
+                >
+                  {this.props.card(data)}
+                </Col>
+              ))}
+            </>
+          ) : (
+            <Col className="col-12">
+              {this.props.NoDataIndication || <NoDataIndication />}
             </Col>
-          ))}
+          )}
         </Row>
         <Row>
           <Col sm="6">
