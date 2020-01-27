@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { editPegawai } from './../../store/actions/pegawaiActions';
-import { Row, Col, Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup } from 'reactstrap';
+import { Row, Col, Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup, Label, CustomInput } from 'reactstrap';
 import LoadingButton from 'components/ui/LoadingButton.jsx';
 import Loading from 'components/ui/Loading.jsx';
 import api from 'store/api.js';
+import Swal from 'sweetalert2';
 
 class EditPegawaiForm extends Component {
     state = {
@@ -49,17 +50,26 @@ class EditPegawaiForm extends Component {
                                     name: this.state.pegawai.name,
                                     email: this.state.pegawai.email,
                                     username: this.state.pegawai.username,
+                                    jobdesc_id: this.state.pegawai.jobdesc_id,
+                                    role_id: this.state.pegawai.roles[0].id,
                                     alamat: this.state.pegawai.alamat,
                                     nomor_handphone: this.state.pegawai.nomor_handphone
                                 }}
                                 validationSchema={EditPegawaiSchema}
                                 onSubmit={data => {
-                                    // this.setState({ isLoading: true });
-                                    // this.props.editPegawai(data, () => {
-                                    //     this.props.getDataPegawai();
-                                    //     this.props.toggle();
-                                    //     this.setState({ isLoading: false })
-                                    // }, () => this.setState({ isLoading: false }));
+                                    this.setState({ isLoading: true });
+                                    data.jobdesc_id = Number(data.jobdesc_id);
+                                    data.role_id = Number(data.role_id);
+                                    api().post(`user/edit/${this.props.pegawaiId}`, data)
+                                    .then(response => {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            text: 'Pegawai berhasil diubah!'
+                                        });
+                                        this.props.getDataPegawai();
+                                        this.props.toggle();
+                                        this.setState({ isLoading: false })
+                                    })
                                 }}
                             >
                                 {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
@@ -68,7 +78,7 @@ class EditPegawaiForm extends Component {
                                                 <label className="form-control-label" htmlFor="input-username">
                                                     Nama
                                                 </label>
-                                                <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-username" type="text" placeholder="Nama" />
+                                                <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-name" type="text" placeholder="Nama" />
                                                 {errors.name && touched.name ? (
                                                     <FormFeedback>{errors.name}</FormFeedback>
                                                 ) : null}
@@ -81,6 +91,22 @@ class EditPegawaiForm extends Component {
                                                 {errors.email && touched.email ? (
                                                     <FormFeedback className="d-block">{errors.email}</FormFeedback>
                                                 ) : null}
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="jobdesc_id">Job</Label>
+                                                <CustomInput type="select" className="form-control-alternative" id="jobdesc_id" name="jobdesc_id" onChange={handleChange} value={String(values.jobdesc_id)}>
+                                                    {this.props.jobs && this.props.jobs.map((job, i) => (
+                                                        <option key={i} value={String(job.id)} default={job.id === values.jobdesc_id}>{job.name}</option>
+                                                    ))}
+                                                </CustomInput>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="role_id">Role</Label>
+                                                <CustomInput type="select" className="form-control-alternative" id="role_id" name="role_id" onChange={handleChange} value={String(values.role_id)}>
+                                                    {this.props.roles && this.props.roles.map((role, i) => (
+                                                        <option key={i} value={role.id} default={role.id === values.role_id}>{role.name}</option>
+                                                    ))}
+                                                </CustomInput>
                                             </FormGroup>
                                             <FormGroup>
                                                 <label className="form-control-label" htmlFor="input-email">
@@ -123,6 +149,12 @@ class EditPegawaiForm extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+      jobs: state.filter.jobs,
+      roles: state.filter.roles.filter(role => role.id !== 1)
+    }
+}
 const mapDispatchToProps = (dispatch) => {
     return {
       editPegawai: (pegawai, success = () => {}, error = () => {}) => {
@@ -130,4 +162,4 @@ const mapDispatchToProps = (dispatch) => {
       }
     }
 }
-export default connect(null, mapDispatchToProps)(EditPegawaiForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditPegawaiForm);

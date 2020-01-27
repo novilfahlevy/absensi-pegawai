@@ -49,7 +49,6 @@ class TambahAnggota extends React.Component {
     api().get('user/pm')
     .then(response => {
       this.setState({ pegawai: response.data.data }, () => {
-        console.log(response.data.data);
         this.setState({ 
           pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai))
         });
@@ -149,11 +148,11 @@ class TambahAnggota extends React.Component {
     .then(response => {
       this.setState({ pegawai: response.data.data }, () => {
         this.setState({ pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai)) }, () => {
-            this.setState({ filterLoading: false });
-            this.toggleFilterModal();
-          })
-        });
+          this.setState({ filterLoading: false });
+          this.toggleFilterModal();
+        })
       });
+    });
   }
 
   refreshData = () => {

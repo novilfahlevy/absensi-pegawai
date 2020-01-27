@@ -25,7 +25,6 @@ class PegawaiDetails extends Component {
     componentDidMount() {
         API().get(`user/${this.props.match.params.id}`)
             .then(res => {
-                console.log(res.data.user)
                 this.setState({ pegawai: res.data.user, jam_kerja: res.data.user.jam_kerja })
             })
             .catch(err => console.log(err))

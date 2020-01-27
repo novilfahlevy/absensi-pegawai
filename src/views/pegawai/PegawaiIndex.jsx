@@ -83,7 +83,7 @@ class PegawaiIndex extends React.Component {
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions: this.getPegawaiOptions(p.id)
+                            ...p, actions: p.role !== 'Admin' ? this.getPegawaiOptions(p.id) : <span className="text-lg">-</span>
                         };
                     })
                 }, () => { 
@@ -123,11 +123,11 @@ class PegawaiIndex extends React.Component {
     getDataPegawai = (url = 'user') => {
         API().get('user')
             .then(res => {
-                this.setState({ pegawai: res.data.user })
+                this.setState({ pegawai: res.data.user });
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions: this.getPegawaiOptions(p.id)
+                            ...p, actions: p.role !== 'Admin' ? this.getPegawaiOptions(p.id) : <span>-</span>
                         };
                     })
                 })
@@ -179,7 +179,7 @@ class PegawaiIndex extends React.Component {
                         this.setState({
                             pegawai: this.state.pegawai.map(p => {
                                 return {
-                                    ...p, actions: this.getPegawaiOptions(p.id)
+                                    ...p, actions: p.role !== 'Admin' ? this.getPegawaiOptions(p.id) : <span className="text-lg">-</span>
                                 };
                             })
                         })
@@ -269,7 +269,7 @@ class PegawaiIndex extends React.Component {
                     </Row>
                     <PegawaiForm modal={this.state.modalIsOpen} toggle={this.toggleModal} getDataPegawai={this.getDataPegawai} />
                     {this.state.editModalIsOpen && (
-                        <EditPegawaiForm modal={this.state.editModalIsOpen} toggle={this.toggleEditModal} pegawaiId={this.state.pegawaiEdited} />
+                        <EditPegawaiForm modal={this.state.editModalIsOpen} toggle={this.toggleEditModal} pegawaiId={this.state.pegawaiEdited} getDataPegawai={this.getDataPegawai} />
                     )}
                 </Container>
                 <Modal isOpen={this.state.filterModalIsOpen}>
