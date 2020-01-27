@@ -170,9 +170,9 @@ class ProjectManager extends React.Component {
                                   <span className="fas fa-eye"></span>
                                 </Button>
                                 <Form className="d-inline-block" onSubmit={e => { e.preventDefault(); this.deleteMember(member.id); }}>
-                                  <LoadingButton type="submit" color="danger" condition={this.state.deleteMemberLoading}>
+                                  <Button type="submit" color="danger">
                                     <span className="fas fa-trash-alt"></span>
-                                  </LoadingButton>
+                                  </Button>
                                 </Form>
                               </CardBody>
                             </Col>

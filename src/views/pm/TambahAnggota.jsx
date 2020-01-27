@@ -1,8 +1,11 @@
 import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import LoadingButton from 'components/ui/LoadingButton.jsx';
 import Swal from 'sweetalert2';
-import { selectFilter } from 'react-bootstrap-table2-filter';
+import api from 'store/api.js';
+import user from 'user.js';
+import { connect } from 'react-redux';
 
 import {
   Container,
@@ -29,51 +32,128 @@ import Table from 'components/ui/Table.jsx';
 
 class TambahAnggota extends React.Component {
   state = {
-    selectedMembers: [1],
-    filterModalIsOpen: false
+    selectedMembers: [],
+    pegawai: [],
+    filterModalIsOpen: false,
+    filterJob: 'all',
+    filterLoading: false
   };
 
-  // id: 1,
-  // name: 'Novil Fahlevy', 
-  // email: 'novilfreon@gmail.com', 
-  // jobdesc: 'Fullstack Web Developer',
-  // detail: (
-  //   <Button color="primary" size="sm">
-  //     <span className="fas fa-eye"></span>
-  //   </Button>
-  // ),
-  // tambah: (
-  //   <Button color='danger' size="sm">
-  //     <span className='fas fa-minus'></span>
-  //   </Button>
-  // )
-
   componentDidMount() {
-    this.setState({ pegawai: this.state.realData }, () => {
-      this.setState({ pegawai: this.state.pegawai });
+    this.getDataFromApi();
+  }
+
+  getDataFromApi() {
+    api().get('user/pm')
+    .then(response => {
+      this.setState({ pegawai: response.data.data }, () => {
+        this.setState({ 
+          pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai))
+        });
+      });
     });
   }
 
+  getData(pegawai) {
+    return {
+      ...pegawai,
+      detail: (
+        <Button color="primary" size="sm" onClick={() => this.props.history.push(`/admin/detail-pegawai/${pegawai.id}`)}>
+          <span className="fas fa-eye"></span>
+        </Button>
+      ),
+      tambah: (
+        <Button color={this.isMemberSelected(pegawai.id) ? 'danger' : 'success'} size="sm" onClick={() => {
+          this.toggleSelectMember(pegawai.id)
+        }}>
+          <span className={`fas fa-${this.isMemberSelected(pegawai.id) ? 'minus' : 'plus'}`}></span>
+        </Button>
+      )
+    }
+  }
+
   toggleSelectMember = user_id => {
+    let getData = () => {
+      this.setState({ 
+        pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai))
+      });
+    }
+
     if ( !this.isMemberSelected(user_id) ) {
-      this.setState({ selectedMembers: [...this.state.selectedMembers, user_id] });
+      this.setState({ selectedMembers: [...this.state.selectedMembers, user_id] }, getData);
       return;
     }
     this.setState({ 
       selectedMembers: this.state.selectedMembers.filter(id => id !== user_id)
-    });
+    }, getData);
   }
 
   isMemberSelected = user_id => {
-    return this.state.selectedMembers.find(id => id === user_id);
+    return this.state.selectedMembers.includes(user_id);
   }
 
   addMember() {
-    // console.log(this.state.selectedMembers);
+    if ( this.state.selectedMembers.length ) {
+      Swal.fire({
+        text: "Tambah anggota?",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Tidak',
+        confirmButtonText: 'Iya'
+      }).then((result) => {
+        if ( result.value ) {
+          this.setState({ addMemberLoading: true });
+          api().post('user/pm', {
+            users: JSON.stringify(this.state.selectedMembers),
+            pm: user('id')
+          })
+          .then(response => {
+            Swal.fire({
+              icon: 'success',
+              text: 'Anggota berhasil ditambah!'
+            });
+            this.setState({ selectedMembers: [] });
+            this.getDataFromApi();
+          })
+        }
+      })
+    }
+    else {
+      Swal.fire({
+        icon: 'warning',
+        text: 'Tambah minimal 1 anggota!'
+      });
+    }
   }
 
   toggleFilterModal() {
     this.setState({ filterModalIsOpen: !this.state.filterModalIsOpen });
+  }
+
+  changeFilter = e => {
+    let filter = e.target.id;
+    filter = `filter${filter[0].toUpperCase() + filter.slice(1)}`;
+    this.setState({ [filter]: e.target.value });
+  }
+
+  submitFilter = e => {
+    e.preventDefault();
+    this.setState({ filterLoading: true });
+    api().get(`user/pm/filter/pegawai/${this.state.filterJob}`)
+    .then(response => {
+      this.setState({ pegawai: response.data.data }, () => {
+        this.setState({ pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai)) }, () => {
+            this.setState({ filterLoading: false });
+            this.toggleFilterModal();
+          })
+        });
+      });
+  }
+
+  refreshData = () => {
+    this.getDataFromApi();
   }
 
   render() {
@@ -83,6 +163,7 @@ class TambahAnggota extends React.Component {
         text: 'Nama',
         headerClasses: 'align-middle',
         headerAlign: 'center',
+        align: 'center',
         sort: true
       }, 
       {
@@ -95,7 +176,8 @@ class TambahAnggota extends React.Component {
         dataField: 'job',
         headerClasses: 'align-middle',
         headerAlign: 'center',
-        text: 'Job'
+        text: 'Job',
+        align: 'center'
       }, 
       {
         dataField: 'detail',
@@ -149,12 +231,14 @@ class TambahAnggota extends React.Component {
                             <span className="fas fa-filter mr-1"></span>
                             Filter
                           </Button>
-                          <Button color="success" size="sm">
+                          <Button color="success" size="sm" onClick={this.refreshData}>
                             <span className="fas fa-undo mr-1"></span>
                             Muat Ulang Data
                           </Button>
                         </div>
-                        <Button color="primary" size="sm" className="mb-3" onClick={() => this.addMember()}>Tambah {this.state.selectedMembers.length} Anggota</Button>
+                        <Form className="d-inline-block" onSubmit={e => { e.preventDefault(); this.addMember(); }}>
+                          <Button color="primary" size="sm" className="mb-3">Tambah {this.state.selectedMembers.length} Anggota</Button>
+                        </Form>
                       </div>
                     </Col>
                   </Row>
@@ -165,32 +249,39 @@ class TambahAnggota extends React.Component {
           </Row>
         </Container>
         <Modal isOpen={this.state.filterModalIsOpen}>
-          <ModalHeader><span className="text-lg">Filter Pegawai</span></ModalHeader>
-          <ModalBody>
-            <Row>
-              <Col>
-                <FormGroup>
-                  <Label for="jobdesc">Job</Label>
-                  <CustomInput type="select" id="jobdesc" name="jobdesc">
-                    <option value="all">Pilih Semua</option>
-                    <option value="Fullstack Web Developer">Fullstack Web Developer</option>
-                    <option value="Back-end Developer">Back-end Developer</option>
-                  </CustomInput>
-                </FormGroup>
-              </Col>
-            </Row>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="danger" onClick={() => this.toggleFilterModal()}>Cancel</Button>
-            <Button color="primary" onClick={this.submitFilter}>
-              <span className="fas fa-filter mr-2"></span>
-              Filter
-            </Button>
-          </ModalFooter>
+          <Form onSubmit={this.submitFilter}>
+            <ModalHeader><span className="text-lg">Filter Pegawai</span></ModalHeader>
+            <ModalBody>
+              <Row>
+                <Col>
+                  <FormGroup>
+                    <Label for="jobdesc">Job</Label>
+                    <CustomInput type="select" id="job" name="job" onChange={this.changeFilter}>
+                      <option value="all">Pilih Semua</option>
+                      {this.props.jobs && this.props.jobs.map((job, i) => (
+                        <option key={i} value={job.name}>{job.name}</option>
+                      ))}
+                    </CustomInput>
+                  </FormGroup>
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter>
+              <Button color="danger" onClick={() => this.toggleFilterModal()}>Cancel</Button>
+              <LoadingButton type="submit" condition={this.state.filterLoading} color="primary">
+                <span className="fas fa-filter mr-2"></span>
+                Filter
+              </LoadingButton>
+            </ModalFooter>
+          </Form>
         </Modal>
       </>
     );
   }
 }
 
-export default FadeIn(TambahAnggota, Header);
+export default connect(
+  state => ({ 
+    jobs: state.filter.jobs
+  })
+)(FadeIn(TambahAnggota, Header));
