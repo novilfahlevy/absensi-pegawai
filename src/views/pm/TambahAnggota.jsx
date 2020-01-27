@@ -36,7 +36,9 @@ class TambahAnggota extends React.Component {
     pegawai: [],
     filterModalIsOpen: false,
     filterJob: 'all',
-    filterLoading: false
+    filterLoading: false,
+    searchPegawaiKeyword: '',
+    searchPegawaiLoading: false
   };
 
   componentDidMount() {
@@ -47,6 +49,7 @@ class TambahAnggota extends React.Component {
     api().get('user/pm')
     .then(response => {
       this.setState({ pegawai: response.data.data }, () => {
+        console.log(response.data.data);
         this.setState({ 
           pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai))
         });
@@ -96,7 +99,7 @@ class TambahAnggota extends React.Component {
     if ( this.state.selectedMembers.length ) {
       Swal.fire({
         text: "Tambah anggota?",
-        icon: 'info',
+        icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -113,9 +116,10 @@ class TambahAnggota extends React.Component {
             Swal.fire({
               icon: 'success',
               text: 'Anggota berhasil ditambah!'
-            });
-            this.setState({ selectedMembers: [] });
-            this.getDataFromApi();
+            })
+            .then(() => this.props.history.push('/admin/project-manager'));
+            // this.setState({ selectedMembers: [] });
+            // this.getDataFromApi();
           })
         }
       })
@@ -154,6 +158,24 @@ class TambahAnggota extends React.Component {
 
   refreshData = () => {
     this.getDataFromApi();
+    this.setState({ selectedMembers: [] });
+  }
+
+  searchPegawai = e => {
+    e.preventDefault();
+    this.setState({ searchPegawaiLoading: true });
+    api().get(`user/pm/search/${this.state.searchPegawaiKeyword}`)
+    .then(response => {
+      this.setState({ pegawai: response.data.data }, () => {
+        this.setState({ pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai)) }, () => {
+          this.setState({ searchPegawaiLoading: false });
+        });
+      });
+    })
+  }
+
+  changeSearchPegawaiKeyword = e => {
+    this.setState({ searchPegawaiKeyword: e.target.value });
   }
 
   render() {
@@ -214,12 +236,12 @@ class TambahAnggota extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <Form onSubmit={this.handleCariSubmit}>
+                  <Form onSubmit={this.searchPegawai}>
                     <InputGroup className="mb-3">
-                      <Input onChange={this.handleCariChange} type="search" name="search" id="search"
+                      <Input onChange={this.changeSearchPegawaiKeyword} type="search" name="search" id="search"
                         placeholder="Cari pegawai" />
                       <InputGroupAddon addonType="append">
-                        <Button type="submit" color="primary">Cari</Button>
+                        <LoadingButton type="submit" color="primary" condition={this.state.searchPegawaiLoading} disabled={!this.state.searchPegawaiKeyword}>Cari</LoadingButton>
                       </InputGroupAddon>
                     </InputGroup>
                   </Form>
