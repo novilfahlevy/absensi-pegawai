@@ -29,6 +29,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { storeUserData } from 'store/actions/authActions.js';
 import user from 'user.js';
 import { storeJobs, storeRoles } from 'store/actions/filterActions.js';
+import { sudoLogout } from "../store/actions/authActions"; 
 import api from 'store/api.js';
 
 class Admin extends React.Component {
@@ -39,7 +40,14 @@ class Admin extends React.Component {
       this.props.storeUserData(localStorage.getItem('auth'));
     }
     
-    api().get('/job').then(res => this.props.storeJobs(res.data.data));
+    api().get('/job').then(res => {
+      this.props.storeJobs(res.data.data);
+    })
+    .catch(err => {
+      if ( err.response.status === 401 ) {
+        this.props.logout();
+      }
+    });
     api().get('/role').then(res => this.props.storeRoles(res.data.data));
   }
 
@@ -122,9 +130,10 @@ class Admin extends React.Component {
 
 export default connect(
   null,
-  dispatch => ({
+  (dispatch, ownProps) => ({
     storeUserData: data => dispatch(storeUserData(data)),
     storeJobs: jobs => dispatch(storeJobs(jobs)),
-    storeRoles: roles => dispatch(storeRoles(roles))
+    storeRoles: roles => dispatch(storeRoles(roles)),
+    logout: () => dispatch(sudoLogout(ownProps.history.push))
   })
 )(withRouter(Admin));

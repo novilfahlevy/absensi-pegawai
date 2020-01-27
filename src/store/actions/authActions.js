@@ -14,7 +14,7 @@ export const login = ({ keyword, password }, push) => {
         let pageNotFound = true;
         routes.map(prop => {
           if ( pageNotFound ) {
-            if ( prop.roles.map(role => role.toLowerCase()).includes(user('role').toLowerCase()) ) {
+            if ( prop.roles.map(role => role.toLowerCase()).indexOf(user('role').toLowerCase()) === 0 ) {
               dispatch({ type: 'LOGIN_SUCCESS' });
               push(`/admin${prop.path}`);
               pageNotFound = false;
@@ -56,6 +56,14 @@ export const logout = push => {
       }
     })
   };
+}
+
+export const sudoLogout = push => {
+  return dispatch => {
+    localStorage.removeItem('auth');
+    dispatch({ type: 'LOGOUT' });
+    push('/auth/login');
+  }
 }
 
 export const storeUserData = data => {
