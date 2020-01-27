@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 import PieChart from './../../components/ui/PieChart.jsx';
 import { Bar, Line } from 'react-chartjs-2'
 import Header from "components/Headers/Header.jsx";
@@ -8,6 +10,7 @@ import Table from 'components/ui/Table.jsx';
 import { selectFilter } from 'react-bootstrap-table2-filter';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import Loading from 'components/ui/Loading.jsx';
+import FileDownload from 'js-file-download';
 import API from 'store/api.js'
 import {
     Card,
@@ -49,8 +52,35 @@ class LaporanPegawai extends React.Component {
             [e.target.name]: e.target.value
         })
     }
+    handleExportSelected = () => {
+        axios({
+            url: `${process.env.REACT_APP_BASE_URL}api/absensi/laporan/export/${this.state.bulan}/${this.state.tahun}`,
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Laporan.xlsx');
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
+    handleExport = () => {
+        axios({
+            url: `${process.env.REACT_APP_BASE_URL}api/absensi/laporan/export`,
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Laporan.xlsx');
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
     handleCariClick = () => {
-        console.log(this.state);
         API().get(`absensi/laporan/cari/${this.state.bulan}/${this.state.tahun}`)
             .then(res => {
                 console.log(res);
@@ -176,7 +206,7 @@ class LaporanPegawai extends React.Component {
                                             <h2 className="mb-0">Laporan Pegawai Bulan Ini ({moment().locale('id').format('MMMM')})</h2>
                                         </Col>
                                         <Col className="text-right" xs="6">
-                                            <Button color="success" onClick={() => this.props.history.push(`/admin/laporan-pegawai`)} size="md">
+                                            <Button color="success" onClick={this.handleExport} size="md">
                                                 <i className="fas fa-file mr-2"></i>
                                                 Export Laporan
                                             </Button>
@@ -251,7 +281,6 @@ class LaporanPegawai extends React.Component {
                                                                     <option value={moment().subtract(2, 'year').year()}>{moment().subtract(2, 'year').year()}</option>
                                                                     <option value={moment().subtract(3, 'year').year()}>{moment().subtract(3, 'year').year()}</option>
                                                                 </Input>
-
                                                             </FormGroup>
                                                         </Col>
                                                         <Col className="col-12 mb-2">
@@ -261,7 +290,7 @@ class LaporanPegawai extends React.Component {
                                                                 </Button>
                                                         </Col>
                                                         <Col className="col-12">
-                                                            <Button disabled={this.state.data_kedua.bulan === 0 && this.state.data_kedua.tahun === 0 ? true : false} color="success" className="w-100" size="md">
+                                                            <Button onClick={this.handleExportSelected} disabled={this.state.data_kedua.bulan === 0 && this.state.data_kedua.tahun === 0 ? true : false} color="success" className="w-100" size="md">
                                                                 <i className="fas fa-file mr-2"></i>
                                                                 Export Laporan
                                                                 </Button>
