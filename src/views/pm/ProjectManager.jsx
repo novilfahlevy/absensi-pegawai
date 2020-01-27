@@ -39,7 +39,8 @@ class ProjectManager extends React.Component {
     members: [],
     filterJob: 'all',
     filterModalIsOpen: false,
-    filterLoading: false
+    filterLoading: false,
+    deleteMemberLoading: false
   }
 
   componentDidMount() {
@@ -91,20 +92,23 @@ class ProjectManager extends React.Component {
       cancelButtonText: 'Tidak',
       confirmButtonText: 'Iya'
     }).then((result) => {
-      if (result.value) {
+      if ( result.value ) {
+        this.setState({ deleteMemberLoading: true });
+
         api().delete(`/user/pm/${user('id')}/${id}`)
-          .then(response => {
-            Swal.fire({
-              icon: 'success',
-              text: 'Anggota berhasil dihapus!'
-            });
-            this.getMembersData();
+        .then(response => {
+          Swal.fire({
+            icon: 'success',
+            text: 'Anggota berhasil dihapus!'
           });
+          this.setState({ deleteMemberLoading: false });
+          this.getMembersData();
+        });
       }
     })
   }
 
-  clearSearch = () => {
+  refreshData = () => {
     this.getMembersData();
   }
 
@@ -143,7 +147,7 @@ class ProjectManager extends React.Component {
                         <span className="fas fa-filter mr-1"></span>
                         Filter
                       </Button>
-                      <Button color="success" size="sm" onClick={this.clearSearch}>
+                      <Button color="success" size="sm" onClick={this.refreshData}>
                         <span className="fas fa-undo mr-1"></span>
                         Muat Ulang Data
                       </Button>
@@ -165,9 +169,11 @@ class ProjectManager extends React.Component {
                                 <Button color="primary" onClick={() => this.props.history.push(`/admin/detail-pegawai/${member.id}`)}>
                                   <span className="fas fa-eye"></span>
                                 </Button>
-                                <Button color="danger" onClick={() => this.deleteMember(member.id)}>
-                                  <span className="fas fa-trash-alt"></span>
-                                </Button>
+                                <Form className="d-inline-block" onSubmit={e => { e.preventDefault(); this.deleteMember(member.id); }}>
+                                  <LoadingButton type="submit" color="danger" condition={this.state.deleteMemberLoading}>
+                                    <span className="fas fa-trash-alt"></span>
+                                  </LoadingButton>
+                                </Form>
                               </CardBody>
                             </Col>
                           </Row>

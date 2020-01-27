@@ -193,7 +193,7 @@ class PegawaiIndex extends React.Component {
     componentDidMount() {
         this.getDataPegawai();
     }
-    clearSearch = () => {
+    refreshData = () => {
         this.getDataPegawai();
         this.setState({ cariPegawaiKeyword: '' });
     }
@@ -256,7 +256,7 @@ class PegawaiIndex extends React.Component {
                                                 <span className="fas fa-filter mr-1"></span>
                                                 Filter
                                             </Button>
-                                            <Button color="success" size="sm" onClick={this.clearSearch}>
+                                            <Button color="success" size="sm" onClick={this.refreshData}>
                                                 <span className="fas fa-undo mr-1"></span>
                                                 Muat Ulang Data
                                             </Button>
