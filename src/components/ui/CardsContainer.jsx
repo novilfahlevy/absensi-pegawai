@@ -53,6 +53,10 @@ class CardsContainer extends React.Component {
     this.setTotalPage();
   }
 
+  componentWillReceiveProps() {
+    this.setTotalPage();
+  }
+
   setTotalPage() {
     this.setState({
       pagination: {
@@ -116,6 +120,7 @@ class CardsContainer extends React.Component {
   render() {
     const { start, limit } = this.state.pagination;
     const data = this.props.filter ? this.state.filteredData : this.props.data;
+    const totalPage = Math.ceil(this.props.data.length / this.state.pagination.limit) || 1;
 
     return (
       <>
@@ -144,8 +149,9 @@ class CardsContainer extends React.Component {
         <Row className="mb-2 mt-2">
           {data.length ? (
             <>
-              {data.slice(start, start + limit).map(data => (
+              {data.slice(start, start + limit).map((data, i) => (
                 <Col
+                  key={i}
                   className="col-12 mb-3"
                   sm={this.props.sm}
                   md={this.props.md}
@@ -169,8 +175,8 @@ class CardsContainer extends React.Component {
                 {this.state.pagination.limit}
               </DropdownToggle>
               <DropdownMenu>
-                {this.state.pagination.limitOptions.map(limit => (
-                  <DropdownItem onClick={() => this.changeLimit(limit)}>{limit}</DropdownItem>
+                {this.state.pagination.limitOptions.map((limit, i) => (
+                  <DropdownItem key={i} onClick={() => this.changeLimit(limit)}>{limit}</DropdownItem>
                 ))}
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -181,9 +187,9 @@ class CardsContainer extends React.Component {
                 <PaginationLink previous onClick={e => { e.preventDefault(); this.prevPage(); }} />
               </PaginationItem>
               <PaginationItem className="d-flex align-items-center px-3">
-                {Math.floor((start / limit + 1))} dari {this.state.pagination.totalPage} halaman
+                {Math.floor((start / limit + 1))} dari {totalPage} halaman
               </PaginationItem>
-              <PaginationItem disabled={((start / limit + 1) >= this.state.pagination.totalPage)}>
+              <PaginationItem disabled={((start / limit + 1) >= totalPage)}>
                 <PaginationLink next onClick={e => { e.preventDefault(); this.nextPage(); }} />
               </PaginationItem>
             </Pagination>
