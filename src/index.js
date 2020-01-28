@@ -16,13 +16,14 @@ import AuthLayout from "layouts/Auth.jsx";
 
 import { Provider } from 'react-redux';
 import store from 'store/reducers/rootReducer.js';
-
+import Login from 'views/auth/Login.jsx';
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
         <Route path="/admin" render={props => <AdminLayout {...props} />} />
         <Route path="/auth" render={props => <AuthLayout {...props} />} />
+        <Route path="/" render={() => <Redirect to="/auth/login" />} />
       </Switch>
     </BrowserRouter>
   </Provider>,
