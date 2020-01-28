@@ -35,7 +35,7 @@ class PegawaiDetails extends Component {
                 'Minggu 4'],
             datasets: [
                 {
-                    label: 'Rainfall',
+                    label: 'Total Jam Kerja',
                     backgroundColor: '#57C3E7',
                     borderColor: '#57C3E7',
                     borderWidth: 2,

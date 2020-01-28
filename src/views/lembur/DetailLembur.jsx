@@ -3,7 +3,6 @@ import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { withRouter } from 'react-router-dom';
-
 import {
     Container,
     Row,
@@ -59,7 +58,7 @@ class DetailLembur extends React.Component {
                                             <img
                                                 alt="..."
                                                 style={{ borderRadius: "10px", height: "20rem", width: "20rem", backgroundSize: "cover" }}
-                                                src={`http://127.0.0.1:8000/storage/lembur/lembur.jpg`}
+                                                src={`${process.env.REACT_APP_BASE_URL}storage/lembur/${data.foto}`}
                                             />
                                         </Col>
                                         <Col className="col-8">
@@ -75,10 +74,10 @@ class DetailLembur extends React.Component {
                                                 <span className="font-weight-bold d-block mt-2">Keterangan : </span>
                                                 <p className="m-0">{data.keterangan}</p>
                                                 <div className="mt-2">
+                                                    <span className="font-weight-bold mb-2 d-block">Konsumsi : <span lassName="font-weight-normal">Rp {data.konsumsi}</span></span>
                                                     <span className="font-weight-bold">Konsumsi : </span><span>Rp {data.konsumsi}</span>
                                                 </div>
                                             </CardText>
-
                                             <Card body>
                                                 <Row noGutters>
                                                     <Col className="col-3 d-flex justify-content-center">
@@ -88,15 +87,15 @@ class DetailLembur extends React.Component {
                                                             width="100"
                                                             className="rounded-circle"
                                                             style={{ backgroundSize: "cover" }}
-                                                            src={`http://127.0.0.1:8000/storage/lembur/lembur.jpg`}
+                                                            src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${data.user.profile}`}
                                                         />
                                                     </Col>
-                                                    <Col className="col-6 d-flex justify-content-start">
-                                                        <h1>{data.user.name}</h1>
+                                                    <Col className="col-9">
+                                                        <h2 className="d-block">{data.user.name}</h2>
+                                                        <h3 className="font-weight-light">{data.user.email}</h3>
                                                     </Col>
                                                 </Row>
                                             </Card>
-
                                         </Col>
                                     </Row>}
                                 </CardBody>
