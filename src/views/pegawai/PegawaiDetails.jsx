@@ -25,6 +25,7 @@ class PegawaiDetails extends Component {
     componentDidMount() {
         API().get(`user/${this.props.match.params.id}`)
             .then(res => {
+                console.log(res.data.user   )
                 this.setState({ pegawai: res.data.user, jam_kerja: res.data.user.jam_kerja })
             })
             .catch(err => console.log(err))
@@ -120,9 +121,13 @@ class PegawaiDetails extends Component {
                                                     <h3>Username</h3>
                                                     <h5>{pegawai.username}</h5>
                                                 </Col>
-                                                <Col lg="12" style={{ marginTop: "1rem" }}>
+                                                <Col lg="6" style={{ marginTop: "1rem" }}>
                                                     <h3>Email</h3>
                                                     <h5>{pegawai.email}</h5>
+                                                </Col>
+                                                <Col lg="6" style={{ marginTop: "1rem" }}>
+                                                    <h3>Role</h3>
+                                                    <h5>{pegawai.roles[0].name}</h5>
                                                 </Col>
                                                 <Col lg="12" style={{ marginTop: "1.5rem" }}>
                                                     <h3>No. Telp</h3>

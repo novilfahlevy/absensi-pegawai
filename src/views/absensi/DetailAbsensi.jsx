@@ -24,7 +24,7 @@ import moment from 'moment';
 
 const AbsenLocation = compose(
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBi6BT_CluADbVAHO1oZv3nsmrbCxkfVsw",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDhA_7ImjT_ZsE0PvCXQoVbwEaqAj_rZ5Q",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `400px` }} />,
     mapElement: <div style={{ height: `100%` }} />
@@ -55,7 +55,7 @@ class DetailAbsensi extends React.Component {
   }
 
   componentDidMount() {
-    api(`lembur/${this.props.match.params.id}/cek`)
+    api().get(`lembur/${this.props.match.params.id}/cek`)
       .then(response => {
         if ( response.data.data ) {
           this.setState({ isLembur: true });
@@ -163,7 +163,7 @@ class DetailAbsensi extends React.Component {
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Pulang</h3>
-                          <p className="m-0">{jam_pulang_absen}</p>
+                          <p className="m-0">{jam_pulang_absen || '-'}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Keterangan Absen</h3>
@@ -193,7 +193,6 @@ class DetailAbsensi extends React.Component {
                 <CardHeader>Absen Masuk</CardHeader>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
-                  {/* <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwZyEkoZk2huhck8SO8b_hShfu6_a3tz7gsDfmzwjjiLS6iFpB" className="rounded" width="100%" height="300" /> */}
                   <Row>
                     <Col className="col-12">
                       <AbsenLocation lat={latitude_absen_masuk} lng={longitude_absen_masuk} />
@@ -202,7 +201,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={foto_absensi_masuk} />
+                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_masuk}`} />
                 </CardBody>
               </Card>
             </Col>
@@ -219,7 +218,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={foto_absensi_keluar} />
+                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_keluar}`} />
                 </CardBody>
               </Card>
             </Col>
