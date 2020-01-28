@@ -3,7 +3,7 @@ import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { withRouter } from 'react-router-dom';
-import MapGL from 'react-map-gl';
+import MapGL, { Marker } from 'react-map-gl';
 
 import { 
   Container, 
@@ -27,12 +27,12 @@ class AbsenLocation extends React.Component {
     viewport: {
       width: '100%',
       height: 300,
-      latitude: -0.459127,
-      longitude: 117.186919,
       latitude: 0,
       longitude: 0,
       zoom: 17
-    }
+    },
+    markerLatitude: 0,
+    markerLongitude: 0
   };
 
   componentDidMount() {
@@ -49,14 +49,18 @@ class AbsenLocation extends React.Component {
         ...this.state.viewport,
         latitude: this.props.lat,
         longitude: this.props.lng
-      }
+      },
+      markerLatitude: this.props.lat,
+      markerLongitude: this.props.lng
     }, () => {
       this.setState({
         viewport: {
           ...this.state.viewport,
           latitude: this.props.lat,
           longitude: this.props.lng
-        }
+        },
+        markerLatitude: this.props.lat,
+        markerLongitude: this.props.lng
       })
     });
   }
@@ -88,7 +92,11 @@ class AbsenLocation extends React.Component {
             className="rounded"
             {...this.state.viewport}
             onViewportChange={(viewport) => this.setState({viewport})}
-          />
+          >
+            <Marker latitude={this.state.markerLatitude} longitude={this.state.markerLongitude} offsetLeft={0} offsetTop={0}>
+              <span className="fas fa-map-marker-alt" style={{ fontSize: '40px' }}></span>
+            </Marker>
+          </MapGL>
         </CardBody>
         <CardFooter className="py-3">
           <Row>
