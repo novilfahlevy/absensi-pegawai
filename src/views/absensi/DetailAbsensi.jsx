@@ -55,6 +55,13 @@ class DetailAbsensi extends React.Component {
   }
 
   componentDidMount() {
+    api(`lembur/${this.props.match.params.id}/cek`)
+      .then(response => {
+        if ( response.data.data ) {
+          this.setState({ isLembur: true });
+        }
+      })
+
     api().get('admin/waktuKerja')
       .then(response => {
         this.setState({ waktu_kerja: response.data.data[0].waktu_kerja });
@@ -173,7 +180,7 @@ class DetailAbsensi extends React.Component {
                           </ListGroupItem>
                         )}
                       </ListGroup>
-                      <Button className="mt-3" color="primary">Lihat Keterangan Lembur</Button>
+                      {this.state.isLembur && <Button className="mt-3" color="primary" onClick={() => this.props.history.push(`/admin/detail-lembur/${this.props.match.params.id}`)}>Lihat Keterangan Lembur</Button>}
                     </Col>
                   </Row>
                 </CardBody>
