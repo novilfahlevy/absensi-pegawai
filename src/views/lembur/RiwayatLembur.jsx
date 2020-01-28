@@ -15,7 +15,10 @@ import {
     FormGroup,
     Label,
     Input,
-    Badge
+    Badge,
+    InputGroupAddon,
+    Form,
+    InputGroup
 } from 'reactstrap';
 
 import { withRouter, Link } from 'react-router-dom';
@@ -28,28 +31,40 @@ import 'moment/locale/id';
 import CardsContainer from 'components/ui/CardsContainer.jsx';
 import API from 'store/api.js';
 import Loading from 'components/ui/Loading.jsx';
+import user from 'user.js'
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class RiwayatLembur extends React.Component {
     state = {
         lembur: null,
         filterBulan: 1,
-        filterTahun: moment().year()
+        filterTahun: moment().year(),
+        cariKeyword: ''
     }
     handleChange = e => {
-        console.log(e.target);
         this.setState({
             [e.target.name]: e.target.value
         })
     }
+    handleCariSubmit = e => {
+        e.preventDefault();
+        API().get(`lembur/cari/${this.state.cariKeyword}`)
+            .then(res => {
+                this.setState({
+                    lembur: res.data.data.sort((a, b) => (a.tanggal > b.tanggal) ? 1 : -1)
+                })
+            })
+            .catch(err => console.log(err))
+    }
     handleReset = () => {
         this.setState({
             filterBulan: 1,
-            filterTahun: moment().year()
+            filterTahun: moment().year(),
+            cariKeyword: ''
         }, this.getData())
     }
     handleClick = () => {
-        API().get(`lembur/filter/${this.state.filterBulan}/${this.state.filterTahun}`)
+        API().get(`lembur/filter/${user('role')}/${user('id')}/${this.state.filterBulan}/${this.state.filterTahun}`)
             .then(res => {
                 this.setState({
                     lembur: res.data.data.sort((a, b) => (a.tanggal > b.tanggal) ? 1 : -1)
@@ -58,8 +73,9 @@ class RiwayatLembur extends React.Component {
             .catch(err => console.log(err))
     }
     getData = () => {
-        API().get('lembur')
+        API().get(`lembur/${user('role')}/${user('id')}`)
             .then(res => {
+                console.log(res);
                 this.setState({
                     lembur: res.data.data.others.sort((a, b) => (a.tanggal > b.tanggal) ? 1 : -1)
                 });
@@ -70,7 +86,7 @@ class RiwayatLembur extends React.Component {
         this.getData();
     }
     render() {
-        const { filterTahun, filterBulan } = this.state;
+        const { filterTahun, filterBulan, cariKeyword } = this.state;
         let styles = {
             card: {
                 border: "none",
@@ -96,6 +112,14 @@ class RiwayatLembur extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
+                                    <Form onSubmit={this.handleCariSubmit}>
+                                        <InputGroup className="mb-3">
+                                            <Input value={cariKeyword} onChange={this.handleChange} type="search" name="cariKeyword" id="search" placeholder="Cari data lembur " />
+                                            <InputGroupAddon addonType="append">
+                                                <Button type="submit" color="primary">Cari</Button>
+                                            </InputGroupAddon>
+                                        </InputGroup>
+                                    </Form>
                                     <Row>
                                         <Col className="col-5">
                                             <FormGroup>
