@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { addPegawai } from './../../store/actions/pegawaiActions';
-import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup, CustomInput, Label } from 'reactstrap';
 import LoadingButton from 'components/ui/LoadingButton.jsx';
 
 class PegawaiForm extends Component {
@@ -32,6 +32,8 @@ class PegawaiForm extends Component {
                             name: '',
                             email: '',
                             username: '',
+                            jobdesc_id: 1,
+                            role: 2,
                             alamat: '',
                             nomor_handphone: '',
                             password: ''
@@ -39,6 +41,8 @@ class PegawaiForm extends Component {
                         validationSchema={AddPegawaiSchema}
                         onSubmit={data => {
                             this.setState({ isLoading: true });
+                            data.jobdesc_id = Number(data.jobdesc_id);
+                            data.role = Number(data.role);
                             this.props.addPegawai(data, () => {
                                 this.props.getDataPegawai();
                                 this.props.toggle();
@@ -53,10 +57,10 @@ class PegawaiForm extends Component {
                                 </ModalHeader>
                                 <ModalBody>
                                     <FormGroup>
-                                        <label className="form-control-label" htmlFor="input-username">
+                                        <label className="form-control-label" htmlFor="input-name">
                                             Nama
                                         </label>
-                                        <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-username" type="text" placeholder="Nama" />
+                                        <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-name" type="text" placeholder="Nama" />
                                         {errors.name && touched.name ? (
                                             <FormFeedback>{errors.name}</FormFeedback>
                                         ) : null}
@@ -78,6 +82,22 @@ class PegawaiForm extends Component {
                                         {errors.email && touched.email ? (
                                             <FormFeedback className="d-block">{errors.email}</FormFeedback>
                                         ) : null}
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="jobdesc_id">Job</Label>
+                                        <CustomInput type="select" className="form-control-alternative" id="jobdesc_id" name="jobdesc_id" onChange={handleChange}>
+                                            {this.props.jobs && this.props.jobs.map((job, i) => (
+                                                <option key={i} value={String(job.id)}>{job.name}</option>
+                                            ))}
+                                        </CustomInput>
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Label for="role">Role</Label>
+                                        <CustomInput type="select" className="form-control-alternative" id="role" name="role" onChange={handleChange}>
+                                            {this.props.roles && this.props.roles.map((role, i) => (
+                                                <option key={i} value={role.id}>{role.name}</option>
+                                            ))}
+                                        </CustomInput>
                                     </FormGroup>
                                     <FormGroup>
                                         <label className="form-control-label" htmlFor="input-password">
@@ -120,6 +140,12 @@ class PegawaiForm extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        jobs: state.filter.jobs,
+        roles: state.filter.roles.filter(role => role.id !== 1)
+    };
+}
 const mapDispatchToProps = (dispatch) => {
     return {
         addPegawai: (pegawai, success, error) => {
@@ -127,4 +153,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-export default connect(null, mapDispatchToProps)(PegawaiForm);
+export default connect(mapStateToProps, mapDispatchToProps)(PegawaiForm);

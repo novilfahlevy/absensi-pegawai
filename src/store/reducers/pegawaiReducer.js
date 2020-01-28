@@ -14,14 +14,14 @@ const pegawaiReducer = (initState = state, action) => {
             console.log('tambah pegawai berhasil');
             return action.res;
         case 'ADD_PEGAWAI_ERROR':
-            if ( action.err.response.status === 422 ) {
-                Swal.fire(
-                    'Gagal!',
-                    'Email sudah digunakan, coba dengan email lain.',
-                    'error'
-                );
-                return action.err;
-            };
+            // if ( action.err.response.status === 422 ) {
+            //     Swal.fire(
+            //         'Gagal!',
+            //         'Email sudah digunakan, coba dengan email lain.',
+            //         'error'
+            //     );
+            //     return action.err;
+            // };
 
             Swal.fire(
                 'Gagal!',

@@ -16,7 +16,7 @@ export const addPegawai = (pegawai, success, error) => {
 
 export const editPegawai = (pegawai, success, error) => {
     return (dispatch, getState) => {
-        alert(pegawai.name);
+        
     }
 }
 

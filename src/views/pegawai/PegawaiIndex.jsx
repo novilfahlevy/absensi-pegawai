@@ -83,7 +83,7 @@ class PegawaiIndex extends React.Component {
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions: this.getPegawaiOptions(p.id)
+                            ...p, actions: this.getPegawaiOptions(p)
                         };
                     })
                 }, () => { 
@@ -93,7 +93,7 @@ class PegawaiIndex extends React.Component {
             });
         });
     }
-    getPegawaiOptions(id) {
+    getPegawaiOptions(p) {
         return (
             <>
                 <UncontrolledDropdown>
@@ -101,17 +101,17 @@ class PegawaiIndex extends React.Component {
                         <i className="fas fa-ellipsis-v"></i>
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" onClick={() => this.toggleEditModal(id)}>
+                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" disabled={p.role === 'Admin'} onClick={() => this.toggleEditModal(p.id)}>
                             <i className="fas fa-pencil-alt text-success"></i>
                             Edit
                         </DropdownItem>
-                        <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
-                            this.deletePegawai(id);
+                        <DropdownItem style={{ cursor: 'pointer' }} disabled={p.role === 'Admin'} onClick={() => {
+                            this.deletePegawai(p.id);
                         }}>
                             <i className="fas fa-trash-alt text-danger"></i>
                             Hapus
                         </DropdownItem>
-                        <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${id}`)} style={{ cursor: 'pointer' }}>
+                        <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
                             <i className="fas fa-list-alt text-primary"></i>
                             Detail
                         </DropdownItem>
@@ -123,11 +123,11 @@ class PegawaiIndex extends React.Component {
     getDataPegawai = (url = 'user') => {
         API().get('user')
             .then(res => {
-                this.setState({ pegawai: res.data.user })
+                this.setState({ pegawai: res.data.user });
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions: this.getPegawaiOptions(p.id)
+                            ...p, actions: this.getPegawaiOptions(p)
                         };
                     })
                 })
@@ -179,7 +179,7 @@ class PegawaiIndex extends React.Component {
                         this.setState({
                             pegawai: this.state.pegawai.map(p => {
                                 return {
-                                    ...p, actions: this.getPegawaiOptions(p.id)
+                                    ...p, actions: this.getPegawaiOptions(p)
                                 };
                             })
                         })
@@ -193,7 +193,7 @@ class PegawaiIndex extends React.Component {
     componentDidMount() {
         this.getDataPegawai();
     }
-    clearSearch = () => {
+    refreshData = () => {
         this.getDataPegawai();
         this.setState({ cariPegawaiKeyword: '' });
     }
@@ -256,7 +256,7 @@ class PegawaiIndex extends React.Component {
                                                 <span className="fas fa-filter mr-1"></span>
                                                 Filter
                                             </Button>
-                                            <Button color="success" size="sm" onClick={this.clearSearch}>
+                                            <Button color="success" size="sm" onClick={this.refreshData}>
                                                 <span className="fas fa-undo mr-1"></span>
                                                 Muat Ulang Data
                                             </Button>
@@ -269,7 +269,7 @@ class PegawaiIndex extends React.Component {
                     </Row>
                     <PegawaiForm modal={this.state.modalIsOpen} toggle={this.toggleModal} getDataPegawai={this.getDataPegawai} />
                     {this.state.editModalIsOpen && (
-                        <EditPegawaiForm modal={this.state.editModalIsOpen} toggle={this.toggleEditModal} pegawaiId={this.state.pegawaiEdited} />
+                        <EditPegawaiForm modal={this.state.editModalIsOpen} toggle={this.toggleEditModal} pegawaiId={this.state.pegawaiEdited} getDataPegawai={this.getDataPegawai} />
                     )}
                 </Container>
                 <Modal isOpen={this.state.filterModalIsOpen}>

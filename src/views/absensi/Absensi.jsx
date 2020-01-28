@@ -106,7 +106,7 @@ class Absensi extends React.Component {
     })
   };
 
-  clearSearch() {
+  refreshData() {
     this.getAbsensi('absensi');
     this.setState({ searchKeyword: '' });
   }
@@ -186,7 +186,7 @@ class Absensi extends React.Component {
                   </Form>
                   <Row className="mb-3">
                     <Col>
-                      <Button color="success" size="sm" onClick={() => this.clearSearch()}>
+                      <Button color="success" size="sm" onClick={() => this.refreshData()}>
                         <span className="fas fa-undo mr-1"></span>
                         Muat Ulang Data
                       </Button>
