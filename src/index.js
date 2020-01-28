@@ -16,7 +16,7 @@ import AuthLayout from "layouts/Auth.jsx";
 
 import { Provider } from 'react-redux';
 import store from 'store/reducers/rootReducer.js';
-
+import Login from 'views/auth/Login.jsx';
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

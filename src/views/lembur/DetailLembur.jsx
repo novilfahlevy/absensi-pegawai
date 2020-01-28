@@ -19,11 +19,11 @@ import Loading from 'components/ui/Loading.jsx';
 import API from 'store/api.js';
 import moment from 'moment';
 import 'moment/locale/id'
+import "./../../assets/css/DetailLembur.css"
 class DetailLembur extends React.Component {
     state = {
         data: null
     }
-
     componentDidMount() {
         API().get(`lembur/${this.props.match.params.id}/detail`)
             .then(res => { this.setState({ data: res.data.data.detail_lembur }); console.log(this.state) }).catch(err => console.log(err))
@@ -42,7 +42,7 @@ class DetailLembur extends React.Component {
                                             <h2 className="m-0">Detail Lembur</h2>
                                         </Col>
                                         <Col className="text-right" xs="6">
-                                            <Button color="success" disabled={data == null ? true : false} className="mr-2" onClick={() => this.props.history.goBack()}>
+                                            <Button color="success" disabled={data == null ? true : false} className="mr-2" onClick={() => this.props.history.push(`/admin/detail-absensi/${data.absensi_id}`)}>
                                                 <i className="fas fa-search mr-2"></i>
                                                 Cek Absensi
                                             </Button>
@@ -74,11 +74,11 @@ class DetailLembur extends React.Component {
                                                 <span className="font-weight-bold d-block mt-2">Keterangan : </span>
                                                 <p className="m-0">{data.keterangan}</p>
                                                 <div className="mt-2">
-                                                    <span className="font-weight-bold mb-2 d-block">Konsumsi : <span lassName="font-weight-normal">Rp {data.konsumsi}</span></span>
+                                                    <span className="font-weight-bold mb-2 d-block">Waktu : <span className="font-weight-normal">{moment.duration(moment(data.lembur_akhir, 'HH:mm:ss').diff(moment(data.lembur_awal, 'HH:mm:ss'))).asHours()} Jam ({moment(data.lembur_awal, 'HH:mm:ss').format('HH:mm')} - {moment(data.lembur_akhir, 'HH:mm:ss').format('HH:mm')})</span></span>
                                                     <span className="font-weight-bold">Konsumsi : </span><span>Rp {data.konsumsi}</span>
                                                 </div>
                                             </CardText>
-                                            <Card body>
+                                            <Card className="profile-card" body onClick={() => this.props.history.push(`/admin/detail-pegawai/${data.user_id}`)}>
                                                 <Row noGutters>
                                                     <Col className="col-3 d-flex justify-content-center">
                                                         <img

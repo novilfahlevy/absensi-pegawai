@@ -1,0 +1,15 @@
+.card.profile-card {
+    cursor: pointer !important;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, .1),
+        -6px -6px 20px rgba(255, 255, 255, 1);
+    border: none;
+}
+
+.card.profile-card:hover {
+    box-shadow: inset -3px -3px 10px rgba(0, 0, 0, .1),
+        inset 6px 6px 20px rgba(255, 255, 255, 1);
+}
+
+.card.profile-card:hover h2 {
+    text-decoration: underline;
+}
