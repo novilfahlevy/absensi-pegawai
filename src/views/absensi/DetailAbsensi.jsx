@@ -49,10 +49,17 @@ class DetailAbsensi extends React.Component {
     latitude_absen_masuk: 0,
     longitude_absen_masuk: 0,
     latitude_absen_keluar: 0,
-    longitude_absen_keluar: 0
+    longitude_absen_keluar: 0,
+    waktu_kerja: 0,
+    isLembur: false
   }
 
   componentDidMount() {
+    api().get('admin/waktuKerja')
+      .then(response => {
+        this.setState({ waktu_kerja: response.data.data[0].waktu_kerja });
+      })
+
     api().get(`absensi/${this.props.match.params.id}/detail`)
       .then(response => {
         const { 
@@ -89,10 +96,33 @@ class DetailAbsensi extends React.Component {
       latitude_absen_masuk,
       longitude_absen_masuk,
       latitude_absen_keluar,
-      longitude_absen_keluar
+      longitude_absen_keluar,
+      waktu_kerja
     } = this.state;
 
-    console.log(latitude_absen_masuk, longitude_absen_masuk)
+    const jam_masuk_absen = moment(`${tanggal} ${jam_masuk}`).format('HH:mm');
+    const jam_pulang_absen = moment(`${tanggal} ${jam_pulang}`).format('HH:mm');
+
+    const format_masuk = jam_masuk_absen.split(':');
+    const format_pulang = jam_pulang_absen.split(':');
+
+    const masuk_jam = format_masuk[0] && format_masuk[0].replace('0', '');
+    // const masuk_menit = format_masuk[1] && format_masuk[1].replace('0', '');
+
+    const pulang_jam = format_pulang[0] && format_pulang[0].replace('0', '');
+    // const pulang_menit = format_pulang[1] && format_pulang[1].replace('0', '');
+
+    let jumlah_jam_kerja = pulang_jam - masuk_jam;
+
+    if ( jumlah_jam_kerja === waktu_kerja ) {
+      jumlah_jam_kerja = 'Tepat Waktu';
+    }
+    else if ( jumlah_jam_kerja > waktu_kerja ) {
+      jumlah_jam_kerja = 'Lewat Jam Kerja';
+    }
+    else {
+      jumlah_jam_kerja = 'Lebih Awal';
+    }
 
     return (
       <>
@@ -122,11 +152,11 @@ class DetailAbsensi extends React.Component {
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Masuk</h3>
-                          <p className="m-0">{moment(`${tanggal} ${jam_masuk}`).format('HH:mm')}</p>
+                          <p className="m-0">{jam_masuk_absen}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Pulang</h3>
-                          <p className="m-0">{moment(`${tanggal} ${jam_pulang}`).format('HH:mm')}</p>
+                          <p className="m-0">{jam_pulang_absen}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Keterangan Absen</h3>
@@ -134,6 +164,14 @@ class DetailAbsensi extends React.Component {
                             {keterangan}
                           </p>
                         </ListGroupItem>
+                        {jam_pulang && (
+                          <ListGroupItem>
+                            <h3>Status</h3>
+                            <p className="m-0">
+                              {jumlah_jam_kerja}
+                            </p>
+                          </ListGroupItem>
+                        )}
                       </ListGroup>
                       <Button className="mt-3" color="primary">Lihat Keterangan Lembur</Button>
                     </Col>
