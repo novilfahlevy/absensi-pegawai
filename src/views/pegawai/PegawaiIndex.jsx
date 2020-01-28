@@ -83,7 +83,7 @@ class PegawaiIndex extends React.Component {
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions: p.role !== 'Admin' ? this.getPegawaiOptions(p.id) : <span className="text-lg">-</span>
+                            ...p, actions: this.getPegawaiOptions(p)
                         };
                     })
                 }, () => { 
@@ -93,7 +93,7 @@ class PegawaiIndex extends React.Component {
             });
         });
     }
-    getPegawaiOptions(id) {
+    getPegawaiOptions(p) {
         return (
             <>
                 <UncontrolledDropdown>
@@ -101,17 +101,17 @@ class PegawaiIndex extends React.Component {
                         <i className="fas fa-ellipsis-v"></i>
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" onClick={() => this.toggleEditModal(id)}>
+                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" disabled={p.role === 'Admin'} onClick={() => this.toggleEditModal(p.id)}>
                             <i className="fas fa-pencil-alt text-success"></i>
                             Edit
                         </DropdownItem>
-                        <DropdownItem style={{ cursor: 'pointer' }} onClick={() => {
-                            this.deletePegawai(id);
+                        <DropdownItem style={{ cursor: 'pointer' }} disabled={p.role === 'Admin'} onClick={() => {
+                            this.deletePegawai(p.id);
                         }}>
                             <i className="fas fa-trash-alt text-danger"></i>
                             Hapus
                         </DropdownItem>
-                        <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${id}`)} style={{ cursor: 'pointer' }}>
+                        <DropdownItem onClick={() => this.props.history.push(`/admin/detail-pegawai/${p.id}`)} style={{ cursor: 'pointer' }}>
                             <i className="fas fa-list-alt text-primary"></i>
                             Detail
                         </DropdownItem>
@@ -127,7 +127,7 @@ class PegawaiIndex extends React.Component {
                 this.setState({
                     pegawai: this.state.pegawai.map(p => {
                         return {
-                            ...p, actions: p.role !== 'Admin' ? this.getPegawaiOptions(p.id) : <span>-</span>
+                            ...p, actions: this.getPegawaiOptions(p)
                         };
                     })
                 })
@@ -179,7 +179,7 @@ class PegawaiIndex extends React.Component {
                         this.setState({
                             pegawai: this.state.pegawai.map(p => {
                                 return {
-                                    ...p, actions: p.role !== 'Admin' ? this.getPegawaiOptions(p.id) : <span className="text-lg">-</span>
+                                    ...p, actions: this.getPegawaiOptions(p)
                                 };
                             })
                         })
