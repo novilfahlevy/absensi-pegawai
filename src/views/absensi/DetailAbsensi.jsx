@@ -3,8 +3,7 @@ import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { withRouter } from 'react-router-dom';
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
-import { compose, withProps } from 'recompose';
+import MapGL from 'react-map-gl';
 
 import { 
   Container, 
@@ -14,6 +13,7 @@ import {
   CardTitle,
   CardBody, 
   CardHeader, 
+  CardFooter,
   Button, 
   ListGroup,
   ListGroupItem
@@ -22,23 +22,101 @@ import {
 import api from 'store/api.js';
 import moment from 'moment';
 
-const AbsenLocation = compose(
-  withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDhA_7ImjT_ZsE0PvCXQoVbwEaqAj_rZ5Q",
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />
-  }),
-  withScriptjs,
-  withGoogleMap
-)(props => (
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={{ lat: props.lat, lng: props.lng }}
-  >
-    {props.isMarkerShown && <Marker position={{ lat: props.lat, lng: props.lng }} />}
-  </GoogleMap>
-))
+class AbsenLocation extends React.Component {
+  state = {
+    viewport: {
+      width: '100%',
+      height: 300,
+      latitude: -0.459127,
+      longitude: 117.186919,
+      latitude: 0,
+      longitude: 0,
+      zoom: 17
+    }
+  };
+
+  componentDidMount() {
+    this.setMapCenter();
+  }
+
+  componentWillReceiveProps() {
+    this.setMapCenter();
+  }
+
+  setMapCenter() {
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        latitude: this.props.lat,
+        longitude: this.props.lng
+      }
+    }, () => {
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          latitude: this.props.lat,
+          longitude: this.props.lng
+        }
+      })
+    });
+  }
+
+  zoomIn = () => {
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        zoom: this.state.viewport.zoom + 1
+      }
+    });
+  }
+
+  zoomOut = () => {
+    this.setState({
+      viewport: {
+        ...this.state.viewport,
+        zoom: this.state.viewport.zoom - 1
+      }
+    });
+  }
+
+  render() {
+    return (
+      <Card className="p-2">
+        <CardBody>
+          <MapGL
+            mapboxApiAccessToken="pk.eyJ1Ijoibm92aWxmYWhsZXZ5IiwiYSI6ImNrNXh1aWd0aDA0cWkzZHAzZmkxc2hodjYifQ.Ooz2WT3O3NzYlWQ7weCVtg"
+            className="rounded"
+            {...this.state.viewport}
+            onViewportChange={(viewport) => this.setState({viewport})}
+          />
+        </CardBody>
+        <CardFooter className="py-3">
+          <Row>
+            <Col>
+              <p className="m-0">Lat: {this.state.viewport.latitude.toString().slice(0, 14)}</p>
+              <p className="m-0">Lng: {this.state.viewport.longitude.toString().slice(0, 14)}</p>
+            </Col>
+            <Col>
+              <div className="d-flex justify-content-end">
+                <Button color="primary" size="lg" onClick={this.zoomOut}>
+                  <span className="fas fa-search-minus text-lg"></span>
+                </Button>
+                <Button color="primary" size="lg" onClick={this.zoomIn}>
+                  <span className="fas fa-search-plus text-lg"></span>
+                </Button>
+              </div>
+            </Col>
+            <Col className="col-12 mt-3">
+              <Button color="primary" className="w-100" onClick={() => this.setMapCenter()}>
+                Reset Lokasi Semula
+              </Button>
+            </Col>
+          </Row>
+        </CardFooter>
+      </Card>
+    );
+  }
+}
 
 class DetailAbsensi extends React.Component {
   state = {
