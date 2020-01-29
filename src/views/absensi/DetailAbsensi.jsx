@@ -3,7 +3,7 @@ import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { withRouter } from 'react-router-dom';
-import MapGL, { Marker } from 'react-map-gl';
+import MapGL, { Marker, NavigationControl } from 'react-map-gl';
 
 import { 
   Container, 
@@ -65,24 +65,6 @@ class AbsenLocation extends React.Component {
     });
   }
 
-  zoomIn = () => {
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        zoom: this.state.viewport.zoom + 1
-      }
-    });
-  }
-
-  zoomOut = () => {
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        zoom: this.state.viewport.zoom - 1
-      }
-    });
-  }
-
   render() {
     return (
       <Card className="p-2">
@@ -91,9 +73,17 @@ class AbsenLocation extends React.Component {
             mapboxApiAccessToken="pk.eyJ1Ijoibm92aWxmYWhsZXZ5IiwiYSI6ImNrNXh1aWd0aDA0cWkzZHAzZmkxc2hodjYifQ.Ooz2WT3O3NzYlWQ7weCVtg"
             className="rounded"
             {...this.state.viewport}
-            onViewportChange={(viewport) => this.setState({viewport})}
+            onViewportChange={viewport => this.setState({ viewport })}
           >
-            <Marker latitude={this.state.markerLatitude} longitude={this.state.markerLongitude} offsetLeft={0} offsetTop={0}>
+            <div style={{ position: 'absolute', right: 0 }}>
+              <NavigationControl />
+            </div>
+            <Marker 
+              latitude={this.state.markerLatitude} 
+              longitude={this.state.markerLongitude} 
+              offsetLeft={0} 
+              offsetTop={0}
+            >
               <span className="fas fa-map-marker-alt" style={{ fontSize: '40px' }}></span>
             </Marker>
           </MapGL>
@@ -103,21 +93,6 @@ class AbsenLocation extends React.Component {
             <Col>
               <p className="m-0">Lat: {this.state.viewport.latitude.toString().slice(0, 14)}</p>
               <p className="m-0">Lng: {this.state.viewport.longitude.toString().slice(0, 14)}</p>
-            </Col>
-            <Col>
-              <div className="d-flex justify-content-end">
-                <Button color="primary" size="lg" onClick={this.zoomOut}>
-                  <span className="fas fa-search-minus text-lg"></span>
-                </Button>
-                <Button color="primary" size="lg" onClick={this.zoomIn}>
-                  <span className="fas fa-search-plus text-lg"></span>
-                </Button>
-              </div>
-            </Col>
-            <Col className="col-12 mt-3">
-              <Button color="primary" className="w-100" onClick={() => this.setMapCenter()}>
-                Reset Lokasi Semula
-              </Button>
             </Col>
           </Row>
         </CardFooter>
