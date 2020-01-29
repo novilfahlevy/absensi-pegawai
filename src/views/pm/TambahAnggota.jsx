@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import api from 'store/api.js';
 import user from 'user.js';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import {
   Container,
@@ -305,4 +306,4 @@ export default connect(
   state => ({ 
     jobs: state.filter.jobs
   })
-)(FadeIn(TambahAnggota, Header));
+)(withRouter(FadeIn(TambahAnggota, Header)));
