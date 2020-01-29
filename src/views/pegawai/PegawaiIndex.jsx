@@ -78,13 +78,13 @@ class PegawaiIndex extends React.Component {
         this.setState({ filterLoading: true });
         API().get(`user/filter/${this.state.filterJob}/${this.state.filterRole}`)
         .then(res => {
-            this.setState({ pegawai: res.data.data }, () => {
+            this.setState({ pegawai: res.data.data || [] }, () => {
                 this.setState({
-                    pegawai: this.state.pegawai.map(p => {
+                    pegawai: this.state.pegawai.length ? this.state.pegawai.map(p => {
                         return {
                             ...p, actions: this.getPegawaiOptions(p)
                         };
-                    })
+                    }) : []
                 }, () => { 
                     this.setState({ filterLoading: false });
                     this.toggleFilterModal();
@@ -122,13 +122,13 @@ class PegawaiIndex extends React.Component {
     getDataPegawai = (url = 'user') => {
         API().get('user')
             .then(res => {
-                this.setState({ pegawai: res.data.user });
+                this.setState({ pegawai: res.data.user || [] });
                 this.setState({
-                    pegawai: this.state.pegawai.map(p => {
+                    pegawai: this.state.pegawai.length ? this.state.pegawai.map(p => {
                         return {
                             ...p, actions: this.getPegawaiOptions(p)
                         };
-                    })
+                    }) : []
                 })
             });
     }
@@ -174,7 +174,7 @@ class PegawaiIndex extends React.Component {
         } else {
             API().get(`user/cari/${this.state.cariPegawaiKeyword}`)
                 .then(res => {
-                    this.setState({ pegawai: res.data.data }, () => {
+                    this.setState({ pegawai: res.data.data || [] }, () => {
                         this.setState({
                             pegawai: this.state.pegawai.map(p => {
                                 return {
