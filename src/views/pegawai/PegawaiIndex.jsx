@@ -100,11 +100,11 @@ class PegawaiIndex extends React.Component {
                         <i className="fas fa-ellipsis-v"></i>
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" disabled={p.role === 'Admin'} onClick={() => this.toggleEditModal(p.id)}>
+                        <DropdownItem style={{ cursor: 'pointer' }} size="sm" disabled={p.role[0] === 'Admin'} onClick={() => this.toggleEditModal(p.id)}>
                             <i className="fas fa-pencil-alt text-success"></i>
                             Edit
                         </DropdownItem>
-                        <DropdownItem style={{ cursor: 'pointer' }} disabled={p.role === 'Admin'} onClick={() => {
+                        <DropdownItem style={{ cursor: 'pointer' }} disabled={p.role[0] === 'Admin'} onClick={() => {
                             this.deletePegawai(p.id);
                         }}>
                             <i className="fas fa-trash-alt text-danger"></i>
