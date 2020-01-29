@@ -27,19 +27,21 @@ class DashboardHeader extends React.Component {
     jumlah: {
       pegawai: 0,
       absen: 0,
-      belum_absen: 0
+      belum_absen: 0,
+      lembur: 0
     }
   }
 
   componentDidMount() {
     api().get('dashboard')
       .then(response => {
-        const { total_pegawai, total_pegawai_absen, total_pegawai_belum_absen } = response.data.data;
+        const { total_pegawai, total_pegawai_absen, total_pegawai_belum_absen, total_pegawai_lembur } = response.data.data;
         this.setState({
           jumlah: {
             pegawai: total_pegawai,
             absen: total_pegawai_absen,
-            belum_absen: total_pegawai_belum_absen
+            belum_absen: total_pegawai_belum_absen,
+            lembur: total_pegawai_lembur
           }
         })
       })
@@ -132,7 +134,7 @@ class DashboardHeader extends React.Component {
                             <CardTitle tag="h5" className="text-uppercase text-muted mb-0">
                               Pegawai Lembur Hari Ini
                             </CardTitle>
-                            <span className="h1 font-weight-bold mb-0">2</span>
+                            <span className="h1 font-weight-bold mb-0">{this.state.jumlah.lembur}</span>
                           </div>
                           <Col className="col-auto">
                             <div className="icon icon-shape bg-purple text-white rounded-circle shadow">
