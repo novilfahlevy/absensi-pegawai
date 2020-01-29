@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import LoadingButton from 'components/ui/LoadingButton.jsx'
 import { connect } from 'react-redux';
 import { changeProfile } from './../store/actions/profileActions.js';
-import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput, FormFeedback } from 'reactstrap';
+import { Button, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, CustomInput, FormFeedback } from 'reactstrap';
 class ProfileForm extends Component {
     state = {
-        file: '${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg',
+        file: `${process.env.REACT_APP_BASE_URL}storage/profiles/default.jpg`,
         real_file: null,
         file_name: '',
         error: null,

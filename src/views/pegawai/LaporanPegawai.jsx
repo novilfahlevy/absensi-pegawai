@@ -1,37 +1,23 @@
 import React from 'react';
 import moment from 'moment';
 import 'moment/locale/id';
-import Swal from 'sweetalert2';
 import axios from 'axios';
 import PieChart from './../../components/ui/PieChart.jsx';
-import { Bar, Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 import Header from "components/Headers/Header.jsx";
 import Table from 'components/ui/Table.jsx';
-import { selectFilter } from 'react-bootstrap-table2-filter';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import Loading from 'components/ui/Loading.jsx';
-import FileDownload from 'js-file-download';
 import API from 'store/api.js'
 import {
     Card,
     CardHeader,
-    CardFooter,
     CardBody,
-    Pagination,
-    PaginationItem,
-    PaginationLink,
     Col,
     Container,
     Button,
     Row,
-    InputGroup,
     Input,
-    InputGroupAddon,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Form,
     FormGroup,
     Label
 } from "reactstrap";

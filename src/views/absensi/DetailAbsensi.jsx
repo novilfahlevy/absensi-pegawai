@@ -269,7 +269,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_masuk}`} />
+                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_masuk}`} alt="Foto Absen Masuk" />
                 </CardBody>
               </Card>
             </Col>
@@ -286,7 +286,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_keluar}`} />
+                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_keluar}`} alt="Foto Absen Keluar" />
                 </CardBody>
               </Card>
             </Col>

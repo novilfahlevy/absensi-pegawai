@@ -64,7 +64,7 @@ class Admin extends React.Component {
           return (
             <Route
               path={prop.layout + prop.path}
-              component={prop.component}
+              component={() => <prop.component />}
               key={key}
             />
           );
@@ -79,9 +79,9 @@ class Admin extends React.Component {
               />
             );
           });
+        }
       }
-      }
-      else return null;
+      return null;
     });
   };
   getBrandText = path => {

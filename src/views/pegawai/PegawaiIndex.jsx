@@ -28,7 +28,6 @@ import {
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.jsx";
-import BootstrapTable from 'react-bootstrap-table-next';
 import API from '../../store/api.js';
 import PegawaiForm from './PegawaiForm'
 import EditPegawaiForm from './EditPegawaiForm'
@@ -283,8 +282,8 @@ class PegawaiIndex extends React.Component {
                                             <Label for="job">Job</Label>
                                             <CustomInput type="select" id="job" name="job" onChange={this.changeFilter}>
                                                 <option value="all">Pilih Semua</option>
-                                                {this.props.jobs.length && this.props.jobs.map(job => {
-                                                    return <option value={job.name}>{job.name}</option>
+                                                {this.props.jobs.length && this.props.jobs.map((job, i) => {
+                                                    return <option key={i} value={job.name}>{job.name}</option>
                                                 })}
                                             </CustomInput>
                                         </FormGroup>
@@ -294,8 +293,8 @@ class PegawaiIndex extends React.Component {
                                             <Label for="role">Role</Label>
                                             <CustomInput type="select" id="role" name="role" onChange={this.changeFilter}>
                                                 <option value="all">Pilih Semua</option>
-                                                {this.props.roles.length && this.props.roles.map(role => {
-                                                    return <option value={role.name}>{role.name}</option>
+                                                {this.props.roles.length && this.props.roles.map((role, i) => {
+                                                    return <option key={i} value={role.name}>{role.name}</option>
                                                 })}
                                             </CustomInput>
                                         </FormGroup>

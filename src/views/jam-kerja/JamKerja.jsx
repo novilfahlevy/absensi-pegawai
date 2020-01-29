@@ -1,6 +1,5 @@
 import React from 'react';
 import API from '../../store/api.js';
-import { Alert } from 'components/ui/Swalert.jsx'
 import Swal from 'sweetalert2'
 import {
     Container,
@@ -9,17 +8,10 @@ import {
     Card,
     CardBody,
     CardTitle,
-    CardText,
-    FormGroup,
-    Label,
-    CustomInput,
-    Input,
     Button,
     Carousel,
     CarouselItem,
-    CarouselControl,
-    CarouselIndicators,
-    CarouselCaption
+    CarouselControl
 } from 'reactstrap';
 
 import Header from 'components/Headers/Header.jsx';

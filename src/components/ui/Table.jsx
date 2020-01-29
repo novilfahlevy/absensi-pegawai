@@ -14,7 +14,6 @@ const remoteTable = (props) => {
 
   return (
     <BootstrapTable
-      // remote
       hover
       bootstrap4
       keyField='id'

@@ -32,8 +32,7 @@ import {
     FormGroup,
     FormFeedback,
     InputGroup,
-    InputGroupAddon,
-    InputGroupButtonDropdown,
+    InputGroupAddon
 
 } from "reactstrap";
 // core components
@@ -117,7 +116,7 @@ class Profile extends React.Component {
         this.getData();
     }
     render() {
-        const { modalOpen, user, isLoading } = this.state;
+        const { modalOpen, user } = this.state;
 
         Yup.addMethod(Yup.string, 'passwordConfirm', message => Yup.mixed().test({
             name: 'passwordConfirm',

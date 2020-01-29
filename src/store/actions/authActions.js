@@ -12,7 +12,7 @@ export const login = ({ keyword, password }, push) => {
       if ( response.data.status === 200 ) {
         localStorage.setItem('auth', btoa(JSON.stringify({ ...response.data.message })));
         let pageNotFound = true;
-        routes.map(prop => {
+        routes.forEach(prop => {
           if ( pageNotFound ) {
             if ( prop.roles.map(role => role.toLowerCase()).indexOf(user('role').toLowerCase()) === 0 ) {
               dispatch({ type: 'LOGIN_SUCCESS' });

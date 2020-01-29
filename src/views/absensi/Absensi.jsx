@@ -20,12 +20,9 @@ import {
 
 import { withRouter } from 'react-router-dom';
 import Lightbox from 'react-image-lightbox';
-import BootstrapTable from 'react-bootstrap-table-next';
-// import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
-import FilterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import moment from 'moment';
 
 class Absensi extends React.Component {
@@ -53,10 +50,10 @@ class Absensi extends React.Component {
           foto: (
             <Row>
               <Col className="col-6">
-                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Masuk" />
               </Col>
               <Col className="col-6">
-                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} />
+                <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`} width="100%" height="100%" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absensi.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Keluar" />
               </Col>
             </Row>
           ),

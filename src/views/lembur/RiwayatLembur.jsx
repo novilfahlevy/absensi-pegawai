@@ -21,18 +21,14 @@ import {
     InputGroup
 } from 'reactstrap';
 
-import { withRouter, Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { withRouter } from 'react-router-dom';
 import FadeIn from 'components/hoc/FadeIn.jsx';
-import PermintaanLembur from './PermintaanLembur.jsx'
-import BootstrapTable from 'react-bootstrap-table-next';
 import moment from 'moment';
 import 'moment/locale/id';
 import CardsContainer from 'components/ui/CardsContainer.jsx';
 import API from 'store/api.js';
 import Loading from 'components/ui/Loading.jsx';
 import user from 'user.js'
-// import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class RiwayatLembur extends React.Component {
     state = {

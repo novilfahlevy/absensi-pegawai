@@ -8,12 +8,9 @@ import {
     Row,
     Col,
     Card,
-    CardTitle,
     CardBody,
     CardHeader,
-    Button,
-    ListGroup,
-    ListGroupItem, Badge, CardText
+    Button, Badge, CardText
 } from 'reactstrap';
 import Loading from 'components/ui/Loading.jsx';
 import API from 'store/api.js';

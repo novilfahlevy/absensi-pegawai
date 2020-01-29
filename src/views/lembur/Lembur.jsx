@@ -11,19 +11,11 @@ import {
     CardHeader,
     CardTitle,
     CardText,
-    Button,
-    UncontrolledDropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Badge
+    Button
 } from 'reactstrap';
 
-import { withRouter, Link } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { withRouter } from 'react-router-dom';
 import FadeIn from 'components/hoc/FadeIn.jsx';
-import PermintaanLembur from './PermintaanLembur.jsx'
-import BootstrapTable from 'react-bootstrap-table-next';
 import moment from 'moment';
 import 'moment/locale/id';
 import CardsContainer from 'components/ui/CardsContainer.jsx';
@@ -44,12 +36,10 @@ class Lembur extends React.Component {
                 this.props.getData();
             })
             .catch(err => console.log(err))
-        console.log(id, status)
     }
     getData = () => {
         API().get(`lembur/${user('role')}/${user('id')}`)
             .then(res => {
-                console.log(res);
                 this.setState({
                     lembur: res.data.data.waiting.sort((a, b) => (a.tanggal > b.tanggal) ? -1 : 1)
                 });
