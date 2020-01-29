@@ -90,9 +90,16 @@ class AbsenLocation extends React.Component {
         </CardBody>
         <CardFooter className="py-3">
           <Row>
-            <Col>
+            <Col lg="6">
               <p className="m-0">Lat: {this.state.viewport.latitude.toString().slice(0, 14)}</p>
               <p className="m-0">Lng: {this.state.viewport.longitude.toString().slice(0, 14)}</p>
+            </Col>
+            <Col lg="6">
+              <div className="d-flex justify-content-end">
+                <Button color="success" size="lg" onClick={() => this.setMapCenter()}>
+                  <span className="fas fa-map-marker-alt text-lg"></span>
+                </Button>
+              </div>
             </Col>
           </Row>
         </CardFooter>
