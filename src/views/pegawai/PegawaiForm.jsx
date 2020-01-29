@@ -33,7 +33,7 @@ class PegawaiForm extends Component {
                             email: '',
                             username: '',
                             jobdesc_id: 1,
-                            role: 2,
+                            role_id: 2,
                             alamat: '',
                             nomor_handphone: '',
                             password: ''
@@ -92,8 +92,8 @@ class PegawaiForm extends Component {
                                         </CustomInput>
                                     </FormGroup>
                                     <FormGroup>
-                                        <Label for="role">Role</Label>
-                                        <CustomInput type="select" className="form-control-alternative" id="role" name="role" onChange={handleChange}>
+                                        <Label for="role_id">Role</Label>
+                                        <CustomInput type="select" className="form-control-alternative" id="role_id" name="role_id" onChange={handleChange}>
                                             {this.props.roles && this.props.roles.map((role, i) => (
                                                 <option key={i} value={role.id}>{role.name}</option>
                                             ))}
