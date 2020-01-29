@@ -144,7 +144,7 @@ class TambahAnggota extends React.Component {
   submitFilter = e => {
     e.preventDefault();
     this.setState({ filterLoading: true });
-    api().get(`user/pm/filter/pegawai/${this.state.filterJob}`)
+    api().get(`user/pm/filter/pegawai/${Number(this.state.filterJob)}`)
     .then(response => {
       this.setState({ pegawai: response.data.data }, () => {
         this.setState({ pegawai: this.state.pegawai.map(pegawai => this.getData(pegawai)) }, () => {
@@ -280,7 +280,7 @@ class TambahAnggota extends React.Component {
                     <CustomInput type="select" id="job" name="job" onChange={this.changeFilter}>
                       <option value="all">Pilih Semua</option>
                       {this.props.jobs && this.props.jobs.map((job, i) => (
-                        <option key={i} value={job.name}>{job.name}</option>
+                        <option key={i} value={job.id}>{job.name}</option>
                       ))}
                     </CustomInput>
                   </FormGroup>
