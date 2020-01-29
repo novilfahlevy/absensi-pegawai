@@ -219,21 +219,29 @@ class Profile extends React.Component {
                                                 <h3>Nama</h3>
                                                 <h5>{user.name}</h5>
                                             </Col>
-                                            <Col lg="6">
-                                                <h3>Username</h3>
-                                                <h5>{user.username}</h5>
-                                            </Col>
-                                            <Col lg="12" style={{ marginTop: "1.5rem" }}>
+                                            <Col className="mt-4 mt-lg-0" lg="6">
                                                 <h3>Email</h3>
                                                 <h5>{user.email}</h5>
                                             </Col>
-                                            <Col lg="12" style={{ marginTop: "1.5rem" }}>
-                                                <h3>No. Telp</h3>
-                                                <h5>{user.nomor_handphone}</h5>
+                                            <Col className="mt-4" lg="6">
+                                                <h3>Username</h3>
+                                                <h5>{user.username}</h5>
                                             </Col>
-                                            <Col lg="12" style={{ marginTop: "1.5rem" }}>
+                                            <Col className="mt-4" lg="6">
                                                 <h3>Alamat</h3>
                                                 <h5>{user.alamat}</h5>
+                                            </Col>
+                                            <Col className="mt-4" lg="6">
+                                                <h3>Nomor Ponsel</h3>
+                                                <h5>{user.nomor_handphone}</h5>
+                                            </Col>
+                                            <Col className="mt-4" lg="6">
+                                                <h3>Job</h3>
+                                                <h5>{user.job}</h5>
+                                            </Col>
+                                            <Col className="mt-4" lg="6">
+                                                <h3>Role</h3>
+                                                <h5>{user.roles[0].name}</h5>
                                             </Col>
                                         </Row> : <Row><Col xs={12} className="d-flex justify-content-center"><Loading /></Col></Row>}
                                     </div>

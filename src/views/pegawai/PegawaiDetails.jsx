@@ -55,9 +55,10 @@ class PegawaiDetails extends Component {
                                 <CardBody className="pt-0 pt-md-4 text-center">
                                     <img
                                         alt="..."
-                                        height="200"
+                                        height="250"
                                         className="rounded-circle"
                                         src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${pegawai.profile || 'default.jpg'}`}
+                                        width="100%"
                                     />
                                 </CardBody>
                             </Card>
@@ -117,25 +118,29 @@ class PegawaiDetails extends Component {
                                                     <h3>Nama</h3>
                                                     <h5>{pegawai.name}</h5>
                                                 </Col>
-                                                <Col lg="6">
-                                                    <h3>Username</h3>
-                                                    <h5>{pegawai.username}</h5>
-                                                </Col>
-                                                <Col lg="6" style={{ marginTop: "1rem" }}>
+                                                <Col className="mt-4 mt-lg-0" lg="6">
                                                     <h3>Email</h3>
                                                     <h5>{pegawai.email}</h5>
                                                 </Col>
-                                                <Col lg="6" style={{ marginTop: "1rem" }}>
-                                                    <h3>Role</h3>
-                                                    <h5>{pegawai.roles[0].name}</h5>
+                                                <Col className="mt-4" lg="6">
+                                                    <h3>Username</h3>
+                                                    <h5>{pegawai.username}</h5>
                                                 </Col>
-                                                <Col lg="12" style={{ marginTop: "1.5rem" }}>
-                                                    <h3>No. Telp</h3>
-                                                    <h5>{pegawai.nomor_handphone}</h5>
-                                                </Col>
-                                                <Col lg="12" style={{ marginTop: "1.5rem" }}>
+                                                <Col className="mt-4" lg="6">
                                                     <h3>Alamat</h3>
                                                     <h5>{pegawai.alamat}</h5>
+                                                </Col>
+                                                <Col className="mt-4" lg="6">
+                                                    <h3>Nomor Ponsel</h3>
+                                                    <h5>{pegawai.nomor_handphone}</h5>
+                                                </Col>
+                                                <Col className="mt-4" lg="6">
+                                                    <h3>Job</h3>
+                                                    <h5>{pegawai.job}</h5>
+                                                </Col>
+                                                <Col className="mt-4" lg="6">
+                                                    <h3>Role</h3>
+                                                    <h5>{pegawai.roles[0].name}</h5>
                                                 </Col>
                                             </Row> : <Row><Col className="d-flex justify-content-center"><Loading /></Col></Row>}
                                     </div>
