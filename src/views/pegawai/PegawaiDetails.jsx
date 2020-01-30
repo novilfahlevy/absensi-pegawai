@@ -3,6 +3,7 @@ import {
     Card,
     CardHeader,
     CardBody,
+    CardFooter,
     Container,
     Row,
     Col
@@ -16,6 +17,7 @@ import API from './../../store/api.js'
 import { Bar } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
 import Loading from 'components/ui/Loading.jsx';
+import { Link } from 'react-router-dom';
 class PegawaiDetails extends Component {
     state = {
         pegawai: {},
@@ -145,6 +147,11 @@ class PegawaiDetails extends Component {
                                             </Row> : <Row><Col className="d-flex justify-content-center"><Loading /></Col></Row>}
                                     </div>
                                 </CardBody>
+                                {pegawai.has_made_by && (
+                                    <CardFooter>
+                                        <p className="m-0">Akun dibuat oleh admin <Link to={`/admin/detail-pegawai/${pegawai.has_made_by.admin_id}`}>{pegawai.has_made_by.name}</Link>.</p>
+                                    </CardFooter>
+                                )}
                             </Card>
                             <Card className="shadow mt-4">
                                 <CardHeader>

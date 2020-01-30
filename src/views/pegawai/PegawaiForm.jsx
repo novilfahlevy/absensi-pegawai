@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { addPegawai } from './../../store/actions/pegawaiActions';
 import { Button, Modal, ModalHeader, ModalBody, FormFeedback, ModalFooter, Input, Form, FormGroup, CustomInput, Label } from 'reactstrap';
 import LoadingButton from 'components/ui/LoadingButton.jsx';
+import user from 'user.js';
 
 class PegawaiForm extends Component {
     state = {
@@ -33,6 +34,7 @@ class PegawaiForm extends Component {
                             email: '',
                             username: '',
                             jobdesc_id: 1,
+                            admin_id: user('id'),
                             role_id: 2,
                             alamat: '',
                             nomor_handphone: '',
