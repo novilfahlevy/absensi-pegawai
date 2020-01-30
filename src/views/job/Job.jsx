@@ -1,8 +1,10 @@
 import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
+import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import api from 'store/api.js';
+import { storeJobs } from 'store/actions/filterActions.js';
 
 import {
   Container,
@@ -34,6 +36,7 @@ class Job extends React.Component {
   getJobs = callback => {
     api().get('/jobdesc').then(res => {
       setTimeout(() => this.setState({ jobs: res.data.data }, callback), 0);
+      this.props.storeJobs(res.data.data);
     });
   }
 
@@ -105,4 +108,11 @@ class Job extends React.Component {
   }
 }
 
-export default FadeIn(Job, Header);
+export default connect(
+  state => ({
+    jobs: state.filter.jobs
+  }),
+  dispatch => ({
+    storeJobs: jobs => dispatch(storeJobs(jobs))
+  })
+)(FadeIn(Job, Header));
