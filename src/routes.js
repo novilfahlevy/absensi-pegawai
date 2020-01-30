@@ -31,6 +31,8 @@ import ProjectManager from 'views/pm/ProjectManager.jsx';
 import TambahAnggota from 'views/pm/TambahAnggota.jsx';
 import DetailLembur from 'views/lembur/DetailLembur.jsx';
 import RiwayatLembur from 'views/lembur/RiwayatLembur.jsx';
+import Job from 'views/job/Job.jsx';
+
 var routes = [
   {
     path: "/index",
@@ -156,6 +158,15 @@ var routes = [
     layout: "/admin",
     isActive: true,
     roles: ['admin', 'project manager']
+  },
+  {
+    path: "/job",
+    name: "Job",
+    icon: "fas fa-briefcase text-green",
+    component: Job,
+    layout: "/admin",
+    isActive: true,
+    roles: ['admin']
   },
   {
     path: "/login",
