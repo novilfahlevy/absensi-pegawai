@@ -35,8 +35,9 @@ class JobListItem extends React.Component {
       this.setState({ editJobLoading: true });
       api().post(`/jobdesc/${this.props.job.id}/edit`, { name: this.state.newJob })
       .then(response => {
-        this.setState({ editJobLoading: false });
-        this.props.getJobs(() => this.setState({ editMode: false }));
+        this.props.getJobs(() => {
+          this.setState({ editMode: false }, () => this.setState({ editJobLoading: false }));
+        });
       });
     } else this.toggleEditMode();
   }
