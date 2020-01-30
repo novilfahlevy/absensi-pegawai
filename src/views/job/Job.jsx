@@ -3,6 +3,7 @@ import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
+import api from 'store/api.js';
 
 import {
   Container,
@@ -22,9 +23,21 @@ import JobListItem from 'views/job/JobListItem.jsx';
 
 class Job extends React.Component {
   state = {
+    jobs: [],
     newJob: '',
     addJobLoading: false
   };
+
+  
+  componentWillReceiveProps() {
+    setTimeout(() => this.setState({ jobs: this.props.jobs }), 0);
+  }
+
+  getJobs() {
+    api().get('/job').then(res => {
+      setTimeout(() =>  this.setState({ jobs: res.data.data }), 0);
+    });
+  }
 
   addJob = e => {
     e.preventDefault();
@@ -58,7 +71,7 @@ class Job extends React.Component {
                       </CardTitle>
                       <Form onSubmit={this.addJob}>
                         <FormGroup>
-                          <CustomInput type="text" className="form-control" name="job" id="job" placeholder="Nama Job" onChange={this.changeNewJob} />
+                          <CustomInput type="text" className="form-control" name="job" id="job" placeholder="Nama Job" onChange={this.changeNewJob} autoComplete="off" />
                         </FormGroup>
                         <LoadingButton type="submit" color="primary" className="w-100" condition={this.state.addJobLoading}>Tambah Job</LoadingButton>
                       </Form>
@@ -66,8 +79,8 @@ class Job extends React.Component {
                   </Col>
                   <Col lg="6">
                     <ListGroup className="mt-3 mt-lg-0">
-                      {this.props.jobs && this.props.jobs.map(job => (
-                        <JobListItem job={job} />
+                      {this.state.jobs && this.state.jobs.map(job => (
+                        <JobListItem key={job.id} job={job} getJobs={this.getJobs} />
                       ))}
                     </ListGroup>
                   </Col>
