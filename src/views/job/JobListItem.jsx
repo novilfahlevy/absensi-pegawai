@@ -80,7 +80,7 @@ class JobListItem extends React.Component {
         <Row>
           <Col className="d-flex align-items-center">
             {this.state.editMode ? (
-              <CustomInput type="text" size="sm" className="form-control" name="job" id="job" defaultValue={name} placeholder="Edit Job" onChange={this.changeNewJobName} />
+              <CustomInput type="text" size="sm" className="form-control" name="job" id="job" defaultValue={name} placeholder="Edit Job" disabled={this.state.editJobLoading} onChange={this.changeNewJobName} />
             ) : name}
           </Col>
           <Col className="d-flex align-items-center justify-content-end">
