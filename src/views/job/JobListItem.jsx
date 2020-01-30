@@ -1,5 +1,6 @@
 import React from 'react';
 import Swal from 'sweetalert2';
+import api from 'store/api.js';
 
 import {
   Row,
@@ -12,7 +13,9 @@ import {
 class JobListItem extends React.Component {
   state = {
     editMode: false,
-    newJob: ''
+    newJob: '',
+    deleteJobLoading: false,
+    editJobLoading: false
   };
 
   componentDidMount() {
@@ -28,11 +31,14 @@ class JobListItem extends React.Component {
   }
 
   editJob = (id, oldJobName, newJobName) => {
-    this.toggleEditMode();
     if ( oldJobName !== newJobName ) {
-      alert('Ter Edit.');
-      this.props.getJobs();
-    }
+      this.setState({ editJobLoading: true });
+      api().post(`/jobdesc/${this.props.job.id}/edit`, { name: this.state.newJob })
+      .then(response => {
+        this.setState({ editJobLoading: false });
+        this.props.getJobs(() => this.setState({ editMode: false }));
+      });
+    } else this.toggleEditMode();
   }
 
   changeNewJobName = e => {
@@ -50,7 +56,18 @@ class JobListItem extends React.Component {
       confirmButtonText: 'Iya'
     }).then(result => {
       if ( result.value ) {
+        this.setState({ deleteJobLoading: true });
 
+        api().delete(`jobdesc/${this.props.job.id}/destroy`)
+        .then(response => {
+            Swal.fire(
+              '',
+              `Job berhasil dihapus.`,
+              'success'
+            );
+            this.setState({ deleteJobLoading: false });
+            this.props.getJobs();
+         })
       }
     })
   }
@@ -68,10 +85,10 @@ class JobListItem extends React.Component {
           <Col className="d-flex align-items-center justify-content-end">
             <Button color="success" size="sm" onClick={e => { 
               this.editJob(id, name, this.state.newJob); 
-            }}>
+            }} disabled={this.state.editJobLoading}>
               <span className="fas fa-pencil-alt"></span>
             </Button>
-            <Button color="danger" size="sm" onClick={() => this.deleteJob(id)}>
+            <Button color="danger" size="sm" onClick={() => this.deleteJob(id)} disabled={this.state.deleteJobLoading}>
               <span className="fas fa-trash-alt"></span>
             </Button>
           </Col>

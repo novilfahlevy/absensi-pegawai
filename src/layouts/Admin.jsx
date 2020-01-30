@@ -40,13 +40,8 @@ class Admin extends React.Component {
       this.props.storeUserData(localStorage.getItem('auth'));
     }
     
-    api().get('/job').then(res => {
+    api().get('/jobdesc').then(res => {
       this.props.storeJobs(res.data.data);
-    })
-    .catch(err => {
-      // if ( err.response.status === 401 ) {
-      //   this.props.logout();
-      // }
     });
     api().get('/role').then(res => this.props.storeRoles(res.data.data));
   }

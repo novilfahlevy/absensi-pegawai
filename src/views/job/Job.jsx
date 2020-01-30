@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
-import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import api from 'store/api.js';
 
@@ -28,14 +27,13 @@ class Job extends React.Component {
     addJobLoading: false
   };
 
-  
-  componentWillReceiveProps() {
-    setTimeout(() => this.setState({ jobs: this.props.jobs }), 0);
+  componentDidMount() {
+    this.getJobs();
   }
 
-  getJobs() {
-    api().get('/job').then(res => {
-      setTimeout(() =>  this.setState({ jobs: res.data.data }), 0);
+  getJobs = callback => {
+    api().get('/jobdesc').then(res => {
+      setTimeout(() => this.setState({ jobs: res.data.data }, callback), 0);
     });
   }
 
@@ -49,6 +47,19 @@ class Job extends React.Component {
       );
       return;
     }
+
+    this.setState({ addJobLoading: true });
+    api().post('jobdesc/store', { name: this.state.newJob })
+      .then(() => {
+        Swal.fire(
+          '',
+          `Job ${ this.state.newJob } telah ditambahkan.`,
+          'success'
+        );
+        this.setState({ addJobLoading: false });
+        this.setState({ newJob: '' });
+        this.getJobs();
+      });
   }
 
   changeNewJob = e => {
@@ -71,7 +82,7 @@ class Job extends React.Component {
                       </CardTitle>
                       <Form onSubmit={this.addJob}>
                         <FormGroup>
-                          <CustomInput type="text" className="form-control" name="job" id="job" placeholder="Nama Job" onChange={this.changeNewJob} autoComplete="off" />
+                          <CustomInput type="text" className="form-control" name="job" id="job" placeholder="Nama Job" defaultValue={this.state.newJob} onChange={this.changeNewJob} autoComplete="off" />
                         </FormGroup>
                         <LoadingButton type="submit" color="primary" className="w-100" condition={this.state.addJobLoading}>Tambah Job</LoadingButton>
                       </Form>
@@ -94,8 +105,4 @@ class Job extends React.Component {
   }
 }
 
-export default connect(
-  state => ({
-    jobs: state.filter.jobs
-  })
-)(FadeIn(Job, Header));
+export default FadeIn(Job, Header);
