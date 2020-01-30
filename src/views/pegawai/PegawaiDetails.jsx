@@ -131,7 +131,7 @@ class PegawaiDetails extends Component {
                                                     <h5>{pegawai.alamat}</h5>
                                                 </Col>
                                                 <Col className="mt-4" lg="6">
-                                                    <h3>Nomor Ponsel</h3>
+                                                    <h3>Nomor Telepon</h3>
                                                     <h5>{pegawai.nomor_handphone}</h5>
                                                 </Col>
                                                 <Col className="mt-4" lg="6">

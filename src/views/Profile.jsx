@@ -232,7 +232,7 @@ class Profile extends React.Component {
                                                 <h5>{user.alamat}</h5>
                                             </Col>
                                             <Col className="mt-4" lg="6">
-                                                <h3>Nomor Ponsel</h3>
+                                                <h3>Nomor Telepon</h3>
                                                 <h5>{user.nomor_handphone}</h5>
                                             </Col>
                                             <Col className="mt-4" lg="6">
