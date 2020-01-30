@@ -70,7 +70,7 @@ class AbsenLocation extends React.Component {
       <Card className="p-2">
         <CardBody>
           <MapGL
-            mapboxApiAccessToken="pk.eyJ1Ijoibm92aWxmYWhsZXZ5IiwiYSI6ImNrNXh1aWd0aDA0cWkzZHAzZmkxc2hodjYifQ.Ooz2WT3O3NzYlWQ7weCVtg"
+            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
             className="rounded"
             {...this.state.viewport}
             onViewportChange={viewport => this.setState({ viewport })}
