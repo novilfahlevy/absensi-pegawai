@@ -85,7 +85,7 @@ class Job extends React.Component {
                       </CardTitle>
                       <Form onSubmit={this.addJob}>
                         <FormGroup>
-                          <CustomInput type="text" className="form-control" name="job" id="job" placeholder="Nama Job" defaultValue={this.state.newJob} onChange={this.changeNewJob} autoComplete="off" />
+                          <CustomInput type="text" className="form-control" name="job" id="job" placeholder="Nama Job" value={this.state.newJob} onChange={this.changeNewJob} autoComplete="off" />
                         </FormGroup>
                         <LoadingButton type="submit" color="primary" className="w-100" condition={this.state.addJobLoading}>Tambah Job</LoadingButton>
                         <p className="m-0 mt-3 text-sm">Minimal harus ada 1 job.</p>
