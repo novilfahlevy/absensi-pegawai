@@ -10,6 +10,7 @@ export const addPegawai = (pegawai, success, error) => {
             .catch(err => {
                 dispatch({ type: 'ADD_PEGAWAI_ERROR', err });
                 error(err);
+                console.log(err.response);
             });
     }
 }

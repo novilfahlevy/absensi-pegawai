@@ -40,7 +40,7 @@ class LaporanPegawai extends React.Component {
     }
     handleExportSelected = () => {
         axios({
-            url: `${process.env.REACT_APP_BASE_URL}api/absensi/laporan/export/${this.state.bulan}/${this.state.tahun}`,
+            url: `${process.env.REACT_APP_BASE_URL}backend/api/absensi/laporan/export/${this.state.bulan}/${this.state.tahun}`,
             method: 'GET',
             responseType: 'blob', // important
         }).then((response) => {
@@ -54,7 +54,7 @@ class LaporanPegawai extends React.Component {
     }
     handleExport = () => {
         axios({
-            url: `${process.env.REACT_APP_BASE_URL}api/absensi/laporan/export`,
+            url: `${process.env.REACT_APP_BASE_URL}backend/api/absensi/laporan/export`,
             method: 'GET',
             responseType: 'blob', // important
         }).then((response) => {

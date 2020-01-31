@@ -33,7 +33,7 @@ class PegawaiForm extends Component {
                             name: '',
                             email: '',
                             username: '',
-                            jobdesc_id: 1,
+                            jobdesc_id: this.props.jobs.length && this.props.jobs[0].id,
                             admin_id: user('id'),
                             role_id: 2,
                             alamat: '',
@@ -45,6 +45,7 @@ class PegawaiForm extends Component {
                             this.setState({ isLoading: true });
                             data.jobdesc_id = Number(data.jobdesc_id);
                             data.role = Number(data.role);
+                            console.log(data.jobdesc_id);
                             this.props.addPegawai(data, () => {
                                 this.props.getDataPegawai();
                                 this.props.toggle();
