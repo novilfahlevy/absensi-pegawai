@@ -170,7 +170,17 @@ class Absensi extends React.Component {
             <Col>
               <Card>
                 <CardHeader>
-                  <h2 className="m-0">Absensi Pegawai</h2>
+                  <Row>
+                    <Col xs="6">
+                      <h2 className="mb-0">Absensi Pegawai</h2>
+                    </Col>
+                    <Col className="text-right" xs="6">
+                      <Button color="primary" size="md">
+                        <i className="fas fa-list-ul mr-2"></i>
+                        Riwayat Absensi
+                      </Button>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
                   <Form onSubmit={this.searchAbsensiSubmit}>
