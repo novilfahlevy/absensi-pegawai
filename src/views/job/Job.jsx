@@ -53,11 +53,11 @@ class Job extends React.Component {
 
     this.setState({ addJobLoading: true });
     api().post('jobdesc/store', { name: this.state.newJob })
-      .then(() => {
+      .then(response => {
         Swal.fire(
           '',
-          `Job ${ this.state.newJob } telah ditambahkan.`,
-          'success'
+          response.data.message,
+          response.data.status === 200 ? 'success' : 'error'
         );
         this.setState({ addJobLoading: false });
         this.setState({ newJob: '' });
