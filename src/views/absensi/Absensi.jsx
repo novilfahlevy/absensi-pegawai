@@ -129,14 +129,6 @@ class Absensi extends React.Component {
         sort: true
       },
       {
-        dataField: 'tanggal',
-        text: 'Tanggal',
-        align: 'center',
-        classes: 'align-middle',
-        headerAlign: 'center',
-        headerClasses: 'align-middle'
-      },
-      {
         dataField: 'waktu_absensi',
         text: 'Waktu Absensi',
         align: 'center',
@@ -175,7 +167,7 @@ class Absensi extends React.Component {
                       <h2 className="mb-0">Absensi Pegawai</h2>
                     </Col>
                     <Col className="text-right" xs="6">
-                      <Button color="primary" size="md">
+                      <Button color="primary" size="md" onClick={() => this.props.history.push('/admin/riwayat-absensi')}>
                         <i className="fas fa-list-ul mr-2"></i>
                         Riwayat Absensi
                       </Button>
