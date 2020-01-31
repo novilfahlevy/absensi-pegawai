@@ -21,7 +21,6 @@ import {
 import { withRouter } from 'react-router-dom';
 import Lightbox from 'react-image-lightbox';
 
-import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import moment from 'moment';
 
@@ -76,32 +75,6 @@ class Absensi extends React.Component {
     e.preventDefault();
     this.getAbsensi(`absensi/${this.state.searchKeyword}`);
   }
-
-  deleteAbsen = id => {
-    Swal.fire({
-      title: 'Apa anda yakin?',
-      text: "Data yang sudah dihapus tidak bisa dipulihkan kembali!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ya, hapus!',
-      cancelButtonText: 'Gak jadi!',
-      reverseButton: true
-    }).then((result) => {
-      if (result.value) {
-        this.setState({
-          absensi: this.state.absensi.filter(absen => absen.id !== id)
-        }, () => {
-          Swal.fire(
-            'Dihapus!',           
-            'Absensi sudah dihapus.',
-            'success'
-          )
-        });
-      }
-    })
-  };
 
   refreshData() {
     this.getAbsensi('absensi');
@@ -185,7 +158,7 @@ class Absensi extends React.Component {
                     <Col>
                       <Button color="success" size="sm" onClick={() => this.refreshData()}>
                         <span className="fas fa-undo mr-1"></span>
-                        Muat Ulang Data
+                        Absensi Hari Ini
                       </Button>
                     </Col>
                   </Row>    
