@@ -1,0 +1,7 @@
+/* .custom-control-label:before{
+  background-color: red;
+} */
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
