@@ -1,6 +1,8 @@
 import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
+import api from 'store/api.js';
+import moment from 'moment';
 
 import { 
   Container, 
@@ -20,8 +22,70 @@ import { withRouter } from 'react-router-dom';
 
 import Table from 'components/ui/Table.jsx';
 import LoadingButton from 'components/ui/LoadingButton.jsx';
+import Lightbox from 'react-image-lightbox';
 
 class RiwayatAbsensi extends React.Component {
+  state = {
+    absensi: [],
+    absenPhotoLightbox: null,
+    filterYear: new Date().getFullYear(),
+    filterMonth: moment().month(),
+    filterLoading: false,
+    refreshDataLoading: false,
+    searchLoading: false
+  };
+
+  componentDidMount() {
+    this.getDataAbsensi();
+  }
+
+  getDataAbsensi(callback) {
+    api().get('absensi/riwayat')
+    .then(response => {
+      this.setState({ absensi: response.data.data }, () => {
+        this.setState({ 
+          absensi: this.state.absensi.map(absen => this.setDataAbsensi(absen)) 
+        }, callback);
+      });
+    });
+  }
+
+  setDataAbsensi(absen) {
+    return {
+      ...absen,
+      nama: absen.name,
+      tanggal: moment(absen.tanggal).format('D MMMM YYYY'),
+      foto: (
+        <Row>
+          <Col className="col-6">
+            <img key={absen.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absen.foto_absensi_masuk}`} width="100%" height="100%" onClick={() => this.toggleAbsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absen.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Masuk" />
+          </Col>
+          <Col className="col-6">
+            <img key={absen.id} src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${absen.foto_absensi_keluar}`} width="100%" height="100%" onClick={() => this.toggleAbsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/profiles/${absen.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Keluar" />
+          </Col>
+        </Row>
+      ),
+      waktu_absensi: `${moment(`${absen.tanggal} ${absen.absensi_masuk}`).format('HH:mm')}${absen.absensi_keluar ? ' - ' + moment(`${absen.tanggal} ${absen.absensi_keluar}`).format('HH:mm') : ''}`,
+      opsi: (
+        <Button color="primary" onClick={() => this.props.history.push(`detail-absensi/${absen.id}`)}>
+          <span className="fas fa-eye"></span>
+        </Button>
+      )
+    };
+  }
+
+  filterData = e => {
+  }
+  
+  refreshData = () => {
+    this.setState({ refreshDataLoading: true });
+    this.getDataAbsensi(() => this.setState({ refreshDataLoading: false }));
+  }
+
+  toggleAbsenPhotoLightbox(image) {
+    this.setState({ absenPhotoLightbox: this.state.absenPhotoLightbox ? null : image });
+  }
+
   render() {
     const columns = [
       {
@@ -34,7 +98,7 @@ class RiwayatAbsensi extends React.Component {
         headerStyle: { width: '20px' }
       },
       {
-        dataField: 'nama',
+        dataField: 'name',
         text: 'Nama Pegawai',
         align: 'center',
         classes: 'align-middle',
@@ -125,23 +189,26 @@ class RiwayatAbsensi extends React.Component {
                             <span className="fas fa-filter mr-1"></span>
                             Filter
                           </LoadingButton>  
-                          <LoadingButton color="success">
-                            <span className="fas fa-undo mr-1"></span>
-                            Muat Ulang Data
-                          </LoadingButton>  
+                          <Form onSubmit={e => { e.preventDefault(); this.refreshData(); }}>
+                            <LoadingButton type="submit" color="success" condition={this.state.refreshDataLoading}>
+                              <span className="fas fa-undo mr-1"></span>
+                              Muat Ulang Data
+                            </LoadingButton>  
+                          </Form>
                         </Col>
                       </Row>
                     </Col>
                   </Row>
                   <Table 
                     columns={columns} 
-                    data={[]}
+                    data={this.state.absensi}
                   />
                 </CardBody>
               </Card> 
             </Col>
           </Row>
         </Container>
+        {this.state.absenPhotoLightbox && <Lightbox mainSrc={this.state.absenPhotoLightbox} onCloseRequest={() => this.setState({ absenPhotoLightbox: null })} />}
       </>
     );
   }
