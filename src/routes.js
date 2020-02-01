@@ -31,6 +31,7 @@ import ProjectManager from 'views/pm/ProjectManager.jsx';
 import TambahAnggota from 'views/pm/TambahAnggota.jsx';
 import DetailLembur from 'views/lembur/DetailLembur.jsx';
 import RiwayatLembur from 'views/lembur/RiwayatLembur.jsx';
+import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Job from 'views/job/Job.jsx';
 
 var routes = [
@@ -59,6 +60,15 @@ var routes = [
     component: Absensi,
     layout: "/admin",
     isActive: true,
+    roles: ['admin']
+  },
+  {
+    path: "/riwayat-absensi",
+    name: "Absensi",
+    icon: "fas fa-list-alt text-red",
+    component: RiwayatAbsensi,
+    layout: "/admin",
+    isActive: false,
     roles: ['admin']
   },
   {
