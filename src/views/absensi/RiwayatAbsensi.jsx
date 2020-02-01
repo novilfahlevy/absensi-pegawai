@@ -223,7 +223,7 @@ class RiwayatAbsensi extends React.Component {
                       <Row className="mb-3">
                         <Col sm="12" lg="3" className="mb-3 mb-lg-0">
                           <CustomInput type="select" className="form-control" id="tahun" name="tahun" onChange={this.changeFilterYear}>
-                            <option value="all">Pilih Semua</option>
+                            <option value="all">Pilih Semua Tahun</option>
                             {this.state.filterYears.map((year, i) => (
                               <option key={i} value={year}>{year}</option>
                             ))}
@@ -231,7 +231,7 @@ class RiwayatAbsensi extends React.Component {
                         </Col>
                         <Col sm="12" lg="3" className="mb-3 mb-lg-0">
                           <CustomInput type="select" className="form-control" id="bulan" name="bulan" onChange={this.changeFilterMonth}>
-                            <option value="all">Pilih Semua</option>
+                            <option value="all">Pilih Semua Bulan</option>
                             {[...Array(12).fill(null)].map((month, i) => (
                               <option key={i} value={i + 1}>{moment().months(i).format('MMMM')}</option>
                             ))}
