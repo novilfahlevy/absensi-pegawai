@@ -23,6 +23,7 @@ import { withRouter } from 'react-router-dom';
 import Table from 'components/ui/Table.jsx';
 import LoadingButton from 'components/ui/LoadingButton.jsx';
 import Lightbox from 'react-image-lightbox';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 
 class RiwayatAbsensi extends React.Component {
   state = {
@@ -190,7 +191,6 @@ class RiwayatAbsensi extends React.Component {
 
     return (
       <>
-        <Header />
         <Container className="mt--7">
           <Row>
             <Col>
@@ -269,4 +269,4 @@ class RiwayatAbsensi extends React.Component {
   }
 }
 
-export default withRouter(RiwayatAbsensi);
+export default withRouter(FadeIn(RiwayatAbsensi, Header));
