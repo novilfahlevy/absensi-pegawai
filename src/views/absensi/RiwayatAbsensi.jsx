@@ -160,7 +160,12 @@ class RiwayatAbsensi extends React.Component {
         classes: 'align-middle',
         headerAlign: 'center',
         headerClasses: 'align-middle',
-        sort: true
+        sort: true,
+        sortFunc(a, b, order) {
+          a = moment.utc(a,'D MMMM YYYY').format('X');
+          b = moment.utc(b,'D MMMM YYYY').format('X');
+          return order === 'asc' ? b - a : a - b;
+        }
       },
       {
         dataField: 'waktu_absensi',
