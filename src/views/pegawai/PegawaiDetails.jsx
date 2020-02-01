@@ -54,14 +54,18 @@ class PegawaiDetails extends Component {
                     <Row>
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">
-                                <CardBody className="pt-0 pt-md-4 text-center">
-                                    <img
-                                        alt="..."
-                                        height="250"
-                                        className="rounded-circle"
-                                        src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${pegawai.profile || 'default.jpg'}`}
-                                        width="100%"
-                                    />
+                                <CardBody className="pt-4 text-center">
+                                    <Row className="justify-content-center">
+                                        <Col sm="6" lg="4" xl="12">
+                                            <img
+                                                alt="..."
+                                                height="250"
+                                                className="rounded-circle"
+                                                src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${pegawai.profile || 'default.jpg'}`}
+                                                width="100%"
+                                            />
+                                        </Col>
+                                    </Row>
                                 </CardBody>
                             </Card>
                             <Card className="mt-4 p-4">
