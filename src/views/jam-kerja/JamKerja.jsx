@@ -113,7 +113,7 @@ class JamKerja extends React.Component {
                                                     <CardTitle>
                                                         <h2>Waktu Kerja</h2>
                                                     </CardTitle>
-                                                    <Carousel activeIndex={hours.indexOf(hours[activeIndex])} next={this.next} interval={false} previous={this.previous}>
+                                                    <Carousel activeIndex={activeIndex} next={this.next} interval={false} previous={this.previous}>
                                                         {slides}
                                                         <CarouselControl style={{ backgroundImage: `url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff0000' viewBox='0 0 8 8'%3E%3Cpath d='M1.5 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E"` }} direction="prev" directionText="Previous" onClickHandler={this.previous} />
                                                         <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
