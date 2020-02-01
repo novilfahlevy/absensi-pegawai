@@ -64,7 +64,7 @@ var routes = [
   },
   {
     path: "/riwayat-absensi",
-    name: "Absensi",
+    name: "Riwayat Absensi",
     icon: "fas fa-list-alt text-red",
     component: RiwayatAbsensi,
     layout: "/admin",
