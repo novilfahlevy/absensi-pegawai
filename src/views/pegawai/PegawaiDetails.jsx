@@ -18,6 +18,7 @@ import { Bar } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
 import Loading from 'components/ui/Loading.jsx';
 import { Link } from 'react-router-dom';
+import FadeIn from 'components/hoc/FadeIn.jsx';
 class PegawaiDetails extends Component {
     state = {
         pegawai: {},
@@ -55,7 +56,6 @@ class PegawaiDetails extends Component {
         const { pegawai, jam_kerja } = this.state;
         return (
             <>
-                <Header />
                 <Container className="mt--7" fluid>
                     <Row>
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
@@ -186,4 +186,4 @@ class PegawaiDetails extends Component {
     }
 }
 
-export default withRouter(PegawaiDetails)
+export default withRouter(FadeIn(PegawaiDetails, Header));
