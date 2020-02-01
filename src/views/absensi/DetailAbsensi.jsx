@@ -115,6 +115,8 @@ class DetailAbsensi extends React.Component {
     jam_masuk: null,
     jam_pulang: null,
     keterangan: null,
+    foto_absensi_masuk: null,
+    foto_absensi_keluar: null,
     latitude_absen_masuk: 0,
     longitude_absen_masuk: 0,
     latitude_absen_keluar: 0,
@@ -144,6 +146,8 @@ class DetailAbsensi extends React.Component {
           absensi_masuk, 
           absensi_keluar, 
           keterangan,
+          foto_absensi_masuk,
+          foto_absensi_keluar,
           latitude_absen_masuk,
           longitude_absen_masuk,
           latitude_absen_keluar,
@@ -155,6 +159,8 @@ class DetailAbsensi extends React.Component {
           jam_masuk: absensi_masuk,
           jam_pulang: absensi_keluar,
           keterangan,
+          foto_absensi_masuk,
+          foto_absensi_keluar,
           latitude_absen_masuk: parseFloat(latitude_absen_masuk),
           longitude_absen_masuk: parseFloat(longitude_absen_masuk),
           latitude_absen_keluar: parseFloat(latitude_absen_keluar,),
@@ -277,7 +283,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_masuk}`} alt="Foto Absen Masuk" />
+                  <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" alt="Foto Absen Masuk" />
                 </CardBody>
               </Card>
             </Col>
@@ -294,7 +300,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={`${process.env.REACT_APP_BASE_URL}/storage/absensi/${foto_absensi_keluar}`} alt="Foto Absen Keluar" />
+                  <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" alt="Foto Absen Keluar" />
                 </CardBody>
               </Card>
             </Col>
