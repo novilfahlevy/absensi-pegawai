@@ -110,6 +110,7 @@ class AbsenLocation extends React.Component {
 
 class DetailAbsensi extends React.Component {
   state = {
+    user_id: null,
     tanggal: null,
     jam_masuk: null,
     jam_pulang: null,
@@ -138,6 +139,7 @@ class DetailAbsensi extends React.Component {
     api().get(`absensi/${this.props.match.params.id}/detail`)
       .then(response => {
         const { 
+          user_id,
           tanggal, 
           absensi_masuk, 
           absensi_keluar, 
@@ -148,6 +150,7 @@ class DetailAbsensi extends React.Component {
           longitude_absen_keluar
         } = response.data.absensi;
         this.setState({
+          user_id,
           tanggal,
           jam_masuk: absensi_masuk,
           jam_pulang: absensi_keluar,
@@ -162,6 +165,7 @@ class DetailAbsensi extends React.Component {
 
   render() {
     const { 
+      user_id,
       tanggal, 
       jam_masuk, 
       jam_pulang, 
@@ -211,6 +215,10 @@ class DetailAbsensi extends React.Component {
                       <h2 className="m-0">Detail Absensi</h2>
                     </Col>
                     <Col className="text-right" xs="4">
+                      <Button color="primary" onClick={() => this.props.history.push(`/admin/detail-pegawai/${user_id}`)}>
+                        <i className="fas fa-user mr-1"></i>
+                        Detail Pegawai
+                      </Button>
                       <Button color="primary" onClick={() => this.props.history.goBack()}>
                         <i className="fas fa-arrow-left"></i>
                       </Button>
