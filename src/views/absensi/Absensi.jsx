@@ -160,7 +160,7 @@ class Absensi extends React.Component {
                     <Col>
                       <Button color="success" size="sm" onClick={() => this.refreshData()}>
                         <span className="fas fa-undo mr-1"></span>
-                        Absensi Hari Ini
+                        Muat Ulang Data
                       </Button>
                     </Col>
                   </Row>    
