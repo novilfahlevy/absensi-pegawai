@@ -76,7 +76,7 @@ const BelumAbsenHariIni = ({ pegawai, history }) => (
                     <CardTitle className="m-0"><h4 className="text-white">{pegawai.name}</h4></CardTitle>
                 </Col>
                 <Col lg={4} className="col-6 d-flex justify-content-end">
-                    <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-pegawai/${pegawai.id}}`)}>
+                    <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-pegawai/${pegawai.id}`)}>
                         <i className="fas fa-eye text-primary"></i>
                     </Button>
                 </Col>

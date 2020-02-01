@@ -20,7 +20,8 @@ class PegawaiForm extends Component {
             alamat: Yup.string()
                 .required('Masukan alamat pegawai'),
             nomor_handphone: Yup.string()
-                .required('Masukan nomor telpon pegawai'),
+                .required('Masukan nomor telpon pegawai')
+                .matches(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/, 'Nomor telepon tidak valid'),
             email: Yup.string()
                 .email('Email tidak valid')
                 .required('Masuk email pegawai'),
