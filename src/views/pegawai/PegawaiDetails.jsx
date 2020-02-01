@@ -22,7 +22,8 @@ class PegawaiDetails extends Component {
     state = {
         pegawai: {},
         total_jam_dalam_minggu: [100, 200, 300, 400],
-        jam_kerja: {}
+        jam_kerja: {},
+        waktu_kerja: 0
     }
     componentDidMount() {
         API().get(`user/${this.props.match.params.id}`)
@@ -31,6 +32,11 @@ class PegawaiDetails extends Component {
                 this.setState({ pegawai: res.data.user, jam_kerja: res.data.user.jam_kerja })
             })
             .catch(err => console.log(err))
+        
+        API().get('/admin/waktuKerja')
+        .then(res => {
+            this.setState({ waktu_kerja: res.data.data[0].waktu_kerja });
+        })
     }
     render() {
         const barData = {
@@ -71,9 +77,9 @@ class PegawaiDetails extends Component {
                             <Card className="mt-4 p-4">
                                 <h2>Data Bulan Ini</h2>
                                 <div style={{ width: "60%", margin: "auto" }}>
-                                    {jam_kerja.performance ? <CircularProgressbarWithChildren style={{ width: "20px" }} value={jam_kerja.performance.total_jam_per_minggu} maxValue={8 * moment().daysInMonth()}>
+                                    {jam_kerja.performance ? <CircularProgressbarWithChildren style={{ width: "20px" }} value={jam_kerja.performance.total_jam_per_minggu} maxValue={this.state.waktu_kerja * moment().daysInMonth()}>
                                         <div className="text-center mt-3">
-                                            <h2>{jam_kerja.performance.total_jam_per_minggu} / {8 * moment().daysInMonth()}</h2>
+                                            <h2>{jam_kerja.performance.total_jam_per_minggu} / {this.state.waktu_kerja * moment().daysInMonth()}</h2>
                                             <p className="font-weight-bold">Jam</p>
                                         </div>
                                     </CircularProgressbarWithChildren> : <div className="d-flex justify-content-center"><Loading /></div>}

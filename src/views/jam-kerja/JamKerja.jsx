@@ -80,7 +80,6 @@ class JamKerja extends React.Component {
 
                 this.setState({ hari_kerja: res.data.data[0].hari_kerja.split(", "), jam_kerja: res.data.data[0].waktu_kerja });
             })
-            .catch(err => console.log(err))
     }
     componentDidMount() {
         this.getData()
