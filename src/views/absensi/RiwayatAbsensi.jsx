@@ -28,14 +28,17 @@ class RiwayatAbsensi extends React.Component {
   state = {
     absensi: [],
     absenPhotoLightbox: null,
-    filterYear: new Date().getFullYear(),
-    filterMonth: moment().month(),
+    filterYears: [],
+    filterYear: 'all',
+    filterMonth: 'all',
     filterLoading: false,
     refreshDataLoading: false,
-    searchLoading: false
+    searchLoading: false,
+    searchKeyword: ''
   };
 
   componentDidMount() {
+    moment.locale('id');
     this.getDataAbsensi();
   }
 
@@ -43,6 +46,7 @@ class RiwayatAbsensi extends React.Component {
     api().get('absensi/riwayat')
     .then(response => {
       this.setState({ absensi: response.data.data }, () => {
+        this.setFilterYears();
         this.setState({ 
           absensi: this.state.absensi.map(absen => this.setDataAbsensi(absen)) 
         }, callback);
@@ -74,12 +78,54 @@ class RiwayatAbsensi extends React.Component {
     };
   }
 
-  filterData = e => {
+  searchData = e => {
+    e.preventDefault();
+    this.setState({ searchLoading: true });
+    api().get(`absensi/riwayat/search/${this.state.searchKeyword}`)
+    .then(response => {
+      this.setState({ absensi: response.data.data }, () => {
+        this.setState({ absensi: this.state.absensi.map(absen => this.setDataAbsensi(absen)) }, () => {
+          this.setState({ searchLoading: false });
+        });
+      });
+    })
+    .catch(err => this.setState({ searchLoading: false }));
+  }
+  
+  changeSearchKeyword = e => {
+    this.setState({ searchKeyword: e.target.value });
   }
   
   refreshData = () => {
     this.setState({ refreshDataLoading: true });
     this.getDataAbsensi(() => this.setState({ refreshDataLoading: false }));
+  }
+
+  filterData = e => {
+    e.preventDefault();
+    this.setState({ filterLoading: true });
+    api().get(`absensi/riwayat/filter/${this.state.filterYear}/${this.state.filterMonth}`)
+    .then(response => {
+      this.setState({ absensi: response.data.data }, () => {
+        this.setState({ absensi: this.state.absensi.map(absen => this.setDataAbsensi(absen)) }, () => {
+          this.setState({ filterLoading: false });
+        });
+      });
+    })
+    .catch(err => console.log(err.response))
+  }
+  
+  setFilterYears() {
+    api().get('absensi/riwayat/years')
+    .then(response => this.setState({ filterYears: response.data.data }));
+  }
+  
+  changeFilterYear = e => {
+    this.setState({ filterYear: e.target.value });
+  }
+  
+  changeFilterMonth = e => {
+    this.setState({ filterMonth: e.target.value });
   }
 
   toggleAbsenPhotoLightbox(image) {
@@ -112,7 +158,8 @@ class RiwayatAbsensi extends React.Component {
         align: 'center',
         classes: 'align-middle',
         headerAlign: 'center',
-        headerClasses: 'align-middle'
+        headerClasses: 'align-middle',
+        sort: true
       },
       {
         dataField: 'waktu_absensi',
@@ -163,11 +210,11 @@ class RiwayatAbsensi extends React.Component {
                 <CardBody>
                   <Row>
                     <Col className="col-12">
-                      <Form>
+                      <Form onSubmit={this.searchData}>
                         <InputGroup className="mb-3">
-                          <CustomInput type="search" className="form-control" name="cariKeyword" id="search" placeholder="Cari nama pegawai" />
+                          <CustomInput type="search" className="form-control" name="cariKeyword" id="search" placeholder="Cari nama pegawai" onChange={this.changeSearchKeyword} />
                           <InputGroupAddon addonType="append">
-                            <Button type="submit" color="primary">Cari</Button>
+                            <LoadingButton type="submit" condition={this.state.searchLoading} color="primary" disabled={!this.state.searchKeyword.length}>Cari</LoadingButton>
                           </InputGroupAddon>
                         </InputGroup>
                       </Form>
@@ -175,20 +222,28 @@ class RiwayatAbsensi extends React.Component {
                     <Col>
                       <Row className="mb-3">
                         <Col sm="12" lg="3" className="mb-3 mb-lg-0">
-                          <CustomInput type="select" className="form-control" id="tahun" name="tahun">
-                            <option value="2020">2020</option>
+                          <CustomInput type="select" className="form-control" id="tahun" name="tahun" onChange={this.changeFilterYear}>
+                            <option value="all">Pilih Semua</option>
+                            {this.state.filterYears.map((year, i) => (
+                              <option key={i} value={year}>{year}</option>
+                            ))}
                           </CustomInput>                  
                         </Col>
                         <Col sm="12" lg="3" className="mb-3 mb-lg-0">
-                          <CustomInput type="select" className="form-control" id="bulan" name="bulan">
-                            <option value="Januari">Januari</option>
+                          <CustomInput type="select" className="form-control" id="bulan" name="bulan" onChange={this.changeFilterMonth}>
+                            <option value="all">Pilih Semua</option>
+                            {[...Array(12).fill(null)].map((month, i) => (
+                              <option key={i} value={i + 1}>{moment().months(i).format('MMMM')}</option>
+                            ))}
                           </CustomInput>                  
                         </Col>
                         <Col className="d-flex align-items-center justify-content-between">
-                          <LoadingButton color="primary">
-                            <span className="fas fa-filter mr-1"></span>
-                            Filter
-                          </LoadingButton>  
+                          <Form onSubmit={this.filterData}>
+                            <LoadingButton type="submit" condition={this.state.filterLoading} color="primary">
+                              <span className="fas fa-filter mr-1"></span>
+                              Filter
+                            </LoadingButton>  
+                          </Form>
                           <Form onSubmit={e => { e.preventDefault(); this.refreshData(); }}>
                             <LoadingButton type="submit" color="success" condition={this.state.refreshDataLoading}>
                               <span className="fas fa-undo mr-1"></span>
