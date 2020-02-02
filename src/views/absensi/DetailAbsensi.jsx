@@ -122,17 +122,10 @@ class DetailAbsensi extends React.Component {
     latitude_absen_keluar: 0,
     longitude_absen_keluar: 0,
     waktu_kerja: 0,
-    isLembur: false
+    lembur: null
   }
 
   componentDidMount() {
-    api().get(`lembur/${this.props.match.params.id}/cek`)
-      .then(response => {
-        if ( response.data.data ) {
-          this.setState({ isLembur: true });
-        }
-      })
-
     api().get('admin/waktuKerja')
       .then(response => {
         this.setState({ waktu_kerja: response.data.data[0].waktu_kerja });
@@ -151,7 +144,8 @@ class DetailAbsensi extends React.Component {
           latitude_absen_masuk,
           longitude_absen_masuk,
           latitude_absen_keluar,
-          longitude_absen_keluar
+          longitude_absen_keluar,
+          lembur
         } = response.data.absensi;
         this.setState({
           user_id,
@@ -164,7 +158,8 @@ class DetailAbsensi extends React.Component {
           latitude_absen_masuk: parseFloat(latitude_absen_masuk),
           longitude_absen_masuk: parseFloat(longitude_absen_masuk),
           latitude_absen_keluar: parseFloat(latitude_absen_keluar,),
-          longitude_absen_keluar: parseFloat(longitude_absen_keluar)
+          longitude_absen_keluar: parseFloat(longitude_absen_keluar),
+          lembur
         });
       });
   }
@@ -258,7 +253,7 @@ class DetailAbsensi extends React.Component {
                           </ListGroupItem>
                         )}
                       </ListGroup>
-                      {this.state.isLembur && <Button className="mt-3" color="primary" onClick={() => this.props.history.push(`/admin/detail-lembur/${this.props.match.params.id}`)}>Lihat Keterangan Lembur</Button>}
+                      {this.state.lembur && <Button className="mt-3" color="primary" onClick={() => this.props.history.push(`/admin/detail-lembur/${this.state.lembur}`)}>Lihat Keterangan Lembur</Button>}
                     </Col>
                   </Row>
                 </CardBody>
