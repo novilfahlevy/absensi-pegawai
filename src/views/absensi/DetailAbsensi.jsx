@@ -188,23 +188,21 @@ class DetailAbsensi extends React.Component {
     const jam_masuk_absen = jam_masuk ? moment(`${tanggal} ${jam_masuk}`).format('HH:mm') : '-';
     const jam_pulang_absen = jam_pulang ? moment(`${tanggal} ${jam_pulang}`).format('HH:mm') : '-';
 
-    const format_masuk = jam_masuk_absen.split(':');
-    const format_pulang = jam_pulang_absen.split(':');
+    let status;
 
-    const masuk_jam = format_masuk[0] && format_masuk[0].replace('0', '');
+    const masuk = moment(`${tanggal} ${jam_masuk}`, 'YYYY/MM/DD HH:mm');
+    const pulang = moment(`${tanggal} ${jam_pulang}`, 'YYYY/MM/DD HH:mm');
 
-    const pulang_jam = format_pulang[0] && format_pulang[0].replace('0', ''); 
+    const total_jam_kerja = pulang.diff(masuk, 'hours', true);
 
-    let jumlah_jam_kerja = pulang_jam - masuk_jam;
-
-    if ( jumlah_jam_kerja === waktu_kerja ) {
-      jumlah_jam_kerja = 'Tepat Waktu';
+    if ( total_jam_kerja >= parseFloat(`${waktu_kerja}.0`) && total_jam_kerja <= parseFloat(`${waktu_kerja}.4`) ) {
+      status = 'Tepat Waktu';
     }
-    else if ( jumlah_jam_kerja > waktu_kerja ) {
-      jumlah_jam_kerja = 'Lewat Jam Kerja';
+    else if ( total_jam_kerja > parseFloat(`${waktu_kerja}.4`) ) {
+      status = 'Lewat Jam Kerja';
     }
     else {
-      jumlah_jam_kerja = 'Lebih Awal';
+      status = 'Lebih Awal';
     }
 
     return (
@@ -255,7 +253,7 @@ class DetailAbsensi extends React.Component {
                           <ListGroupItem>
                             <h3>Status</h3>
                             <p className="m-0">
-                              {jumlah_jam_kerja}
+                              {status}
                             </p>
                           </ListGroupItem>
                         )}
@@ -281,7 +279,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
+                  {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" height="300" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
                 </CardBody>
               </Card>
             </Col>
@@ -298,7 +296,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
+                  {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" height="300" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
                 </CardBody>
               </Card>
             </Col>
