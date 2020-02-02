@@ -185,17 +185,15 @@ class DetailAbsensi extends React.Component {
       waktu_kerja
     } = this.state;
 
-    const jam_masuk_absen = moment(`${tanggal} ${jam_masuk}`).format('HH:mm');
-    const jam_pulang_absen = moment(`${tanggal} ${jam_pulang}`).format('HH:mm');
+    const jam_masuk_absen = jam_masuk ? moment(`${tanggal} ${jam_masuk}`).format('HH:mm') : '-';
+    const jam_pulang_absen = jam_pulang ? moment(`${tanggal} ${jam_pulang}`).format('HH:mm') : '-';
 
     const format_masuk = jam_masuk_absen.split(':');
     const format_pulang = jam_pulang_absen.split(':');
 
     const masuk_jam = format_masuk[0] && format_masuk[0].replace('0', '');
-    // const masuk_menit = format_masuk[1] && format_masuk[1].replace('0', '');
 
-    const pulang_jam = format_pulang[0] && format_pulang[0].replace('0', '');
-    // const pulang_menit = format_pulang[1] && format_pulang[1].replace('0', '');
+    const pulang_jam = format_pulang[0] && format_pulang[0].replace('0', ''); 
 
     let jumlah_jam_kerja = pulang_jam - masuk_jam;
 
@@ -237,7 +235,7 @@ class DetailAbsensi extends React.Component {
                       <ListGroup>
                         <ListGroupItem>
                           <h3>Tanggal</h3>
-                          <p className="m-0">{moment(tanggal).format('D MMMM YYYY')}</p>
+                          <p className="m-0">{tanggal ? moment(tanggal).format('D MMMM YYYY') : '-'}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Masuk</h3>
@@ -245,12 +243,12 @@ class DetailAbsensi extends React.Component {
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Jam Pulang</h3>
-                          <p className="m-0">{jam_pulang_absen || '-'}</p>
+                          <p className="m-0">{jam_pulang_absen}</p>
                         </ListGroupItem>
                         <ListGroupItem>
                           <h3>Keterangan Absen</h3>
                           <p className="m-0">
-                            {keterangan}
+                            {keterangan || '-'}
                           </p>
                         </ListGroupItem>
                         {jam_pulang && (
@@ -277,13 +275,13 @@ class DetailAbsensi extends React.Component {
                   <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
                   <Row>
                     <Col className="col-12">
-                      <AbsenLocation lat={latitude_absen_masuk} lng={longitude_absen_masuk} />
+                      {(latitude_absen_masuk && longitude_absen_masuk) ? <AbsenLocation lat={latitude_absen_masuk} lng={longitude_absen_masuk} /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
                     </Col>
                   </Row>
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" alt="Foto Absen Masuk" />
+                  {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
                 </CardBody>
               </Card>
             </Col>
@@ -294,13 +292,13 @@ class DetailAbsensi extends React.Component {
                   <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
                   <Row>
                     <Col className="col-12">
-                      <AbsenLocation lat={latitude_absen_keluar} lng={longitude_absen_keluar} />
+                    {(latitude_absen_keluar && longitude_absen_keluar) ? <AbsenLocation lat={latitude_absen_keluar} lng={longitude_absen_keluar} /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
                     </Col>
                   </Row>
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" alt="Foto Absen Keluar" />
+                  {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
                 </CardBody>
               </Card>
             </Col>

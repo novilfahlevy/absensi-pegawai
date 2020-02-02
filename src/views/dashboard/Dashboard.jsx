@@ -56,7 +56,7 @@ const AbsenHariIni = ({ pegawai, history, className }) => (
             <Col lg={8} className="col-6">
                 <CardTitle className="m-0">{pegawai.name}</CardTitle>
                 <CardText>
-                    <span className="font-weight-bold">{pegawai.absensi_masuk}</span>{pegawai.absensi_keluar && (<span className="font-weight-bold"> - {pegawai.absensi_keluar}</span>)}
+                    <span className="font-weight-bold">{pegawai.absensi_masuk.split(':').reverse().splice(1).reverse().join(':')}</span>{pegawai.absensi_keluar && (<span className="font-weight-bold"> - {pegawai.absensi_keluar.split(':').reverse().splice(1).reverse().join(':')}</span>)}
                 </CardText>
             </Col>
             <Col lg={4} className="col-6 text-right">
@@ -159,7 +159,7 @@ class Dashboard extends React.Component {
                                     <Row className="justify-content-center">
                                     {
                                         !this.state.loading.pegawai_belum_absen ? this.state.pegawai.belum_absen.length ? this.state.pegawai.belum_absen.map(pegawai => (
-                                            <Col xl={12} className="col-12">
+                                            <Col key={pegawai.id} xl={12} className="col-12">
                                                 <BelumAbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
                                             </Col>
                                         )) : (
