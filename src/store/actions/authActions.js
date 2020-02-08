@@ -10,11 +10,11 @@ export const login = ({ keyword, password }, push) => {
     api().post('/auth/login', { keyword, password })
     .then(response => {
       if ( response.data.status === 200 ) {
-        localStorage.setItem('auth', btoa(JSON.stringify({ ...response.data.message })));
+        localStorage.setItem('auth', btoa(JSON.stringify(response.data.data)));
         let pageNotFound = true;
         routes.forEach(prop => {
           if ( pageNotFound ) {
-            if ( prop.roles.map(role => role.toLowerCase()).indexOf(user('role').toLowerCase()) === 0 ) {
+            if ( prop.roles.indexOf(user('role').toLowerCase()) >= 0 ) {
               dispatch({ type: 'LOGIN_SUCCESS' });
               push(`/admin${prop.path}`);
               pageNotFound = false;
