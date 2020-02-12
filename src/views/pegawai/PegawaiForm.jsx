@@ -46,11 +46,10 @@ class PegawaiForm extends Component {
                             this.setState({ isLoading: true });
                             data.jobdesc_id = Number(data.jobdesc_id);
                             data.role = Number(data.role);
-                            console.log(data.jobdesc_id);
                             this.props.addPegawai(data, () => {
                                 this.props.getDataPegawai();
                                 this.props.toggle();
-                                this.setState({ isLoading: false })
+                                this.setState({ isLoading: false });
                             }, () => this.setState({ isLoading: false }));
                         }}
                     >

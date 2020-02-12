@@ -11,7 +11,6 @@ const pegawaiReducer = (initState = state, action) => {
                 'Pegawai berhasil ditambahkan',
                 'success'
             )
-            console.log('tambah pegawai berhasil');
             return action.res;
         case 'ADD_PEGAWAI_ERROR':
             // if ( action.err.response.status === 422 ) {
@@ -25,7 +24,7 @@ const pegawaiReducer = (initState = state, action) => {
 
             Swal.fire(
                 'Gagal!',
-                'Pegawai gagal ditambahkan! Coba sekali lagi!',
+                action.err,
                 'error'
             )
             return action.err;

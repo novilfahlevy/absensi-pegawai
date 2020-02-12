@@ -63,13 +63,21 @@ class EditPegawaiForm extends Component {
                                     data.role_id = Number(data.role_id);
                                     api().post(`user/edit/${this.props.pegawaiId}`, data)
                                     .then(response => {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            text: 'Pegawai berhasil diubah!'
-                                        });
-                                        this.props.getDataPegawai();
-                                        this.props.toggle();
-                                        this.setState({ isLoading: false })
+                                        if ( response.data.status === 422 ) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                text: response.data.message
+                                            });
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'success',
+                                                text: 'Pegawai berhasil diubah!'
+                                            });
+                                            
+                                            this.props.getDataPegawai();
+                                            this.props.toggle();
+                                        }
+                                        this.setState({ isLoading: false });
                                     })
                                 }}
                             >

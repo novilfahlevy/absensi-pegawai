@@ -63,10 +63,10 @@ class RiwayatAbsensi extends React.Component {
       foto: (
         <Row>
           <Col className="col-6">
-            <img key={absen.id} src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absen.foto_absensi_masuk}`} width="100%" height="50" onClick={() => this.toggleAbsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absen.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Masuk" />
+            <img key={absen.id} src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absen.foto_absensi_masuk}`} width="100%" height="50" onClick={() => this.toggleAbsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absen.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Masuk" />
           </Col>
           <Col className="col-6">
-            <img key={absen.id} src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absen.foto_absensi_keluar}`} width="100%" height="50" onClick={() => this.toggleAbsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absen.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Keluar" />
+            <img key={absen.id} src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absen.foto_absensi_keluar}`} width="100%" height="50" onClick={() => this.toggleAbsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absen.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Keluar" />
           </Col>
         </Row>
       ),

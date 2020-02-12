@@ -177,7 +177,7 @@ class ProjectManager extends React.Component {
                         <Card>
                           <Row>
                             <Col className="pr-0">
-                              <CardImg src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${member.profile || 'default.jpg'}`} width="80" height="100%" />
+                              <CardImg src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/profiles/${member.profile || 'default.jpg'}`} width="80" height="100%" />
                             </Col>
                             <Col className="pl-0">
                               <CardBody>

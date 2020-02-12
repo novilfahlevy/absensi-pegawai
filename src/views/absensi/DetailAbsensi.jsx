@@ -274,7 +274,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" height="300" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
+                  {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${foto_absensi_masuk}`} width="100%" height="300" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
                 </CardBody>
               </Card>
             </Col>
@@ -291,7 +291,7 @@ class DetailAbsensi extends React.Component {
                 </CardBody>
                 <CardBody>
                   <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" height="300" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
+                  {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${foto_absensi_keluar}`} width="100%" height="300" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
                 </CardBody>
               </Card>
             </Col>

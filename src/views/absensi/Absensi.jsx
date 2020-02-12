@@ -49,10 +49,10 @@ class Absensi extends React.Component {
           foto: (
             <Row>
               <Col className="col-6">
-                {absensi.foto_absensi_masuk ? <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absensi.foto_absensi_masuk}`} width="100%" height="50" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absensi.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Masuk" /> : '-'}
+                {absensi.foto_absensi_masuk ? <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absensi.foto_absensi_masuk}`} width="100%" height="50" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absensi.foto_absensi_masuk}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Masuk" /> : '-'}
               </Col>
               <Col className="col-6">
-                {absensi.foto_absensi_keluar ? <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absensi.foto_absensi_keluar}`} width="100%" height="50" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${absensi.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Keluar" /> : '-'}
+                {absensi.foto_absensi_keluar ? <img key={absensi.id} src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absensi.foto_absensi_keluar}`} width="100%" height="50" onClick={() => this.toggleabsenPhotoLightbox(`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${absensi.foto_absensi_keluar}`)} style={{ cursor: 'pointer' }} alt="Foto Absen Keluar" /> : '-'}
               </Col>
             </Row>
           ),
