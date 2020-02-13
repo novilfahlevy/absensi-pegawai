@@ -11,11 +11,21 @@ import Swal from 'sweetalert2';
 
 class EditPegawaiForm extends Component {
     state = {
-      modal: false,
       isLoading: false,
       pegawai: null
     }
-    toggle = () => this.setState({ modal: !this.state.modal });
+    toggleModal = () => {
+        Swal.fire({
+            text: 'Batalkan edit pegawai?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Batal'
+        })
+        .then(({ value }) => value && this.props.toggle());
+    }
     componentDidMount() {
       api().get(`user/${this.props.pegawaiId}`)
       .then(res => {
@@ -40,8 +50,8 @@ class EditPegawaiForm extends Component {
 
         return (
             <>
-                <Modal isOpen={this.props.modal} toggle={this.props.toggle}>
-                    <ModalHeader toggle={this.props.toggle}>
+                <Modal isOpen={this.props.modal} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>
                         <h2>Edit Pegawai</h2>
                     </ModalHeader>
                     <ModalBody>
@@ -75,7 +85,7 @@ class EditPegawaiForm extends Component {
                                             });
                                             
                                             this.props.getDataPegawai();
-                                            this.props.toggle();
+                                            this.toggleModal();
                                         }
                                         this.setState({ isLoading: false });
                                     })
@@ -83,69 +93,85 @@ class EditPegawaiForm extends Component {
                             >
                                 {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
                                     <Form onSubmit={handleSubmit}>
-                                            <FormGroup>
-                                                <label className="form-control-label" htmlFor="input-username">
-                                                    Nama
-                                                </label>
-                                                <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-name" type="text" placeholder="Nama" />
-                                                {errors.name && touched.name ? (
-                                                    <FormFeedback>{errors.name}</FormFeedback>
-                                                ) : null}
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <label className="form-control-label" htmlFor="input-email">
-                                                    Email
-                                                </label>
-                                                <Input nvalid={errors.email && touched.email ? true : false} onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
-                                                {errors.email && touched.email ? (
-                                                    <FormFeedback className="d-block">{errors.email}</FormFeedback>
-                                                ) : null}
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="jobdesc_id">Job</Label>
-                                                <CustomInput type="select" className="form-control-alternative" id="jobdesc_id" name="jobdesc_id" onChange={handleChange} value={String(values.jobdesc_id)}>
-                                                    {this.props.jobs && this.props.jobs.map((job, i) => (
-                                                        <option key={i} value={String(job.id)} default={job.id === values.jobdesc_id}>{job.name}</option>
-                                                    ))}
-                                                </CustomInput>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="role_id">Role</Label>
-                                                <CustomInput type="select" className="form-control-alternative" id="role_id" name="role_id" onChange={handleChange} value={String(values.role_id)}>
-                                                    {this.props.roles && this.props.roles.map((role, i) => (
-                                                        <option key={i} value={role.id} default={role.id === values.role_id}>{role.name}</option>
-                                                    ))}
-                                                </CustomInput>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <label className="form-control-label" htmlFor="input-email">
-                                                    Username
-                                                </label>
-                                                <Input invalid={errors.username && touched.username ? true : false} onChange={handleChange} value={values.username} name="username" type="username" className="form-control-alternative" id="input-username" placeholder="Username" />
-                                                {errors.username && touched.username ? (
-                                                    <FormFeedback className="d-block">{errors.username}</FormFeedback>
-                                                ) : null}
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <label className="form-control-label" htmlFor="input-email">
-                                                    No. Telpon
-                                                </label>
-                                                <Input invalid={errors.nomor_handphone && touched.nomor_handphone ? true : false} onChange={handleChange} value={values.nomor_handphone} name="nomor_handphone" type="text" className="form-control-alternative" id="input-nomor_handphone" placeholder="No. Telpon" />
-                                                {errors.nomor_handphone && touched.nomor_handphone ? (
-                                                    <FormFeedback className="d-block">{errors.nomor_handphone}</FormFeedback>
-                                                ) : null}
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <label className="form-control-label" htmlFor="input-email">
-                                                    Alamat
-                                                </label>
-                                                <Input invalid={errors.alamat && touched.alamat ? true : false} onChange={handleChange} value={values.alamat} name="alamat" type="textarea" className="form-control-alternative" id="input-alamat" placeholder="Alamat" />
-                                                {errors.alamat && touched.alamat ? (
-                                                    <FormFeedback className="d-block">{errors.alamat}</FormFeedback>
-                                                ) : null}
-                                            </FormGroup>
+                                        <Row>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <label className="form-control-label" htmlFor="input-username">
+                                                        Nama
+                                                    </label>
+                                                    <Input invalid={errors.name && touched.name ? true : false} onChange={handleChange} value={values.name} name="name" className="form-control-alternative" id="input-name" type="text" placeholder="Nama" />
+                                                    {errors.name && touched.name ? (
+                                                        <FormFeedback>{errors.name}</FormFeedback>
+                                                    ) : null}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <label className="form-control-label" htmlFor="input-email">
+                                                        Email
+                                                    </label>
+                                                    <Input nvalid={errors.email && touched.email ? true : false} onChange={handleChange} value={values.email} name="email" type="email" className="form-control-alternative" id="input-email" placeholder="Email" />
+                                                    {errors.email && touched.email ? (
+                                                        <FormFeedback className="d-block">{errors.email}</FormFeedback>
+                                                    ) : null}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <Label for="jobdesc_id">Job</Label>
+                                                    <CustomInput type="select" className="form-control-alternative" id="jobdesc_id" name="jobdesc_id" onChange={handleChange} value={String(values.jobdesc_id)}>
+                                                        {this.props.jobs && this.props.jobs.map((job, i) => (
+                                                            <option key={i} value={String(job.id)} default={job.id === values.jobdesc_id}>{job.name}</option>
+                                                        ))}
+                                                    </CustomInput>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <Label for="role_id">Role</Label>
+                                                    <CustomInput type="select" className="form-control-alternative" id="role_id" name="role_id" onChange={handleChange} value={String(values.role_id)}>
+                                                        {this.props.roles && this.props.roles.map((role, i) => (
+                                                            <option key={i} value={role.id} default={role.id === values.role_id}>{role.name}</option>
+                                                        ))}
+                                                    </CustomInput>
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <label className="form-control-label" htmlFor="input-email">
+                                                        Username
+                                                    </label>
+                                                    <Input invalid={errors.username && touched.username ? true : false} onChange={handleChange} value={values.username} name="username" type="username" className="form-control-alternative" id="input-username" placeholder="Username" />
+                                                    {errors.username && touched.username ? (
+                                                        <FormFeedback className="d-block">{errors.username}</FormFeedback>
+                                                    ) : null}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <label className="form-control-label" htmlFor="input-email">
+                                                        No. Telpon
+                                                    </label>
+                                                    <Input invalid={errors.nomor_handphone && touched.nomor_handphone ? true : false} onChange={handleChange} value={values.nomor_handphone} name="nomor_handphone" type="text" className="form-control-alternative" id="input-nomor_handphone" placeholder="No. Telpon" />
+                                                    {errors.nomor_handphone && touched.nomor_handphone ? (
+                                                        <FormFeedback className="d-block">{errors.nomor_handphone}</FormFeedback>
+                                                    ) : null}
+                                                </FormGroup>
+                                            </Col>
+                                            <Col sm="6">
+                                                <FormGroup>
+                                                    <label className="form-control-label" htmlFor="input-email">
+                                                        Alamat
+                                                    </label>
+                                                    <Input invalid={errors.alamat && touched.alamat ? true : false} onChange={handleChange} value={values.alamat} name="alamat" type="textarea" className="form-control-alternative" id="input-alamat" placeholder="Alamat" />
+                                                    {errors.alamat && touched.alamat ? (
+                                                        <FormFeedback className="d-block">{errors.alamat}</FormFeedback>
+                                                    ) : null}
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
                                         <ModalFooter>
-                                            <Button color="secondary" onClick={this.props.toggle}>Cancel</Button>
+                                            <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
                                             <LoadingButton type="submit" color="primary" condition={this.state.isLoading}>Edit</LoadingButton>
                                         </ModalFooter>
                                     </Form>
