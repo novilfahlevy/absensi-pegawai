@@ -36,15 +36,6 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
 
-    routes.forEach(route => {
-      const userRole = user('role').toLowerCase();
-      if ( route.roles.includes(userRole) ) {
-        if ( 'homepageFor' in route && route.homepageFor === userRole ) {
-          props.history.push(`${route.layout}${route.path}`);
-        }
-      }
-    });
-
     if ( localStorage.getItem('auth') ) {
       this.props.storeUserData(localStorage.getItem('auth'));
     }
@@ -55,7 +46,18 @@ class Admin extends React.Component {
     api().get('/role').then(res => this.props.storeRoles(res.data.data));
   }
 
-  componentDidUpdate(e) {
+  componentDidMount() {
+    routes.forEach(route => {
+      const userRole = user('role').toLowerCase();
+      if ( route.roles.includes(userRole) ) {
+        if ( 'homepageFor' in route && route.homepageFor === userRole ) {
+          this.props.history.push(`${route.layout}${route.path}`);
+        }
+      }
+    });
+  }
+
+  componentDidUpdate(e) {    
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     this.refs.mainContent.scrollTop = 0;
