@@ -24,15 +24,22 @@ import Lightbox from 'react-image-lightbox';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import moment from 'moment';
 
+import AbsenByAdmin from 'views/absensi/AbsenByAdmin.jsx';
+
 class Absensi extends React.Component {
   state = {
     absensi: [],
     absenPhotoLightbox: null,
     searchKeyword: '',
+    absenByAdminModal: false
   };
 
   componentDidMount() {
     this.getAbsensi('absensi');
+  }
+
+  absenByAdminModalToggle = () => {
+    this.setState({ absenByAdminModal: !this.state.absenByAdminModal })
   }
 
   toggleabsenPhotoLightbox(image) {
@@ -140,6 +147,10 @@ class Absensi extends React.Component {
                       <h2 className="mb-0">Absensi Pegawai</h2>
                     </Col>
                     <Col className="text-right" xs="6">
+                      <Button color="success" size="md" onClick={this.absenByAdminModalToggle}>
+                        <i className="fas fa-user-check mr-2"></i>
+                        Absen Oleh Admin
+                      </Button>
                       <Button color="primary" size="md" onClick={() => this.props.history.push('/admin/riwayat-absensi')}>
                         <i className="fas fa-list-ul mr-2"></i>
                         Riwayat Absensi
@@ -175,6 +186,7 @@ class Absensi extends React.Component {
           </Row>
         </Container>
         {this.state.absenPhotoLightbox && <Lightbox mainSrc={this.state.absenPhotoLightbox} onCloseRequest={() => this.setState({ absenPhotoLightbox: null })} />}
+        <AbsenByAdmin toggle={this.absenByAdminModalToggle} isOpen={this.state.absenByAdminModal} />
       </>
     );
   }
