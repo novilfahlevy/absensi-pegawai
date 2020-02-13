@@ -36,6 +36,15 @@ class Admin extends React.Component {
   constructor(props) {
     super(props);
 
+    routes.forEach(route => {
+      const userRole = user('role').toLowerCase();
+      if ( route.roles.includes(userRole) ) {
+        if ( 'homepageFor' in route && route.homepageFor === userRole ) {
+          props.history.push(`${route.layout}${route.path}`);
+        }
+      }
+    });
+
     if ( localStorage.getItem('auth') ) {
       this.props.storeUserData(localStorage.getItem('auth'));
     }
@@ -76,6 +85,7 @@ class Admin extends React.Component {
           });
         }
       }
+
       return null;
     });
   };

@@ -42,7 +42,8 @@ var routes = [
     component: props => <Dashboard {...props} />,
     layout: "/admin",
     isActive: true,
-    roles: ['admin']
+    roles: ['admin'],
+    homepageFor: 'admin'
   },
   {
     path: "/pegawai",
@@ -140,7 +141,8 @@ var routes = [
     component: ProjectManager,
     layout: "/admin",
     isActive: true,
-    roles: ['project manager']
+    roles: ['project manager'],
+    homepageFor: 'project manager'
   },
   {
     path: "/lembur",

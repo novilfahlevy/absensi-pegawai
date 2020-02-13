@@ -11,14 +11,10 @@ export const login = ({ keyword, password }, push) => {
     .then(response => {
       if ( response.data.status === 200 ) {
         localStorage.setItem('auth', btoa(JSON.stringify(response.data.data)));
-        let pageNotFound = true;
         routes.forEach(prop => {
-          if ( pageNotFound ) {
-            if ( prop.roles.indexOf(user('role').toLowerCase()) >= 0 ) {
-              dispatch({ type: 'LOGIN_SUCCESS' });
-              push(`/admin${prop.path}`);
-              pageNotFound = false;
-            }
+          if ( prop.homepageFor === user('role').toLowerCase() ) {
+            dispatch({ type: 'LOGIN_SUCCESS' });
+            push(`/admin${prop.path}`);
           }
         });
       }
