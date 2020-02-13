@@ -4,6 +4,7 @@ import 'moment/locale/id';
 import axios from 'axios';
 import PieChart from './../../components/ui/PieChart.jsx';
 import { Line } from 'react-chartjs-2'
+import { withRouter } from 'react-router-dom';
 import Header from "components/Headers/Header.jsx";
 import Table from 'components/ui/Table.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
@@ -198,6 +199,9 @@ class LaporanPegawai extends React.Component {
                                                 <i className="fas fa-file mr-2"></i>
                                                 Export Laporan
                                             </Button>
+                                            <Button color="primary" onClick={() => this.props.history.goBack()} size="md">
+                                                <i className="fas fa-arrow-left"></i>
+                                            </Button>
                                         </Col>
                                     </Row>
                                 </CardHeader>
@@ -320,4 +324,4 @@ class LaporanPegawai extends React.Component {
     }
 }
 
-export default FadeIn(LaporanPegawai, Header);
+export default FadeIn(withRouter(LaporanPegawai), Header);
