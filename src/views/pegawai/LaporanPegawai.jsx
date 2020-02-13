@@ -23,7 +23,7 @@ import {
 } from "reactstrap";
 class LaporanPegawai extends React.Component {
     state = {
-        pegawai: [{}],
+        pegawai: [],
         statusPegawai: null,
         total_jam_per_bulan: null,
         bulan: 1,
@@ -89,7 +89,9 @@ class LaporanPegawai extends React.Component {
                     total_jam_per_bulan: data.total_jam_per_bulan,
                     data_kedua: { total_jam_per_bulan: data.total_jam_per_bulan, statusPegawai: [data.status_pegawai.terlambat, data.status_pegawai.tepat_waktu, data.status_pegawai.overwork] },
                     statusPegawai: [data.status_pegawai.terlambat, data.status_pegawai.tepat_waktu, data.status_pegawai.overwork]
-                }, () => console.log(this.state))
+                }, () => {
+                    this.setState({ pegawai: this.state.pegawai });
+                })
             })
             .catch(err => console.log(err))
     }
