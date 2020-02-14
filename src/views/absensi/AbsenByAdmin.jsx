@@ -56,7 +56,7 @@ class AbsenMasuk extends React.Component {
           }}
           validationSchema={absenMasukSchema}
           onSubmit={data => {
-            alert();
+            console.log(data);
           }}
         >
           {({ errors, touched, handleChange, handleSubmit }) => (
@@ -135,7 +135,7 @@ class AbsenKeluar extends React.Component {
           }}
           validationSchema={absenKeluarSchema}
           onSubmit={data => {
-            alert();
+            console.log(data);
           }}
         >
           {({ errors, touched, handleChange, handleSubmit }) => (
