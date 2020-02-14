@@ -23,11 +23,13 @@ import API from 'store/api.js';
 import Loading from 'components/ui/Loading.jsx';
 import 'assets/css/permintaanLembur.css';
 import user from 'user.js';
+import FormLembur from './FormLembur';
 // import paginationFactory from 'react-bootstrap-table2-paginator';
 
 class Lembur extends React.Component {
     state = {
-        lembur: null
+        lembur: null,
+        isModalOpen: false
     }
     handleClick = (id, status) => {
         API().post(`lembur/${id}`, { status })
@@ -36,6 +38,9 @@ class Lembur extends React.Component {
                 this.props.getData();
             })
             .catch(err => console.log(err))
+    }
+    toggleModal = () => {
+        this.setState({ isModalOpen: !this.state.isModalOpen })
     }
     getData = () => {
         API().get(`lembur/${user('role')}/${user('id')}`)
@@ -64,10 +69,14 @@ class Lembur extends React.Component {
                             <Card>
                                 <CardHeader>
                                     <Row className="align-items-center">
-                                        <Col xs="8">
+                                        <Col xs="6">
                                             <h2 className="mb-0">Lembur</h2>
                                         </Col>
-                                        <Col className="text-right" xs="4">
+                                        <Col className="text-right" xs="6">
+                                            <Button color="success" size="md" onClick={this.toggleModal}>
+                                                <i className="fas fa-plus mr-2"></i>
+                                                Tambah Lembur
+                                            </Button>
                                             <Button color="primary" size="md" onClick={() => this.props.history.push(`/admin/riwayat-lembur`)}>
                                                 <i className="fas fa-list-ul mr-2"></i>
                                                 Riwayat Lembur
@@ -125,6 +134,7 @@ class Lembur extends React.Component {
                         </Col>
                     </Row>
                 </Container>
+                <FormLembur isModalOpen={this.state.isModalOpen} toggle={this.toggleModal} />
             </>
         );
     }
