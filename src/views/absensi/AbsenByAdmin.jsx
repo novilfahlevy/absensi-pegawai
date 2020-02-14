@@ -3,7 +3,7 @@ import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import Pagination from 'react-js-pagination';
 import { Formik } from 'formik';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import {
@@ -76,7 +76,12 @@ class AbsenMasuk extends React.Component {
               </Col>
               <Col className="col-12">
                 <UncontrolledAlert className="mb-3" color="danger">
-                  User 'Eddy Gunawan' telah melakukan absen masuk pada hari Selasa, 27 Januari 2020.
+                  <p className="m-0">
+                    User 'Eddy Gunawan' telah melakukan absen masuk pada hari Selasa, 27 Januari 2020.
+                  </p>
+                  <Link className="text-white text-underline" to="/admin/detail-absensi/1">
+                    Lihat detail absen
+                  </Link>.
                 </UncontrolledAlert>
                 <FormGroup>
                   <Label htmlFor="tanggal">Tanggal</Label>
@@ -161,12 +166,6 @@ class AbsenKeluar extends React.Component {
                     {errors.jamAbsen && touched.jamAbsen ? (
                       <FormFeedback className="d-block">{errors.jamAbsen}</FormFeedback>
                     ) : null}
-                  </FormGroup>
-                </Col>
-                <Col className="col-12">
-                  <FormGroup>
-                    <Label htmlFor="keterangan">Keterangan (Opsional)</Label>
-                    <Input type="textarea" className="form-control" name="keterangan" id="keterangan" />
                   </FormGroup>
                   <Button color="primary">Absen</Button>
                 </Col>
