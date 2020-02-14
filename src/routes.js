@@ -33,6 +33,7 @@ import DetailLembur from 'views/lembur/DetailLembur.jsx';
 import RiwayatLembur from 'views/lembur/RiwayatLembur.jsx';
 import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Job from 'views/job/Job.jsx';
+import AbsenByAdmin from 'views/absensi/AbsenByAdmin.jsx';
 
 var routes = [
   {
@@ -68,6 +69,14 @@ var routes = [
     name: "Riwayat Absensi",
     icon: "fas fa-list-alt text-red",
     component: RiwayatAbsensi,
+    layout: "/admin",
+    isActive: false,
+    roles: ['admin']
+  },
+  {
+    path: "/absen-by-admin",
+    name: "Absen Oleh Admin",
+    component: AbsenByAdmin,
     layout: "/admin",
     isActive: false,
     roles: ['admin']
