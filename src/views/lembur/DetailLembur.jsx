@@ -71,7 +71,7 @@ class DetailLembur extends React.Component {
                                                 <span className="font-weight-bold d-block mt-2">Keterangan : </span>
                                                 <p className="m-0">{data.keterangan}</p>
                                                 <div className="mt-2">
-                                                    <span className="font-weight-bold mb-2 d-block">Waktu : <span className="font-weight-normal">{moment.duration(moment(data.lembur_akhir, 'HH:mm:ss').diff(moment(data.lembur_awal, 'HH:mm:ss'))).asHours()} Jam ({moment(data.lembur_awal, 'HH:mm:ss').format('HH:mm')} - {moment(data.lembur_akhir, 'HH:mm:ss').format('HH:mm')})</span></span>
+                                                    <span className="font-weight-bold mb-2 d-block">Waktu : <span className="font-weight-normal">{Math.floor(moment.duration(moment(data.lembur_akhir, 'HH:mm:ss').diff(moment(data.lembur_awal, 'HH:mm:ss'))).asHours())} Jam ({moment(data.lembur_awal, 'HH:mm:ss').format('HH:mm')} - {moment(data.lembur_akhir, 'HH:mm:ss').format('HH:mm')})</span></span>
                                                     <span className="font-weight-bold">Konsumsi : </span><span>Rp {data.konsumsi}</span>
                                                 </div>
                                             </CardText>
