@@ -28,7 +28,7 @@ class Absensi extends React.Component {
   state = {
     absensi: [],
     absenPhotoLightbox: null,
-    searchKeyword: '',
+    searchKeyword: ''
   };
 
   componentDidMount() {
@@ -140,6 +140,10 @@ class Absensi extends React.Component {
                       <h2 className="mb-0">Absensi Pegawai</h2>
                     </Col>
                     <Col className="text-right" xs="6">
+                      <Button color="success" size="md" onClick={() => this.props.history.push('/admin/absen-by-admin')}>
+                        <i className="fas fa-user-check mr-2"></i>
+                        Absen Oleh Admin
+                      </Button>
                       <Button color="primary" size="md" onClick={() => this.props.history.push('/admin/riwayat-absensi')}>
                         <i className="fas fa-list-ul mr-2"></i>
                         Riwayat Absensi
