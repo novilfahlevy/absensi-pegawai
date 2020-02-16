@@ -92,7 +92,8 @@ class AbsenMasuk extends React.Component {
         <Formik
           initialValues={{
             tanggal: '',
-            jamAbsen: ''
+            jamAbsen: '',
+            keterangan: ''
           }}
           validationSchema={absenMasukSchema}
           onSubmit={(data, { resetForm }) => {
@@ -151,7 +152,7 @@ class AbsenMasuk extends React.Component {
                 <Col className="col-12">
                   <FormGroup>
                     <Label htmlFor="keterangan">Keterangan (Opsional)</Label>
-                    <Input type="textarea" className="form-control" name="keterangan" id="keterangan" />
+                    <Input type="textarea" className="form-control" name="keterangan" id="keterangan" onChange={handleChange} value={values.keterangan} />
                   </FormGroup>
                   <LoadingButton type="submit" condition={this.state.absenLoading} color="primary">Absen</LoadingButton>
                 </Col>

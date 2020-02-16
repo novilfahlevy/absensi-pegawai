@@ -122,7 +122,9 @@ class DetailAbsensi extends React.Component {
     latitude_absen_keluar: 0,
     longitude_absen_keluar: 0,
     waktu_kerja: 0,
-    lembur: null
+    lembur: null,
+    absen_masuk_oleh_admin: null,
+    absen_keluar_oleh_admin: null
   }
 
   componentDidMount() {
@@ -145,7 +147,9 @@ class DetailAbsensi extends React.Component {
           longitude_absen_masuk,
           latitude_absen_keluar,
           longitude_absen_keluar,
-          lembur
+          lembur,
+          absen_masuk_oleh_admin,
+          absen_keluar_oleh_admin,
         } = response.data.absensi;
         this.setState({
           user_id,
@@ -159,7 +163,9 @@ class DetailAbsensi extends React.Component {
           longitude_absen_masuk: parseFloat(longitude_absen_masuk),
           latitude_absen_keluar: parseFloat(latitude_absen_keluar,),
           longitude_absen_keluar: parseFloat(longitude_absen_keluar),
-          lembur
+          lembur,
+          absen_masuk_oleh_admin,
+          absen_keluar_oleh_admin
         });
       });
   }
@@ -177,7 +183,9 @@ class DetailAbsensi extends React.Component {
       longitude_absen_masuk,
       latitude_absen_keluar,
       longitude_absen_keluar,
-      waktu_kerja
+      waktu_kerja,
+      absen_masuk_oleh_admin,
+      absen_keluar_oleh_admin
     } = this.state;
 
     const jam_masuk_absen = jam_masuk ? moment(`${tanggal} ${jam_masuk}`).format('HH:mm') : '-';
@@ -264,35 +272,51 @@ class DetailAbsensi extends React.Component {
             <Col lg="6">
               <Card>
                 <CardHeader>Absen Masuk</CardHeader>
-                <CardBody>
-                  <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
-                  <Row>
-                    <Col className="col-12">
-                      {(latitude_absen_masuk && longitude_absen_masuk) ? <AbsenLocation lat={latitude_absen_masuk} lng={longitude_absen_masuk} /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardBody>
-                  <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${foto_absensi_masuk}`} width="100%" height="300" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
-                </CardBody>
+                {!absen_masuk_oleh_admin ? (
+                  <>
+                    <CardBody>
+                      <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
+                      <Row>
+                        <Col className="col-12">
+                          {(latitude_absen_masuk && longitude_absen_masuk) ? <AbsenLocation lat={latitude_absen_masuk} lng={longitude_absen_masuk} /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
+                        </Col>
+                      </Row>
+                    </CardBody>
+                    <CardBody>
+                      <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
+                      {foto_absensi_masuk ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_masuk}`} width="100%" height="300" alt="Foto Absen Masuk" /> : <p className="m-0 text-center">Belum ada absen masuk</p>}
+                    </CardBody>
+                  </>
+                ) : (
+                  <CardBody>
+                    <p className="m-0 text-center">Diabsen oleh admin</p>
+                  </CardBody>
+                )}
               </Card>
             </Col>
             <Col lg="6">
               <Card>
                 <CardHeader>Absen Pulang</CardHeader>
-                <CardBody>
-                  <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
-                  <Row>
-                    <Col className="col-12">
-                    {(latitude_absen_keluar && longitude_absen_keluar) ? <AbsenLocation lat={latitude_absen_keluar} lng={longitude_absen_keluar} /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
-                    </Col>
-                  </Row>
-                </CardBody>
-                <CardBody>
-                  <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
-                  {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/attendances_photo/${foto_absensi_keluar}`} width="100%" height="300" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
-                </CardBody>
+                {!absen_keluar_oleh_admin ? (
+                  <>
+                    <CardBody>
+                      <CardTitle><h2 className="m-0">Lokasi</h2></CardTitle>
+                      <Row>
+                        <Col className="col-12">
+                        {(latitude_absen_keluar && longitude_absen_keluar) ? <AbsenLocation lat={latitude_absen_keluar} lng={longitude_absen_keluar} /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
+                        </Col>
+                      </Row>
+                    </CardBody>
+                    <CardBody>
+                      <CardTitle><h2 className="m-0">Foto</h2></CardTitle>
+                      {foto_absensi_keluar ? <img src={`${process.env.REACT_APP_BASE_URL}storage/attendances_photo/${foto_absensi_keluar}`} width="100%" height="300" alt="Foto Absen Keluar" /> : <p className="m-0 text-center">Belum ada absen keluar</p>}
+                    </CardBody>
+                  </>
+                ) : (
+                  <CardBody>
+                    <p className="m-0 text-center">Diabsen oleh admin</p>
+                  </CardBody>
+                )}
               </Card>
             </Col>
           </Row>
