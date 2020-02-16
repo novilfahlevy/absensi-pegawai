@@ -158,7 +158,7 @@ class TambahAnggota extends React.Component {
 
   refreshData = () => {
     this.getDataFromApi();
-    this.setState({ selectedMembers: [] });
+    this.setState({ searchPegawaiKeyword: '' });
   }
 
   searchPegawai = e => {
@@ -238,8 +238,7 @@ class TambahAnggota extends React.Component {
                 <CardBody>
                   <Form onSubmit={this.searchPegawai}>
                     <InputGroup className="mb-3">
-                      <Input onChange={this.changeSearchPegawaiKeyword} type="search" name="search" id="search"
-                        placeholder="Cari pegawai" />
+                      <Input onChange={this.changeSearchPegawaiKeyword} type="search" name="search" id="search" value={this.state.searchPegawaiKeyword} placeholder="Cari pegawai" />
                       <InputGroupAddon addonType="append">
                         <LoadingButton type="submit" color="primary" condition={this.state.searchPegawaiLoading} disabled={!this.state.searchPegawaiKeyword}>Cari</LoadingButton>
                       </InputGroupAddon>

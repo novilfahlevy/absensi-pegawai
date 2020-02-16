@@ -55,7 +55,7 @@ class DetailLembur extends React.Component {
                                             <img
                                                 alt="..."
                                                 style={{ borderRadius: "10px", height: "20rem", width: "20rem", backgroundSize: "cover" }}
-                                                src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/lembur/${data.foto}`}
+                                                src={`${process.env.REACT_APP_BASE_URL}storage/lembur/${data.foto}`}
                                             />
                                         </Col>
                                         <Col className="col-8">
@@ -84,7 +84,7 @@ class DetailLembur extends React.Component {
                                                             width="100"
                                                             className="rounded-circle"
                                                             style={{ backgroundSize: "cover" }}
-                                                            src={`${process.env.REACT_APP_BASE_URL}backend/api/storage/profiles/${data.user.profile}`}
+                                                            src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${data.user.profile}`}
                                                         />
                                                     </Col>
                                                     <Col className="col-9">
