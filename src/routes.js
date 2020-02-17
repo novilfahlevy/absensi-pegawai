@@ -34,6 +34,7 @@ import RiwayatLembur from 'views/lembur/RiwayatLembur.jsx';
 import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Job from 'views/job/Job.jsx';
 import AbsenByAdmin from 'views/absensi/AbsenByAdmin.jsx';
+import Izin from 'views/izin/Izin.jsx';
 
 var routes = [
   {
@@ -60,6 +61,15 @@ var routes = [
     name: "Absensi",
     icon: "fas fa-list-alt text-red",
     component: Absensi,
+    layout: "/admin",
+    isActive: true,
+    roles: ['admin']
+  },
+  {
+    path: "/izin",
+    name: "Izin",
+    icon: "fas fa-user-clock text-purple",
+    component: Izin,
     layout: "/admin",
     isActive: true,
     roles: ['admin']
