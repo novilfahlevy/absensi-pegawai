@@ -31,7 +31,7 @@ import {
   CardTitle,
   InputGroup,
   InputGroupAddon,
-  UncontrolledAlert,
+  Alert,
   Form,
   FormFeedback
 } from 'reactstrap';
@@ -40,9 +40,18 @@ class AbsenMasuk extends React.Component {
   state = {
     selectedUser: {},
     alert: {},
+    isAlert: false,
     selectUserModal: false,
     absenLoading : false
   };
+
+  toggleAlert = () => {
+    this.setState({ isAlert: !this.state.isAlert }, () => {
+      if ( !this.state.isAlert ) {
+        this.setState({ alert: {} });
+      }
+    });
+  }
 
   toggleSelectUserModal = () => {
     this.setState({ selectUserModal: !this.state.selectUserModal });
@@ -56,6 +65,7 @@ class AbsenMasuk extends React.Component {
 
   absen = (data, callback) => {
     this.setState({ absenLoading: true });
+    this.setState({ isAlert: false });
     api().post('absen-masuk/by-admin', {
       ...data,
       userId: this.state.selectedUser.id
@@ -65,6 +75,8 @@ class AbsenMasuk extends React.Component {
           this.setState({ absenLoading: false });
           this.setState({
             alert: { type: 'danger', message: response.data.message }
+          }, () => {
+            this.toggleAlert();
           });
           return;
         }
@@ -72,6 +84,8 @@ class AbsenMasuk extends React.Component {
         this.setState({ selectedUser: {} });
         this.setState({
           alert: { type: 'success', message: 'Absen berhasil' }
+        }, () => {
+          this.toggleAlert();
         });
         callback();
       });
@@ -125,13 +139,11 @@ class AbsenMasuk extends React.Component {
                   <hr className="mb-3 mt-4" />
                 </Col>
                 <Col className="col-12">
-                  {!!Object.keys(this.state.alert).length && (
-                    <UncontrolledAlert className="mb-3" color={this.state.alert.type}>
-                      <p className="m-0">
-                        {this.state.alert.message}
-                      </p>
-                    </UncontrolledAlert>
-                  )}
+                  <Alert className="mb-3" isOpen={this.state.isAlert} toggle={this.toggleAlert} color={this.state.alert.type}>
+                    <p className="m-0">
+                      {this.state.alert.message}
+                    </p>
+                  </Alert>
                   <FormGroup>
                     <Label htmlFor="tanggal">Tanggal</Label>
                     <CustomInput type="date" className="form-control" name="tanggal" id="tanggal" onChange={handleChange} value={values.tanggal} />
@@ -174,8 +186,17 @@ class AbsenKeluar extends React.Component {
   state = {
     selectedUser: {},
     alert: {},
+    isAlert: false,
     selectAbsenModal: false,
     absenLoading: false
+  }
+
+  toggleAlert = () => {
+    this.setState({ isAlert: !this.state.isAlert }, () => {
+      if ( !this.state.isAlert ) {
+        this.setState({ alert: {} });
+      }
+    });
   }
 
   toggleSelectAbsenModal = () => {
@@ -190,6 +211,7 @@ class AbsenKeluar extends React.Component {
 
   absen = (data, callback) => {
     this.setState({ absenLoading: true });
+    this.setState({ isAlert: false });
     api().post('absen-keluar/by-admin', {
       ...data,
       userId: this.state.selectedUser.id
@@ -199,6 +221,8 @@ class AbsenKeluar extends React.Component {
           this.setState({ absenLoading: false });
           this.setState({
             alert: { type: 'danger', message: response.data.message }
+          }, () => {
+            this.toggleAlert();
           });
           return;
         }
@@ -206,6 +230,8 @@ class AbsenKeluar extends React.Component {
         this.setState({ selectedUser: {} });
         this.setState({
           alert: { type: 'success', message: 'Absen berhasil' }
+        }, () => {
+          this.toggleAlert();
         });
         callback();
       });
@@ -262,13 +288,11 @@ class AbsenKeluar extends React.Component {
                   <hr className="mb-3 mt-4" />
                 </Col>
                 <Col className="col-12">
-                  {!!Object.keys(this.state.alert).length && (
-                    <UncontrolledAlert className="mb-3" color={this.state.alert.type}>
-                      <p className="m-0">
-                        {this.state.alert.message}
-                      </p>
-                    </UncontrolledAlert>
-                  )}
+                  <Alert className="mb-3" isOpen={this.state.isAlert} toggle={this.toggleAlert} color={this.state.alert.type}>
+                    <p className="m-0">
+                      {this.state.alert.message}
+                    </p>
+                  </Alert>
                   <FormGroup>
                     <Label htmlFor="jamAbsen">Jam Absen</Label>
                     <CustomInput type="time" className="form-control" name="jamAbsen" id="jamAbsen" onChange={handleChange} value={values.jamAbsen} />

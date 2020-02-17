@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from 'components/Headers/Header.jsx';
 import FadeIn from 'components/hoc/FadeIn.jsx';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import MapGL, { Marker, NavigationControl } from 'react-map-gl';
 
 import { 
@@ -247,7 +247,15 @@ class DetailAbsensi extends React.Component {
                           <p className="m-0">{jam_pulang_absen}</p>
                         </ListGroupItem>
                         <ListGroupItem>
-                          <h3>Keterangan Absen</h3>
+                          {absen_masuk_oleh_admin ? (
+                            <div className="w-100 d-flex align-items-center">
+                              <h3>Keterangan Absen</h3>
+                              <p className="m-0 mb-2 ml-2">(Admin)</p>
+                            </div>
+                          ) : (
+                            <h3>Keterangan Absen</h3>
+
+                          )}
                           <p className="m-0">
                             {keterangan || '-'}
                           </p>
@@ -295,7 +303,9 @@ class DetailAbsensi extends React.Component {
                   )
                 ) : (
                   <CardBody>
-                    <p className="m-0 text-center">Diabsen oleh admin</p>
+                    <p className="m-0 text-center">
+                      Diabsen oleh <Link to={`/admin/detail-pegawai/${absen_masuk_oleh_admin}`}>admin</Link>
+                    </p>
                   </CardBody>
                 )}
               </Card>
@@ -326,7 +336,9 @@ class DetailAbsensi extends React.Component {
                   )
                 ) : (
                   <CardBody>
-                    <p className="m-0 text-center">Diabsen oleh admin</p>
+                    <p className="m-0 text-center">
+                      Diabsen oleh <Link to={`/admin/detail-pegawai/${absen_keluar_oleh_admin}`}>admin</Link>
+                    </p>
                   </CardBody>
                 )}
               </Card>
