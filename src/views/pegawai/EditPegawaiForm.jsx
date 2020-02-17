@@ -85,10 +85,10 @@ class EditPegawaiForm extends Component {
                                             });
                                             
                                             this.props.getDataPegawai();
-                                            this.toggleModal();
+                                            this.props.toggle();
                                         }
                                         this.setState({ isLoading: false });
-                                    })
+                                    });
                                 }}
                             >
                                 {({ errors, touched, values, handleChange, handleBlur, handleSubmit }) => (
