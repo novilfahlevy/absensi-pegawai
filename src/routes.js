@@ -35,6 +35,7 @@ import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Job from 'views/job/Job.jsx';
 import AbsenByAdmin from 'views/absensi/AbsenByAdmin.jsx';
 import Izin from 'views/izin/Izin.jsx';
+import IzinByAdmin from 'views/izin/IzinByAdmin';
 
 var routes = [
   {
@@ -72,6 +73,14 @@ var routes = [
     component: Izin,
     layout: "/admin",
     isActive: true,
+    roles: ['admin']
+  },
+  {
+    path: "/izin-by-admin",
+    name: "Izin Oleh Admin",
+    component: IzinByAdmin,
+    layout: "/admin",
+    isActive: false,
     roles: ['admin']
   },
   {

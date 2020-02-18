@@ -27,9 +27,13 @@ class Izin extends React.Component {
                   <h2 className="m-0">Izin</h2>
                 </Col>
                 <Col className="text-right" xs="6">
-                  <Button color="success" size="md" onClick={() => this.props.history.push('/admin/absen-by-admin')}>
+                  <Button color="success" size="md" onClick={() => this.props.history.push('/admin/izin-by-admin')}>
                     <i className="fas fa-plus mr-2"></i>
                     Tambah Izin
+                  </Button>
+                  <Button color="primary" size="md" onClick={() => this.props.history.push('/admin/riwayat-izin')}>
+                    <i className="fas fa-list mr-2"></i>
+                    Riwayat Izin
                   </Button>
                 </Col>
               </Row>
