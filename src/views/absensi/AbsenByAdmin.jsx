@@ -203,9 +203,9 @@ class AbsenKeluar extends React.Component {
     this.setState({ selectAbsenModal: !this.state.selectAbsenModal });
   }
 
-  setSelectedUser = ({ id, name, profile, tanggal }) => {
+  setSelectedUser = ({ id, name, profile, tanggal, jamMasuk }) => {
     this.setState({
-      selectedUser: { id, name, profile, tanggal }
+      selectedUser: { id, name, profile, tanggal, jamMasuk }
     });
   }
 
@@ -243,8 +243,8 @@ class AbsenKeluar extends React.Component {
         .required('Masukan jam absensi')
     })
 
-    const { name = null, profile = null, tanggal = null } = this.state.selectedUser;
-
+    const { name = null, profile = null, tanggal = null, jamMasuk = null } = this.state.selectedUser;
+    console.log(this.state);
     return (
       <>
         <Formik
@@ -273,14 +273,7 @@ class AbsenKeluar extends React.Component {
                     <CardBody className="p-0 d-flex align-items-center">
                       <img src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${profile || 'default.jpg'}`} width="80" height="80" className="mr-4 rounded" alt="User Absen" />
                       <CardTitle className="m-0">
-                        {(name && tanggal) ? (
-                          <>
-                            <p className="m-0 text-lg">{name}</p>
-                            <p className="m-0 small text-muted">{tanggal}</p>
-                          </>
-                        ) : (
-                          <p className="m-0">-</p>
-                        )}
+                        <p className="m-0 text-lg">{name || '-'}</p>
                       </CardTitle>
                     </CardBody>
                   </Card>
@@ -294,7 +287,19 @@ class AbsenKeluar extends React.Component {
                     </p>
                   </Alert>
                   <FormGroup>
-                    <Label htmlFor="jamAbsen">Jam Absen</Label>
+                    <Label htmlFor="tanggal">Tanggal</Label>
+                    <CustomInput type="date" className="form-control" name="tanggal" id="tanggal" value={moment(tanggal).format('YYYY-MM-DD') || ''} disabled />
+                  </FormGroup>
+                </Col>
+                <Col className="col-12">
+                  <FormGroup>
+                    <Label htmlFor="jamMasuk">Jam Masuk</Label>
+                    <CustomInput type="time" className="form-control" name="jamMasuk" id="jamMasuk" value={jamMasuk || ''} disabled />
+                  </FormGroup>
+                </Col>
+                <Col className="col-12">
+                  <FormGroup>
+                    <Label htmlFor="jamAbsen">Jam Keluar</Label>
                     <CustomInput type="time" className="form-control" name="jamAbsen" id="jamAbsen" onChange={handleChange} value={values.jamAbsen} />
                     {errors.jamAbsen && touched.jamAbsen ? (
                       <FormFeedback className="d-block">{errors.jamAbsen}</FormFeedback>
@@ -590,7 +595,8 @@ class ModalUserAbsenKeluar extends React.Component {
                           id: user.id,
                           name: user.name,
                           profile: user.profile,
-                          tanggal: user.tanggal
+                          tanggal: user.tanggal,
+                          jamMasuk: user.jamMasuk
                         });
                         this.props.toggle();
                       }}>Pilih</Button>
