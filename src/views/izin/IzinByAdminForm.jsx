@@ -17,6 +17,8 @@ import {
   Card,
   CardBody,
   CardTitle,
+  CardImg,
+  CardText,
   Alert,
   Form,
   FormFeedback
@@ -24,7 +26,7 @@ import {
 
 import IzinByAdminModal from 'views/izin/IzinByAdminModal.jsx';
 
-class IzinPerhariByAdmin extends React.Component {
+class IzinByAdminForm extends React.Component {
   state = {
     selectedUser: {},
     alert: {},
@@ -109,19 +111,20 @@ class IzinPerhariByAdmin extends React.Component {
           {({ values, errors, touched, handleChange, handleSubmit }) => (
             <Form onSubmit={handleSubmit}>
               <Row>
-                <Col className="col-12">
+                <Col lg="4">
                   <Card>
-                    <CardBody className="p-0 d-flex align-items-center">
-                      <img src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${profile || 'default.jpg'}`} width="80" height="80" className="mr-4 rounded" alt="User Absen" />
-                      <CardTitle className="m-0">
-                        <p className="m-0">{name || '-'}</p>
-                      </CardTitle>
+                    <CardImg top width="100%" src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${profile || 'default.jpg'}`} height="200" alt="User" />
+                    <CardBody>
+                      <CardTitle className="text-lg">{name || '-'}</CardTitle>
+                      <CardText className="mt-2">
+                        <strong>Terakhir izin :</strong>
+                        <p className="m-0 text-dark">Selasa, 27 Januari 2020</p>
+                      </CardText>
+                      <Button color="primary" className="mt-3 w-100" onClick={this.toggleSelectUserModal}>Pilih User</Button>
                     </CardBody>
                   </Card>
-                  <Button color="primary" className="mt-3 w-100" onClick={this.toggleSelectUserModal}>Pilih User</Button>
-                  <hr className="mb-3 mt-4" />
                 </Col>
-                <Col className="col-12">
+                <Col>
                   <Row>
                     <Col className="col-12">
                       <Alert className="mb-3" isOpen={this.state.isAlert} toggle={this.toggleAlert} color={this.state.alert.type}>
@@ -130,7 +133,7 @@ class IzinPerhariByAdmin extends React.Component {
                         </p>
                       </Alert>
                     </Col>
-                    <Col lg="6">
+                    <Col className="col-12">
                       <FormGroup>
                         <Label htmlFor="tanggalMulai">Tanggal Mulai</Label>
                         <CustomInput type="date" className="form-control" name="tanggalMulai" id="tanggalMulai" onChange={handleChange} value={values.tanggalMulai} />
@@ -139,7 +142,7 @@ class IzinPerhariByAdmin extends React.Component {
                         ) : null}
                       </FormGroup>
                     </Col>
-                    <Col lg="6">
+                    <Col className="col-12">
                       <FormGroup>
                         <Label htmlFor="tanggalSelesai">Tanggal Selesai</Label>
                         <CustomInput type="date" className="form-control" name="tanggalSelesai" id="tanggalSelesai" onChange={handleChange} value={values.tanggalSelesai} />
@@ -148,36 +151,36 @@ class IzinPerhariByAdmin extends React.Component {
                         ) : null}
                       </FormGroup>
                     </Col>
+                    <Col className="col-12">
+                      <FormGroup>
+                        <Label htmlFor="alasan">Alasan</Label>
+                        <Input type="select" className="form-control" name="alasan" id="alasan" onChange={e => {
+                          handleChange(e);
+                          this.setState({ alasanLain: !e.target.value });
+                        }}>
+                          <option value="Sakit" defaultValue>Sakit</option>
+                          <option value="Cuti">Cuti</option>
+                          <option value="">Lainnya...</option>
+                        </Input>
+                      </FormGroup>
+                      {this.state.alasanLain && (
+                        <FormGroup>
+                          <Label htmlFor="alasan">Alasan Lain</Label>
+                          <Input type="text" className="form-control" name="alasan" id="alasan" onChange={handleChange} value={values.alasan} />
+                          {(errors.alasan && touched.alasan) ? (
+                            <FormFeedback className="d-block">{errors.alasan}</FormFeedback>
+                          ) : null}
+                        </FormGroup>
+                      )}
+                    </Col>
+                    <Col className="col-12">
+                      <FormGroup>
+                        <Label htmlFor="keterangan">Keterangan (Opsional)</Label>
+                        <Input type="textarea" className="form-control" name="keterangan" id="keterangan" onChange={handleChange} value={values.keterangan} />
+                      </FormGroup>
+                      <Button type="submit" color="primary">Absen</Button>
+                    </Col>
                   </Row>
-                </Col>
-                <Col className="col-12">
-                  <FormGroup>
-                    <Label htmlFor="alasan">Alasan</Label>
-                    <Input type="select" className="form-control" name="alasan" id="alasan" onChange={e => {
-                      handleChange(e);
-                      this.setState({ alasanLain: !e.target.value });
-                    }}>
-                      <option value="Sakit" defaultValue>Sakit</option>
-                      <option value="Cuti">Cuti</option>
-                      <option value="">Lainnya...</option>
-                    </Input>
-                  </FormGroup>
-                  {this.state.alasanLain && (
-                    <FormGroup>
-                      <Label htmlFor="alasan">Alasan Lain</Label>
-                      <Input type="text" className="form-control" name="alasan" id="alasan" onChange={handleChange} value={values.alasan} />
-                      {(errors.alasan && touched.alasan) ? (
-                        <FormFeedback className="d-block">{errors.alasan}</FormFeedback>
-                      ) : null}
-                    </FormGroup>
-                  )}
-                </Col>
-                <Col className="col-12">
-                  <FormGroup>
-                    <Label htmlFor="keterangan">Keterangan (Opsional)</Label>
-                    <Input type="textarea" className="form-control" name="keterangan" id="keterangan" onChange={handleChange} value={values.keterangan} />
-                  </FormGroup>
-                  <Button type="submit" color="primary">Absen</Button>
                 </Col>
               </Row>
             </Form>
@@ -193,4 +196,4 @@ class IzinPerhariByAdmin extends React.Component {
   }
 }
 
-export default FadeIn(IzinPerhariByAdmin);
+export default FadeIn(IzinByAdminForm);

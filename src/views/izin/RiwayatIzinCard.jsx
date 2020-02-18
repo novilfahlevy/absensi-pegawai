@@ -2,22 +2,16 @@ import React from 'react';
 
 import {
   Card,
-  CardHeader,
   CardBody,
   CardText,
   CardFooter,
   Button,
   UncontrolledCollapse,
-  Form,
-  Input,
-  InputGroup,
-  InputGroupAddon
 } from 'reactstrap';
 
 import FadeIn from 'components/hoc/FadeIn.jsx';
-import CardsContainer from 'components/ui/CardsContainer.jsx';
 
-class IzinCard extends React.Component {
+class RiwayatIzinCard extends React.Component {
   render() {
     const toggler = btoa(Math.random() * 3).slice(0, 5).toLowerCase();
 
@@ -28,8 +22,11 @@ class IzinCard extends React.Component {
           <div className="d-flex justify-content-between align-items-center w-100 mr-3">
             <div className="d-flex flex-column justify-content-center">
               <CardText className="m-0 mb-1 text-dark">Muhammad Novil Fahlevy</CardText>
-              <CardText className="m-0 text-sm font-weight-bold">Senin, 25 Januari 2020</CardText>
-              <CardText className="m-0 text-sm font-weight-bold">11:00 - 15:30</CardText>
+              <CardText className="m-0 text-sm font-weight-bold">
+                Senin, 25 Januari 2020
+                <span className="font-weight-normal mx-1">s.d.</span>
+                Rabu, 27 Januari 2020
+              </CardText>
             </div>
             <Button color="primary" size="sm" id={toggler}>
               <span className="fas fa-eye"></span>
@@ -55,33 +52,4 @@ class IzinCard extends React.Component {
   }
 }
 
-class RiwayatIzinPerjam extends React.Component {
-  render() {
-    return (
-      <Card className="mb-4">
-        <CardHeader>
-          <p className="m-0 text-dark text-lg"><strong>Izin Per Jam</strong></p>
-        </CardHeader>
-        <CardBody>
-          <Form>
-            <InputGroup className="mb-3">
-              <Input type="search" name="search" id="search" placeholder="Cari pegawai" />
-              <InputGroupAddon addonType="append">
-                <Button type="submit" color="primary">Cari</Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </Form>
-          <CardsContainer 
-            data={[1, 2, 3]}
-            card={data => (
-              <IzinCard />
-            )}
-            limitOptions={[5, 10, 15]}
-          />
-        </CardBody>
-      </Card>
-    );
-  }
-}
-
-export default FadeIn(RiwayatIzinPerjam);
+export default FadeIn(RiwayatIzinCard);
