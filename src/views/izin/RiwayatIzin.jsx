@@ -7,7 +7,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button
+  Button,
+  Form,
+  Input,
+  InputGroup,
+  InputGroupAddon
 } from 'reactstrap';
 
 import Header from 'components/Headers/Header.jsx';
@@ -36,12 +40,24 @@ class IzinRiwayat extends React.Component {
                 </Row>
               </CardHeader>
               <CardBody>
+                <Form onSubmit={this.handleCariSubmit}>
+                  <InputGroup className="mb-3">
+                    <Input type="search" name="search" id="search" placeholder="Cari pegawai" />
+                    <InputGroupAddon addonType="append">
+                      <Button type="submit" color="primary">Cari</Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                </Form>
+                <Button color="success" className="mb-2">
+                  <span className="fas fa-undo mr-2"></span>
+                  Muat Ulang Data
+                </Button>
                 <CardsContainer 
                   data={[1, 2, 3]}
                   card={data => (
                     <RiwayatIzinCard />
                   )}
-                  limitOptions={[5, 10, 15]}
+                  limitOptions={[5, 10, 20]}
                 />
               </CardBody>
             </Card>

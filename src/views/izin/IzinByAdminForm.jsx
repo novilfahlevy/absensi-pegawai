@@ -113,7 +113,7 @@ class IzinByAdminForm extends React.Component {
               <Row>
                 <Col lg="4">
                   <Card>
-                    <CardImg top width="100%" src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${profile || 'default.jpg'}`} height="200" alt="User" />
+                    <CardImg top width="100%" src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${profile || 'default.jpg'}`} height="250" alt="User" />
                     <CardBody>
                       <CardTitle className="text-lg">{name || '-'}</CardTitle>
                       <CardText className="mt-2">

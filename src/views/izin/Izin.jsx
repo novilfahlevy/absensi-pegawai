@@ -47,8 +47,7 @@ class Izin extends React.Component {
                   card={data => (
                     <IzinCard />
                   )}
-                  limitOptions={[4, 6, 10]}
-                  lg="6"
+                  limitOptions={[5, 10, 20]}
                 />
               </CardBody>
             </Card>

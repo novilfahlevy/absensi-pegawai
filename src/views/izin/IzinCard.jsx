@@ -5,7 +5,8 @@ import {
   CardBody,
   CardText,
   CardFooter,
-  Button
+  Button,
+  UncontrolledCollapse
 } from 'reactstrap';
 
 import FadeIn from 'components/hoc/FadeIn.jsx';
@@ -21,6 +22,8 @@ class IzinCard extends React.Component {
   }
 
   render() {
+    const toggler = btoa(Math.random() * 3).slice(0, 5).toLowerCase();
+
     return (
       <Card>
         <CardBody className="p-0 d-flex align-items-center">
@@ -30,37 +33,34 @@ class IzinCard extends React.Component {
               <CardText className="m-0 mb-1 text-dark">Muhammad Novil Fahlevy</CardText>
               <CardText className="m-0 text-sm font-weight-bold">25 Januari 2020 - 3 Februari 2020</CardText>
             </div>
-            <Button color="danger" size="sm">Batalkan</Button>
+            <div>
+              <Button color="primary" id={toggler} size="sm">
+                <span className="fas fa-eye"></span>
+              </Button>
+              <Button color="danger" size="sm">
+                <span className="fas fa-times"></span>
+              </Button>
+            </div>
           </div>
         </CardBody>
-        <CardFooter className="p-3">
-          <CardText className="m-0 text-dark">
-            <strong>Izin dari</strong>
-            <p className="m-0 text-dark">Eddy Gunawan</p>
-          </CardText>
-          <CardText className="m-0 text-dark">
-            <strong>Alasan</strong>
-            <p className="m-0 text-dark">Sakit</p>
-          </CardText>
-          <CardText className="m-0 text-dark">
-            <strong>Keterangan</strong>
-              {this.state.keteranganDetail ? (
-                <>
-                  <p className="m-0 text-dark text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi voluptates autem et beatae cupiditate expedita maiores voluptatibus vitae ipsam impedit.
-                  </p>
-                  <a href="/" className="text-sm" onClick={this.toggleKeteranganDetail}>Lihat Lebih Sedikit</a>
-                </>
-              ) : (
-                <>
-                  <p className="m-0 text-dark text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit...
-                  </p>
-                  <a href="/" className="text-sm" onClick={this.toggleKeteranganDetail}>Lihat Lengkap</a>
-                </>
-              )}
-          </CardText>
-        </CardFooter>
+        <UncontrolledCollapse style={{ transition: '0.1s' }} toggler={`#${toggler}`}>
+          <CardFooter className="p-3">
+            <CardText className="m-0 text-dark">
+              <strong>Izin dari</strong>
+              <p className="m-0 text-dark">Eddy Gunawan</p>
+            </CardText>
+            <CardText className="m-0 text-dark">
+              <strong>Alasan</strong>
+              <p className="m-0 text-dark">Sakit</p>
+            </CardText>
+            <CardText className="m-0 text-dark">
+              <strong>Keterangan</strong>
+              <p className="m-0 text-dark text-sm">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi voluptates autem et beatae cupiditate expedita maiores voluptatibus vitae ipsam impedit.
+              </p>
+            </CardText>
+          </CardFooter>
+        </UncontrolledCollapse>
       </Card>
     );
   }
