@@ -36,6 +36,10 @@ class RiwayatIzinCard extends React.Component {
         <UncontrolledCollapse style={{ transition: '0.1s' }} toggler={`#${toggler}`}>
           <CardFooter className="p-3">
             <CardText className="m-0 text-dark">
+              <strong>Izin dari</strong>
+              <p className="m-0 text-dark">Eddy Gunawan</p>
+            </CardText>
+            <CardText className="m-0 text-dark">
               <strong>Alasan</strong>
               <p className="m-0 text-dark">Sakit</p>
             </CardText>
