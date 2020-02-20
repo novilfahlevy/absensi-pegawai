@@ -1,4 +1,5 @@
 import React from 'react';
+import api from 'store/api.js';
 
 import {
   Container,
@@ -18,6 +19,23 @@ import CardsContainer from 'components/ui/CardsContainer.jsx';
 import { withRouter } from 'react-router-dom';
 
 class Izin extends React.Component {
+  state = {
+    izin: []
+  };
+
+  getIzinToday = () => {
+    api().get('users/izin')
+    .then(response => {
+      this.setState({ izin: response.data.data }, () => {
+        this.setState({ izin: this.state.izin });
+      });
+    });    
+  }
+
+  componentDidMount() {
+    this.getIzinToday();
+  }
+
   render() {
     return (
       <Container className="mt--8">
@@ -43,9 +61,9 @@ class Izin extends React.Component {
               </CardHeader>
               <CardBody>
                 <CardsContainer 
-                  data={[...Array(20).fill(null)]}
-                  card={data => (
-                    <IzinCard />
+                  data={this.state.izin}
+                  card={user => (
+                    <IzinCard user={user} getIzinToday={this.getIzinToday} />
                   )}
                   limitOptions={[5, 10, 20]}
                 />

@@ -36,6 +36,7 @@ import {
   Container,
   Media
 } from "reactstrap";
+import moment from 'moment';
 
 class AdminNavbar extends React.Component {
   render() {
@@ -49,6 +50,9 @@ class AdminNavbar extends React.Component {
             >
               {this.props.brandText}
             </Link>
+            <span className="m-0 text-white text-sm font-weight-bold">
+              {moment().format('dddd, Do MMMM YYYY')}
+            </span>
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
