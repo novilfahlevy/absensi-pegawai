@@ -43,14 +43,14 @@ class AdminNavbar extends React.Component {
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
-          <Container fluid>
+          <Container className="d-flex justify-content-between" fluid>
             <Link
               className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
               to="/"
             >
               {this.props.brandText}
             </Link>
-            <span className="m-0 text-white text-sm font-weight-bold">
+            <span className="m-0 text-white text-sm font-weight-bold d-none d-lg-inline-block">
               {moment().format('dddd, Do MMMM YYYY')}
             </span>
             <Nav className="align-items-center d-none d-md-flex" navbar>
