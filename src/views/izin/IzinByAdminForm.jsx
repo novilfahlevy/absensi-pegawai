@@ -159,8 +159,8 @@ class IzinByAdminForm extends React.Component {
                           handleChange(e);
                           this.setState({ alasanLain: !e.target.value });
                         }}>
-                          <option value="Sakit" defaultValue>Sakit</option>
-                          <option value="Cuti">Cuti</option>
+                          <option value="Kepentingan Diluar" defaultValue>Kepentingan Diluar</option>
+                          <option value="Sakit">Sakit</option>
                           <option value="">Lainnya...</option>
                         </Input>
                       </FormGroup>
