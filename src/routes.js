@@ -68,21 +68,12 @@ var routes = [
     roles: ['admin']
   },
   {
-    path: "/izin",
-    name: "Izin",
-    icon: "fas fa-user-clock text-purple",
-    component: Izin,
-    layout: "/admin",
-    isActive: true,
-    roles: ['admin']
-  },
-  {
     path: "/izin-by-admin",
     name: "Izin Oleh Admin",
     component: IzinByAdmin,
     layout: "/admin",
     isActive: false,
-    roles: ['admin']
+    roles: ['admin', 'project manager']
   },
   {
     path: "/riwayat-izin",
@@ -90,7 +81,7 @@ var routes = [
     component: RiwayatIzin,
     layout: "/admin",
     isActive: false,
-    roles: ['admin']
+    roles: ['admin', 'project manager']
   },
   {
     path: "/riwayat-absensi",
@@ -180,6 +171,15 @@ var routes = [
     isActive: true,
     roles: ['project manager'],
     homepageFor: 'project manager'
+  },
+  {
+    path: "/izin",
+    name: "Izin",
+    icon: "fas fa-user-clock text-purple",
+    component: Izin,
+    layout: "/admin",
+    isActive: true,
+    roles: ['admin', 'project manager']
   },
   {
     path: "/lembur",

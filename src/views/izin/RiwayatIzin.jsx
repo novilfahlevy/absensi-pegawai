@@ -92,7 +92,7 @@ class IzinRiwayat extends React.Component {
                   <InputGroup className="mb-3">
                     <Input type="search" name="search" id="search" placeholder="Cari pegawai" onChange={e => {
                       this.setState({ searchIzinKeyword: e.target.value });
-                    }} />
+                    }} value={this.state.searchIzinKeyword} />
                     <InputGroupAddon addonType="append">
                       <LoadingButton type="submit" color="primary" condition={this.state.searchIzinLoading} disabled={!this.state.searchIzinKeyword}>Cari</LoadingButton>
                     </InputGroupAddon>
