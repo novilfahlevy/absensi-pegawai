@@ -34,6 +34,9 @@ import RiwayatLembur from 'views/lembur/RiwayatLembur.jsx';
 import RiwayatAbsensi from 'views/absensi/RiwayatAbsensi.jsx';
 import Job from 'views/job/Job.jsx';
 import AbsenByAdmin from 'views/absensi/AbsenByAdmin.jsx';
+import Izin from 'views/izin/Izin.jsx';
+import IzinByAdmin from 'views/izin/IzinByAdmin.jsx';
+import RiwayatIzin from 'views/izin/RiwayatIzin.jsx';
 
 var routes = [
   {
@@ -63,6 +66,22 @@ var routes = [
     layout: "/admin",
     isActive: true,
     roles: ['admin']
+  },
+  {
+    path: "/izin-by-admin",
+    name: "Izin Oleh Admin",
+    component: IzinByAdmin,
+    layout: "/admin",
+    isActive: false,
+    roles: ['admin', 'project manager']
+  },
+  {
+    path: "/riwayat-izin",
+    name: "Riwayat Izin",
+    component: RiwayatIzin,
+    layout: "/admin",
+    isActive: false,
+    roles: ['admin', 'project manager']
   },
   {
     path: "/riwayat-absensi",
@@ -152,6 +171,15 @@ var routes = [
     isActive: true,
     roles: ['project manager'],
     homepageFor: 'project manager'
+  },
+  {
+    path: "/izin",
+    name: "Izin",
+    icon: "fas fa-user-clock text-purple",
+    component: Izin,
+    layout: "/admin",
+    isActive: true,
+    roles: ['admin', 'project manager']
   },
   {
     path: "/lembur",

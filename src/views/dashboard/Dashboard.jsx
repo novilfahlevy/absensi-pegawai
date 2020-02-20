@@ -68,17 +68,12 @@ const AbsenHariIni = ({ pegawai, history, className }) => (
     </Card>
 );
 
-const BelumAbsenHariIni = ({ pegawai, history }) => (
+const IzinHariIni = ({ pegawai, history }) => (
     <Col lg={12} className="col-12">
         <Card className="bg-gradient-default my-2" body>
             <Row className="align-items-center">
-                <Col lg={8} className="col-6">
+                <Col className="col-12">
                     <CardTitle className="m-0"><h4 className="text-white">{pegawai.name}</h4></CardTitle>
-                </Col>
-                <Col lg={4} className="col-6 d-flex justify-content-end">
-                    <Button color="white" className="w-70 h-70" onClick={() => history.push(`/admin/detail-pegawai/${pegawai.id}`)}>
-                        <i className="fas fa-eye text-primary"></i>
-                    </Button>
                 </Col>
             </Row>
         </Card>
@@ -91,11 +86,11 @@ class Dashboard extends React.Component {
         chartExample1Data: "data1",
         pegawai: {
             absen_tercepat: [],
-            belum_absen: []
+            izin: []
         },
         loading: {
             pegawai_absen_tercepat: true,
-            pegawai_belum_absen: true
+            pegawai_izin: true
         }
     };
     toggleNavs = (e, index) => {
@@ -121,18 +116,18 @@ class Dashboard extends React.Component {
         }
         api().get('dashboard')
             .then(response => {
-                const { pegawai_sudah_absen, pegawai_belum_absen } = response.data.data;
+                const { pegawai_sudah_absen, pegawai_izin } = response.data.data;
                 this.setState({
                     pegawai: {
                         ...this.state.pegawai,
                         absen_tercepat: pegawai_sudah_absen,
-                        belum_absen: pegawai_belum_absen
+                        izin: pegawai_izin
                     }
                 }, () => this.setState({
                     loading: {
                         ...this.state.loading,
                         pegawai_absen_tercepat: false,
-                        pegawai_belum_absen: false
+                        pegawai_izin: false
                     }
                 }));
             });
@@ -151,16 +146,16 @@ class Dashboard extends React.Component {
                                             <h6 className="text-uppercase text-light ls-1 mb-1">
                                                 Overview
                                             </h6>
-                                            <h2 className="text-white mb-0">Belum Absen Hari Ini</h2>
+                                            <h2 className="text-white mb-0">Izin Hari Ini</h2>
                                         </div>
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
                                     <Row className="justify-content-center">
                                     {
-                                        !this.state.loading.pegawai_belum_absen ? this.state.pegawai.belum_absen.length ? this.state.pegawai.belum_absen.map(pegawai => (
+                                        !this.state.loading.pegawai_izin ? this.state.pegawai.izin.length ? this.state.pegawai.izin.map(pegawai => (
                                             <Col key={pegawai.id} xl={12} className="col-12">
-                                                <BelumAbsenHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
+                                                <IzinHariIni key={pegawai.id} {...this.props} pegawai={pegawai} />
                                             </Col>
                                         )) : (
                                             <h4 className="text-muted">-</h4>

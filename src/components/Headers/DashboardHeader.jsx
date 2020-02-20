@@ -27,7 +27,7 @@ class DashboardHeader extends React.Component {
     jumlah: {
       pegawai: 0,
       absen: 0,
-      belum_absen: 0,
+      izin: 0,
       lembur: 0
     }
   }
@@ -35,12 +35,12 @@ class DashboardHeader extends React.Component {
   componentDidMount() {
     api().get('dashboard')
       .then(response => {
-        const { total_pegawai, total_pegawai_absen, total_pegawai_belum_absen, total_pegawai_lembur } = response.data.data;
+        const { total_pegawai, total_pegawai_absen, total_pegawai_izin, total_pegawai_lembur } = response.data.data;
         this.setState({
           jumlah: {
             pegawai: total_pegawai,
             absen: total_pegawai_absen,
-            belum_absen: total_pegawai_belum_absen,
+            izin: total_pegawai_izin,
             lembur: total_pegawai_lembur
           }
         })
@@ -48,7 +48,7 @@ class DashboardHeader extends React.Component {
   }
 
   render() {
-    const { pegawai, absen, belum_absen } = this.state.jumlah;
+    const { pegawai, absen, izin } = this.state.jumlah;
     return (
       <>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
@@ -111,10 +111,10 @@ class DashboardHeader extends React.Component {
                               tag="h5"
                               className="text-uppercase text-muted mb-0"
                             >
-                              Total Belum Absen Hari Ini
+                              Total Izin Hari Ini
                             </CardTitle>
                             <span className="h1 font-weight-bold mb-0">
-                              {belum_absen}
+                              {izin}
                             </span>
                           </div>
                           <Col className="col-auto">
