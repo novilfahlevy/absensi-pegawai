@@ -24,6 +24,7 @@ import {
   FormFeedback
 } from 'reactstrap';
 
+import LoadingButton from 'components/ui/LoadingButton.jsx';
 import IzinByAdminModal from 'views/izin/IzinByAdminModal.jsx';
 
 class IzinByAdminForm extends React.Component {
@@ -48,18 +49,18 @@ class IzinByAdminForm extends React.Component {
     this.setState({ selectUserModal: !this.state.selectUserModal });
   }
 
-  setSelectedUser = ({ id, name, profile }) => {
+  setSelectedUser = ({ id, name, profile, izin_terakhir }) => {
     this.setState({
-      selectedUser: { id, name, profile }
+      selectedUser: { id, name, profile, izin_terakhir }
     });
   }
 
-  absen = (data, callback) => {
+  izin = (data, callback) => {
     this.setState({ izinLoading: true });
     this.setState({ isAlert: false });
-    api().post('absen-masuk/by-admin', {
+    api().post('user/izin', {
       ...data,
-      userId: this.state.selectedUser.id
+      user_id: this.state.selectedUser.id
     })
       .then(response => {
         if ( response.data.status === 400 ) {
@@ -74,7 +75,7 @@ class IzinByAdminForm extends React.Component {
         this.setState({ izinLoading: false });
         this.setState({ selectedUser: {} });
         this.setState({
-          alert: { type: 'success', message: 'Absen berhasil' }
+          alert: { type: 'success', message: 'Izin berhasil' }
         }, () => {
           this.toggleAlert();
         });
@@ -84,28 +85,28 @@ class IzinByAdminForm extends React.Component {
 
   render() {
     const izinPerhariSchema = Yup.object().shape({
-      tanggalMulai: Yup.string()
+      tanggal_mulai: Yup.string()
         .required('Masukan tanggal mulai izin'),
-      tanggalSelesai: Yup.string()
+      tanggal_selesai: Yup.string()
         .required('Masukan tanggal selesai izin'),
       alasan: Yup.string()
         .required('Masukan alasan izin')
     });
 
-    const { name = null, profile = null } = this.state.selectedUser; 
+    const { name = null, profile = null, izin_terakhir = null } = this.state.selectedUser; 
 
     return (
       <>
         <Formik
           initialValues={{
-            tanggalMulai: '',
-            tanggalSelesai: '',
+            tanggal_mulai: '',
+            tanggal_selesai: '',
             alasan: 'sakit',
             keterangan: ''
           }}
           validationSchema={izinPerhariSchema}
           onSubmit={(data, { resetForm }) => {
-            console.log(data);
+            this.izin(data, resetForm);
           }}
         >
           {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -118,7 +119,7 @@ class IzinByAdminForm extends React.Component {
                       <CardTitle className="text-lg">{name || '-'}</CardTitle>
                       <CardText className="mt-2">
                         <strong>Terakhir izin :</strong>
-                        <p className="m-0 text-dark">Selasa, 27 Januari 2020</p>
+                        <p className="m-0 text-dark">{izin_terakhir || '-'}</p>
                       </CardText>
                       <Button color="primary" className="mt-3 w-100" onClick={this.toggleSelectUserModal}>Pilih User</Button>
                     </CardBody>
@@ -135,19 +136,19 @@ class IzinByAdminForm extends React.Component {
                     </Col>
                     <Col className="col-12">
                       <FormGroup>
-                        <Label htmlFor="tanggalMulai">Tanggal Mulai</Label>
-                        <CustomInput type="date" className="form-control" name="tanggalMulai" id="tanggalMulai" onChange={handleChange} value={values.tanggalMulai} />
-                        {errors.tanggalMulai && touched.tanggalMulai ? (
-                          <FormFeedback className="d-block">{errors.tanggalMulai}</FormFeedback>
+                        <Label htmlFor="tanggal_mulai">Tanggal Mulai</Label>
+                        <CustomInput type="date" className="form-control" name="tanggal_mulai" id="tanggal_mulai" onChange={handleChange} value={values.tanggal_mulai} />
+                        {errors.tanggal_mulai && touched.tanggal_mulai ? (
+                          <FormFeedback className="d-block">{errors.tanggal_mulai}</FormFeedback>
                         ) : null}
                       </FormGroup>
                     </Col>
                     <Col className="col-12">
                       <FormGroup>
-                        <Label htmlFor="tanggalSelesai">Tanggal Selesai</Label>
-                        <CustomInput type="date" className="form-control" name="tanggalSelesai" id="tanggalSelesai" onChange={handleChange} value={values.tanggalSelesai} />
-                        {errors.tanggalSelesai && touched.tanggalSelesai ? (
-                          <FormFeedback className="d-block">{errors.tanggalSelesai}</FormFeedback>
+                        <Label htmlFor="tanggal_selesai">Tanggal Selesai</Label>
+                        <CustomInput type="date" className="form-control" name="tanggal_selesai" id="tanggal_selesai" onChange={handleChange} value={values.tanggal_selesai} />
+                        {errors.tanggal_selesai && touched.tanggal_selesai ? (
+                          <FormFeedback className="d-block">{errors.tanggal_selesai}</FormFeedback>
                         ) : null}
                       </FormGroup>
                     </Col>
@@ -178,7 +179,7 @@ class IzinByAdminForm extends React.Component {
                         <Label htmlFor="keterangan">Keterangan (Opsional)</Label>
                         <Input type="textarea" className="form-control" name="keterangan" id="keterangan" onChange={handleChange} value={values.keterangan} />
                       </FormGroup>
-                      <Button type="submit" color="primary">Absen</Button>
+                      <LoadingButton type="submit" condition={this.state.izinLoading} color="primary">Absen</LoadingButton>
                     </Col>
                   </Row>
                 </Col>

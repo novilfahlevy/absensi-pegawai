@@ -62,8 +62,8 @@ class Izin extends React.Component {
               <CardBody>
                 <CardsContainer 
                   data={this.state.izin}
-                  card={user => (
-                    <IzinCard user={user} getIzinToday={this.getIzinToday} />
+                  card={(user, i) => (
+                    <IzinCard user={user} getIzinToday={this.getIzinToday} fadeInDelay={(i + 1) * 100} />
                   )}
                   limitOptions={[5, 10, 20]}
                 />

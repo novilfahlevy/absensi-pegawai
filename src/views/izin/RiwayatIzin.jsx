@@ -36,7 +36,6 @@ class IzinRiwayat extends React.Component {
       this.setState({ searchIzinLoading: true });
       api().get(`search/users/${this.state.searchIzinKeyword}/izin/riwayat`)
         .then(response => {
-          console.log(response.data.data);
           this.setState({ izin: response.data.data }, () => {
             this.setState({ izin: this.state.izin }, () => {
               this.setState({ refreshDataLoading: false });
@@ -106,8 +105,8 @@ class IzinRiwayat extends React.Component {
                 </Form>
                 <CardsContainer 
                   data={this.state.izin}
-                  card={user => (
-                    <RiwayatIzinCard user={user} />
+                  card={(user, i) => (
+                    <RiwayatIzinCard user={user} fadeInDelay={(i + 1) * 100} />
                   )}
                   limitOptions={[5, 10, 20]}
                 />

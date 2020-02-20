@@ -52,7 +52,7 @@ class IzinPerjamByAdminModal extends React.Component {
   };
 
   getUsersData(callback) {
-    api().get('users/absen-masuk/by-admin')
+    api().get('users/to-izin')
       .then(response => {
         this.setState({ users: response.data.data }, () => {
           this.setState({ users: this.state.users }, callback);
@@ -73,7 +73,7 @@ class IzinPerjamByAdminModal extends React.Component {
   searchData = e => {
     e.preventDefault();
     this.setLoading('searchUser', true);
-    api().get(`search/user/${this.state.searchUserKeyword}/absen-by-admin`)
+    api().get(`search/users/${this.state.searchUserKeyword}/to-izin`)
       .then(response => {
         this.setState({ users: response.data.data }, () => {
           this.setState({ users: this.state.users }, () => {
@@ -134,11 +134,7 @@ class IzinPerjamByAdminModal extends React.Component {
                         <p className="m-0">{user.name}</p>
                       </CardTitle>
                       <Button color="success" size="sm" onClick={() => {
-                        this.props.setSelectedUser({
-                          id: user.id,
-                          name: user.name,
-                          profile: user.profile
-                        });
+                        this.props.setSelectedUser(user);
                         this.props.toggle();
                       }}>Pilih</Button>
                     </div>

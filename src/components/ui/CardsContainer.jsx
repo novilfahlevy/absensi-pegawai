@@ -157,7 +157,7 @@ class CardsContainer extends React.Component {
                   lg={this.props.lg}
                   xl={this.props.xl}
                 >
-                  {this.props.card(data)}
+                  {this.props.card(data, i)}
                 </Col>
               ))}
             </>
