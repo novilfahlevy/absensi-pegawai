@@ -1,5 +1,6 @@
 import React from 'react';
 import api from 'store/api.js';
+import Swal from 'sweetalert2';
 import FadeIn from 'components/hoc/FadeIn.jsx';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -106,7 +107,16 @@ class IzinByAdminForm extends React.Component {
           }}
           validationSchema={izinPerhariSchema}
           onSubmit={(data, { resetForm }) => {
-            this.izin(data, resetForm);
+            if ( !!Object.keys(this.state.selectedUser).length ) {
+              this.izin(data, resetForm);
+            }
+            else {
+              Swal.fire(
+                'Pilih User',
+                'Pilih User Yang Ingin Izin',
+                'warning'
+              );
+            }
           }}
         >
           {({ values, errors, touched, handleChange, handleSubmit }) => (
