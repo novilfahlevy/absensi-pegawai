@@ -45,7 +45,7 @@ class Izin extends React.Component {
               <CardHeader>
                 <Row className="align-items-center">
                   <Col xs="6">
-                    <h2 className="m-0">Izin</h2>
+                    <h2 className="m-0">Izin Hari Ini</h2>
                   </Col>
                   <Col className="text-right" xs="6">
                     <Button color="success" size="md" onClick={() => this.props.history.push('/admin/izin-by-admin')}>
