@@ -33,6 +33,7 @@ import {
   CustomInput
 } from 'reactstrap';
 
+import AnggotaCard from 'views/pm/AnggotaCard.jsx';
 
 class ProjectManager extends React.Component {
   state = {
@@ -172,29 +173,9 @@ class ProjectManager extends React.Component {
                   </Row>
                   <CardsContainer
                     data={this.state.members}
-                    card={member => {
+                    card={(member, i) => {
                       return (
-                        <Card>
-                          <Row>
-                            <Col className="pr-0">
-                              <CardImg src={`${process.env.REACT_APP_BASE_URL}storage/profiles/${member.profile || 'default.jpg'}`} width="80" height="100%" />
-                            </Col>
-                            <Col className="pl-0">
-                              <CardBody>
-                                <CardTitle className="mb-2"><h3>{member.name}</h3></CardTitle>
-                                <CardText className="text-sm">{member.job}</CardText>
-                                <Button color="primary" onClick={() => this.props.history.push(`/admin/detail-pegawai/${member.id}`)}>
-                                  <span className="fas fa-eye"></span>
-                                </Button>
-                                <Form className="d-inline-block" onSubmit={e => { e.preventDefault(); this.deleteMember(member.id); }}>
-                                  <Button type="submit" color="danger">
-                                    <span className="fas fa-trash-alt"></span>
-                                  </Button>
-                                </Form>
-                              </CardBody>
-                            </Col>
-                          </Row>
-                        </Card>
+                        <AnggotaCard member={member} fadeInDelay={(i + 1) * 100} />
                       );
                     }}
                     limitOptions={[4, 8, 10]}
