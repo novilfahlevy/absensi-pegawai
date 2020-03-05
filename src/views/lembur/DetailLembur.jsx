@@ -29,7 +29,7 @@ class DetailLembur extends React.Component {
         const { data } = this.state;
         return (
             <>
-                <Container className="mt--7">
+                <Container className="mt--7" fluid>
                     <Row>
                         <Col>
                             <Card className="mb-3">

@@ -101,7 +101,7 @@ class JamKerja extends React.Component {
         });
         return (
             <>
-                <Container className="mt--7">
+                <Container className="mt--7" fluid>
                     <Row>
                         <Col lg="12" className="col-12">
                             <Card>

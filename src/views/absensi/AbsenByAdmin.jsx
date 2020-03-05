@@ -639,7 +639,7 @@ class ModalUserAbsenKeluar extends React.Component {
 class AbsenByAdmin extends React.Component {
   render() {
     return (
-      <Container className="mt--8">
+      <Container className="mt--8" fluid>
         <Row>
           <Col className="col-12">
             <Card className="p-3 mb-3" body>

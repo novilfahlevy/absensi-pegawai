@@ -25,7 +25,7 @@ class TambahAbsensi extends React.Component {
     return (
       <>
         <Header />
-        <Container className="mt--7">
+        <Container className="mt--7" fluid>
           <Row>
             <Col lg="7">
               <Card className="mb-3">

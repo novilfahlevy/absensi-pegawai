@@ -71,8 +71,8 @@ export default class FormLembur extends React.Component {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            cancelButtonText: 'Cancel',
-            confirmButtonText: 'Batal'
+            cancelButtonText: 'Tidak',
+            confirmButtonText: 'Iya'
         })
             .then(({ value }) => value && this.props.toggle());
     }

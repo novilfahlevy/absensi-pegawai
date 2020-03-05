@@ -20,7 +20,7 @@ import IzinByAdminForm from 'views/izin/IzinByAdminForm.jsx';
 class IzinByAdmin extends React.Component {
   render() {
     return (
-      <Container className="mt--7">
+      <Container className="mt--7" fluid>
         <Row>
           <Col className="col-12 mb-3 mb-lg-0">
             <Card>

@@ -130,7 +130,7 @@ class Absensi extends React.Component {
 
     return (
       <>
-        <Container className="mt--7">
+        <Container className="mt--7" fluid>
           <Row>
             <Col>
               <Card>
